@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers\{{typeViewCamelCase}};
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\{{modelName}};
+
+class {{modelName}}Controller extends Controller
+{
+    public function __construct(){}
+
+    public function index()
+    {
+        ${{modelNamePluralLowerCase}} = {{modelName}}::all();
+        if (\Request::ajax()) {
+            $view = view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.index', compact('{{modelNamePluralLowerCase}}'))->renderSections();
+            return response()->json([
+                'content' => $view['content'],
+                'css' => $view['css'],
+                'js' => $view['js'],
+            ]);
+        }
+        return view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.index', compact('{{modelNamePluralLowerCase}}'))->render();
+    }
+
+    public function create()
+    {
+        if (\Request::ajax()) {
+            $view = view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.create')->renderSections();
+            return response()->json([
+                'content' => $view['content'],
+                'css' => $view['css'],
+                'js' => $view['js'],
+            ]);
+        }
+        return view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.create')->render();
+    }
+
+    public function store(Request $request)
+    {
+        $status = {{modelName}}::create($request->all());
+        if ($status) {
+            $data['status'] = true;
+            $data['message'] = "Data berhasil disimpan!!!";
+        } else {
+            $data['status'] = false;
+            $data['message'] = "Data gagal disimpan!!!";
+        }
+        return response()->json(['code' => 200,'data' => $data], 200);
+    }
+
+    public function show($id)
+    {
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+
+        return response()->json(${{modelNameSingularLowerCase}});
+    }
+
+    public function edit($id)
+    {
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+        if (\Request::ajax()) {
+            $view = view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.edit', compact('{{modelNameSingularLowerCase}}'))->renderSections();
+            return response()->json([
+                'content' => $view['content'],
+                'css' => $view['css'],
+                'js' => $view['js'],
+            ]);
+        }
+        return view('{{typeViewLowerCase}}.{{modelNamePluralLowerCase}}.edit', compact('{{modelNameSingularLowerCase}}'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+        $status = ${{modelNameSingularLowerCase}}->update($request->all());
+
+        if ($status) {
+            $data['status'] = true;
+            $data['message'] = "Data berhasil disimpan!!!";
+        } else {
+            $data['status'] = false;
+            $data['message'] = "Data gagal disimpan!!!";
+        }
+        return response()->json(['code' => 200,'data' => $data], 200);
+    }
+
+    public function delete(Request $request)
+    {
+        $ids = $request->id;
+        if (is_array($ids)) {
+            $status = {{modelName}}::destroy($ids);
+        } else {
+            $status = {{modelName}}::findOrFail($ids)->delete();
+        }
+        if ($status) {
+            $data['status'] = true;
+            $data['message'] = "Data berhasil dihapus!!!";
+        } else {
+            $data['status'] = false;
+            $data['message'] = "Data gagal dihapus!!!";
+        }
+        return response()->json(['code' => 200,'data' => $data], 200);
+    }
+}

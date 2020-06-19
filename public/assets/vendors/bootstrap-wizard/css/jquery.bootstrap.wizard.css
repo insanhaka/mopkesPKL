@@ -1,0 +1,40 @@
+/*FORM WIZARD*/
+#rootwizard .steps,
+#rootwizard .steps>li>a.step {
+    background-color: #fff;
+    background-image: none;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+}
+
+#rootwizard .steps>li>a.step>.number {
+    background-color: #eee;
+    text-align: center !important;
+    padding: 8px 15px 13px;
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+}
+
+#rootwizard .steps>li.active>a.step {
+    border-bottom: 2px solid #dd4b39;
+}
+
+#rootwizard .steps>li.active>a.step .number {
+    background-color: #dd4b39;
+    color: #fff;
+}
+
+#rootwizard .steps>li>a.step>.desc,
+#rootwizard .steps>li>a.step>.number {
+    color: #333;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/*END FORM WIZARD*/

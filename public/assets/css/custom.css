@@ -1,0 +1,91 @@
+/**
+ *
+ * You can write your CSS code here, DO NOT touch the default JavaScript file
+ * because it will make it harder for you to update.
+ * 
+ */
+
+/*# sourceMappingURL=custom.css.map */
+/*LEGEND*/
+fieldset.the-fieldset {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin: 10px 0;
+}
+legend.the-legend {
+    border-style: none;
+    border-width: 0;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 20px;
+    margin-bottom: 0;
+    width: auto;
+    padding: 5px 10px;
+    border: 1px solid #e0e0e0;
+}
+/*END LEGEND*/
+/* Loading Ajax */
+.loading-container {
+    z-index: 2000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0.6;
+    display: none;
+}
+
+.loading-container .lds-hourglass {
+    margin: 40vh auto;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.loading-container .lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid #6777ef;
+    border-color: #6777ef transparent #6777ef transparent;
+    animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes lds-hourglass {
+    0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+
+    50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    100% {
+        transform: rotate(1800deg);
+    }
+}
+
+/* Effect Shiny */
+.shine {
+    -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, .6) 30%, #000 50%, rgba(0, 0, 0, .6) 70%);
+    -webkit-mask-size: 200%;
+    animation: shine 2s linear infinite;
+}
+
+@keyframes shine {
+    from {
+        -webkit-mask-position: 150%;
+    }
+
+    to {
+        -webkit-mask-position: -50%;
+    }
+}
