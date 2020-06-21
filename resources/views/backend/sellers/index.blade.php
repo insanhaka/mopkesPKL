@@ -87,6 +87,19 @@
     {!! Html::script('assets/vendors/datatables/media/js/jquery.dataTables.responsive.min.js') !!}
     {!! Html::script('assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') !!}
     {!! Html::script('js/pages/datatables-init.js') !!}
+
+
+    <script type="text/javascript">
+        @if ($message = Session::get('success'))
+            iziToast.success({
+                        title: 'Success',
+                        message: 'Data Berhasil Disimpan',
+                        position: 'topRight'
+                    });
+            @endif
+    </script>
+
+
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();

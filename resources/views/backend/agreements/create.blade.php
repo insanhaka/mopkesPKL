@@ -22,9 +22,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!!Form::open(['route'=>'admin.agreement.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
+                    {!!Form::open(['route'=>'admin.agreement.store','class'=>'validate', 'method'=>'POST', 'enctype'=>'multipart/form-data', 'id'=>'simpan','novalidate'=>''])!!}
                     {{-- <form action="{{ route('admin.agreement.store') }}" method="POST" enctype="multipart/form-data"> --}}
-                        @csrf
+                        {{-- @csrf --}}
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-lg-4 col-12">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    </form>
+                    {{-- </form> --}}
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -56,41 +56,56 @@
 @endsection
 
 @section('js')
+{!! Html::script('assets/vendors/select2/dist/js/select2.min.js') !!}
 {!! Html::script('assets/vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js') !!}
 {!! Html::script('js/pages/validate-init.js') !!}
-    <script>
-        $(document).ready(function(){
-            // SAVE
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    var $this = $('form#simpan');
-                    $.ajax({
-                        url : $this.attr('action'),
-                        type : 'POST',
-                        data : $this.serialize(),
-                        dataType: 'json',
-                        success:function(response){
-                            if(response.data.status){
-                                url = APP_URL_ADMIN +'/agreement';
-                                history.pushState(null, null, url);
-                                load(url);
-                                iziToast.success({
-                                    title: 'Success',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }else{
-                                iziToast.error({
-                                    title: 'Failed',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }
-                        }
+    <script type="text/javascript">
+        // $(document).ready(function(){
+
+            @if ($message = Session::get('success'))
+            // url = APP_URL_ADMIN +'/agreement';
+            // history.pushState(null, null, url);
+            // load(url);
+            iziToast.success({
+                        title: 'Success',
+                        message: 'Data Berhasil Disimpan',
+                        position: 'topRight'
                     });
-                }
-            });
-            InitiateSimpleValidate.init();
-        });
+            @endif
+
+            // $(".select2").select2();
+            // // SAVE
+            // $.validator.setDefaults({
+            //     submitHandler: function () {
+            //         var $this = $('form#simpan');
+            //         $.ajax({
+            //             url : $this.attr('action'),
+            //             type : 'POST',
+            //             data : new FormData($('form#simpan')[0]),
+            //             dataType: 'json',
+            //             success:function(response){
+            //                 console.log(response.data.status);
+            //                 if(response.data.status){
+            //                     url = APP_URL_ADMIN +'/agreement';
+            //                     history.pushState(null, null, url);
+            //                     load(url);
+            //                     iziToast.success({
+            //                         title: 'Success',
+            //                         message: response.data.message,
+            //                         position: 'topRight'
+            //                     });
+            //                 }else{
+            //                     iziToast.error({
+            //                         title: 'Failed',
+            //                         message: response.data.message,
+            //                         position: 'topRight'
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
+            // InitiateSimpleValidate.init();
+        // });
     </script>
 @endsection

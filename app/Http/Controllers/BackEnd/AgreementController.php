@@ -42,7 +42,8 @@ class AgreementController extends Controller
 
         $this->validate($request, [
 			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-			'name' => 'required',
+            'name' => 'required',
+			// 'attachment' => 'required',
 		]);
 
 		// menyimpan data file yang diupload ke variabel $file
@@ -51,11 +52,12 @@ class AgreementController extends Controller
 		$nama_file = time()."_".$file->getClientOriginalName();
 
       	        // isi dengan nama folder tempat kemana file diupload
-		$tujuan_upload = 'data_file';
+		$tujuan_upload = 'agreement_file';
 		$file->move($tujuan_upload,$nama_file);
 
 		$status =  Agreement::create([
-			'attachment' => $nama_file,
+            'attachment' => $nama_file,
+			// 'attachment' => $request->attachment,
 			'name' => $request->name,
         ]);
 
@@ -64,14 +66,18 @@ class AgreementController extends Controller
         // $setuju->attachment = $request->attachment;
         // $status = $setuju->save();
         // $status = Agreement::create($request->all());
-        if ($status) {
-            $data['status'] = true;
-            $data['message'] = "Data berhasil disimpan!!!";
-        } else {
-            $data['status'] = false;
-            $data['message'] = "Data gagal disimpan!!!";
-        }
-        return response()->json(['code' => 200,'data' => $data], 200);
+        // if ($status) {
+        //     $data['status'] = true;
+        //     $data['message'] = "Data berhasil disimpan!!!";
+        // } else {
+        //     $data['status'] = false;
+        //     $data['message'] = "Data gagal disimpan!!!";
+        // }
+
+        // return response()->json(['code' => 200,'data' => $data], 200);
+        return back()->with('success','Data Berhasil Disimpan');
+        // $agreements = Agreement::all();
+        // return view('backend.agreements.index', compact('agreements'))->with('oke');
     }
 
     public function show($id)
@@ -110,21 +116,10 @@ class AgreementController extends Controller
         return response()->json(['code' => 200,'data' => $data], 200);
     }
 
-    public function delete(Request $request)
+    public function delete($id)
     {
-        $ids = $request->id;
-        if (is_array($ids)) {
-            $status = Agreement::destroy($ids);
-        } else {
-            $status = Agreement::findOrFail($ids)->delete();
-        }
-        if ($status) {
-            $data['status'] = true;
-            $data['message'] = "Data berhasil dihapus!!!";
-        } else {
-            $data['status'] = false;
-            $data['message'] = "Data gagal dihapus!!!";
-        }
-        return response()->json(['code' => 200,'data' => $data], 200);
+        $data = Agreement::find($id);
+        $data->delete();
+        return back()->with('success','Data Berhasil Dihapus');
     }
 }

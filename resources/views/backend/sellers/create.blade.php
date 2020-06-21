@@ -33,10 +33,10 @@
                                 {!! Form::label('nik', 'NIK') !!}
                                 {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'nik','required'=>'true']) !!}
                             </div>
-                            {{-- <div class="form-group col-lg-6 col-12">
+                            <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('domisili_kec', 'Kecamatan ( Domisili )') !!}
                                 {!! Form::select('domisili_kec', $data['arrRoles'], null, ['class'=>'form-control select2','id'=>'domisili_kec','required'=>'true','style'=>'width: 100%;']) !!}
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer border-top">

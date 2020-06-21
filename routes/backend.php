@@ -41,7 +41,8 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
 
     Route::resource('agreement', 'AgreementController');
-    Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
+    // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
+    Route::get('/agreement/{id}/delete', 'AgreementController@delete');
 
     Route::match(['get', 'post'],'/logout','LoginController@doLogout')->name('logout');
 

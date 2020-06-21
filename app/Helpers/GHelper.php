@@ -88,11 +88,11 @@ class GHelper
         }
     }
 
-    public static function btnDelete($id)
+    public static function btnDelete($id, $ajax = true)
     {
         $uri = self::uri();
         if (GPermissionLibrary::permissionDelete()) {
-            return '<a class="dropdown-item has-icon bg-danger text-white btn-hapus" data-url='.url($uri).' data-id='.$id.' href="#" title="Delete"><i class="far fa-trash-alt"></i> Delete</a>';
+            return '<a class="dropdown-item has-icon bg-danger text-white btn-hapus" href="'.url($uri) . '/' . $id . '/delete'.'" title="Delete"><i class="far fa-trash-alt"></i> Delete</a>';
             // return link_to('#', 'Delete', ['class' => 'dropdown-item has-icon btn-hapus', 'data-url' => url()->full(), 'data-id' => $id]);
         }
     }

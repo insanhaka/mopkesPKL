@@ -15,6 +15,8 @@
         @yield('css')
     </div>
 
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
     <!-- Template CSS -->
     {!! Html::style('assets/css/style.css') !!}
     {!! Html::style('assets/css/components.css') !!}
