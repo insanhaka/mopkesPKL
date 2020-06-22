@@ -45,7 +45,12 @@
                                 @foreach ($sellers as $data)
                                 <tr>
                                     <td>{!! GHelper::cbDelete($data->id); !!}</td>
-                                    {{-- Add Something Here --}}
+                                    <td>{!! $data->name !!}</td>
+                                    <td>{!! $data->nik !!}</td>
+                                    <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
+                                    <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
+                                    <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
+                                    <td>{!! $data->product->product_name !!}</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +94,7 @@
     {!! Html::script('js/pages/datatables-init.js') !!}
 
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         @if ($message = Session::get('success'))
             iziToast.success({
                         title: 'Success',
@@ -97,7 +102,7 @@
                         position: 'topRight'
                     });
             @endif
-    </script>
+    </script> --}}
 
 
     <script type="text/javascript">

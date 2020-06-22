@@ -19,7 +19,7 @@ class Seller extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Product', 'product_id', 'id');
+        return $this->belongsTo('App\Product', 'product_id', 'id');
     }
 
     public function district_dom()

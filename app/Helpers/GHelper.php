@@ -30,7 +30,7 @@ class GHelper
     public static function btnCancel($caption = 'Cancel', $ajax = true)
     {
         $uri = self::uri();
-        
+
         if ($ajax == true) {
             return \Form::button('<i class="fas fa-times-circle"></i> '.$caption, ['class' => 'btn btn-default', 'data-request' => 'push', 'href' => url($uri)]);
         } else {
@@ -117,7 +117,7 @@ class GHelper
             }else{
                 return '<a class="dropdown-item has-icon btn-approve" data-url='.url($uri).' data-id='.$data->id.' href="#" title="Approved"><i class="fas fa-check-double"></i> Approved</a>';
             }
-            
+
         }
     }
 
@@ -129,7 +129,7 @@ class GHelper
             }else{
                 return '<a class="dropdown-item has-icon modalTrigger" href="'.route($route,$data).'" title="Activated"><i class="fas fa-check"></i> Activated</a>';
             }
-            
+
         }
     }
 
@@ -141,7 +141,7 @@ class GHelper
             }else{
                 return '<a class="dropdown-item has-icon modalTrigger" href="'.route($route,$data).'" title="Activated"><i class="fas fa-check"></i> Activated</a>';
             }
-            
+
         }
     }
 
@@ -241,7 +241,7 @@ class GHelper
             $link = link_to('#');
         }
         return $link;
-        
+
     }
 
     public static function formatBytes($size, $precision = 2)

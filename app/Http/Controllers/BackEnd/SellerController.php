@@ -5,10 +5,17 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Seller;
+use App\District;
+use App\Product;
+use App\Village;
 
 class SellerController extends Controller
 {
-    public function __construct(){}
+    public function __construct(){
+        $this->kecparent = District::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'name')->prepend('Pilih Kecamatan', '0');
+        $this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'name')->prepend('Pilih Desa', '0');
+        $this->productparent = Product::where('product_name', 0)->orderBy('product_name', 'asc')->pluck('product_name', 'product_name')->prepend('Pilih Produk', '0');
+    }
 
     public function index()
     {
@@ -26,15 +33,18 @@ class SellerController extends Controller
 
     public function create()
     {
+        $kecparent = $this->kecparent;
+        $desparent = $this->desparent;
+        $productparent = $this->productparent;
         if (\Request::ajax()) {
-            $view = view('backend.sellers.create')->renderSections();
+            $view = view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.sellers.create')->render();
+        return view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent'))->render();
     }
 
     public function store(Request $request)
