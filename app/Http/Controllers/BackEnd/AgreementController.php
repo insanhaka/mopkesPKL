@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Agreement;
+use App\Kelompok;
 
 class AgreementController extends Controller
 {
@@ -40,44 +41,82 @@ class AgreementController extends Controller
     public function store(Request $request)
     {
 
+        $data_kelompok = $request->menu_kelompok;
+        // dd($data_kelompok);
+
         $this->validate($request, [
 			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required',
+            'menu_kelompok' => 'required'
 			// 'attachment' => 'required',
-		]);
-
-		// menyimpan data file yang diupload ke variabel $file
-		$file = $request->file('attachment');
-
-		$nama_file = time()."_".$file->getClientOriginalName();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-		$tujuan_upload = 'agreement_file';
-		$file->move($tujuan_upload,$nama_file);
-
-		$status =  Agreement::create([
-            'attachment' => $nama_file,
-			// 'attachment' => $request->attachment,
-			'name' => $request->name,
         ]);
 
-        // $setuju = new Agreement();
-        // $setuju->name = $request->name;
-        // $setuju->attachment = $request->attachment;
-        // $status = $setuju->save();
-        // $status = Agreement::create($request->all());
-        // if ($status) {
-        //     $data['status'] = true;
-        //     $data['message'] = "Data berhasil disimpan!!!";
-        // } else {
-        //     $data['status'] = false;
-        //     $data['message'] = "Data gagal disimpan!!!";
-        // }
+        if ($data_kelompok === "0"){
 
-        // return response()->json(['code' => 200,'data' => $data], 200);
-        return back()->with('success','Data Berhasil Disimpan');
-        // $agreements = Agreement::all();
-        // return view('backend.agreements.index', compact('agreements'))->with('oke');
+            // menyimpan data file yang diupload ke variabel $file
+            $file = $request->file('attachment');
+
+            $nama_file = time()."_".$file->getClientOriginalName();
+
+                    // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'agreement_file';
+            $file->move($tujuan_upload,$nama_file);
+
+            $input =  Agreement::create([
+                'attachment' => $nama_file,
+                'status' => 'Kelompok',
+                'name' => $request->name,
+            ]);
+
+            $status = Kelompok::create([
+                'name' => $request->name,
+            ]);
+            // $status = Agreement::create($request->all());
+            // if ($status) {
+            //     $data['status'] = true;
+            //     $data['message'] = "Data berhasil disimpan!!!";
+            // } else {
+            //     $data['status'] = false;
+            //     $data['message'] = "Data gagal disimpan!!!";
+            // }
+
+            // return response()->json(['code' => 200,'data' => $data], 200);
+            return back()->with('success','Data Berhasil Disimpan');
+            // $agreements = Agreement::all();
+            // return view('backend.agreements.index', compact('agreements'))->with('oke');
+
+        } else {
+
+            // menyimpan data file yang diupload ke variabel $file
+            $file = $request->file('attachment');
+
+            $nama_file = time()."_".$file->getClientOriginalName();
+
+                    // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'agreement_file';
+            $file->move($tujuan_upload,$nama_file);
+
+            $input =  Agreement::create([
+                'attachment' => $nama_file,
+                'status' => 'Individu',
+                'name' => $request->name,
+            ]);
+            // $status = Agreement::create($request->all());
+            // if ($status) {
+            //     $data['status'] = true;
+            //     $data['message'] = "Data berhasil disimpan!!!";
+            // } else {
+            //     $data['status'] = false;
+            //     $data['message'] = "Data gagal disimpan!!!";
+            // }
+
+            // return response()->json(['code' => 200,'data' => $data], 200);
+            return back()->with('success','Data Berhasil Disimpan');
+            // $agreements = Agreement::all();
+            // return view('backend.agreements.index', compact('agreements'))->with('oke');
+
+        }
+
     }
 
     public function show($id)

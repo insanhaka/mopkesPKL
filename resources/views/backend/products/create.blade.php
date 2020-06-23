@@ -26,8 +26,8 @@
                     <div class="card-body">
                         <div class="row">
                         <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('product_name', 'Nama Produk') !!}
-                                {!! Form::text('product_name', null ,['id'=>'product_name','class'=>'form-control','placeholder'=>'Nama Produk','required'=>'true']) !!}
+                                {!! Form::label('product_name', 'Jenis Produk') !!}
+                                {!! Form::text('product_name', null ,['id'=>'product_name','class'=>'form-control','placeholder'=>'Tulis Jenis Produk','required'=>'true']) !!}
                             </div>
                         </div>
                     </div>

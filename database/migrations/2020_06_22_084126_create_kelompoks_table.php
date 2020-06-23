@@ -14,7 +14,7 @@ class CreateKelompoksTable extends Migration
     public function up()
     {
         Schema::create('kelompoks', function (Blueprint $table) {
-            $table->char('id',10)->primary();
+            $table->id();
             $table->string('name', 100);
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();

@@ -3,13 +3,8 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
-class Agreement extends Model
+class Kelompok extends Model
 {
-
-    protected $table = "agreements";
-
-    protected $fillable = ['name','attachment', 'status'];
-
     protected $guarded = [];
     public static function boot()
     {
@@ -20,5 +15,10 @@ class Agreement extends Model
         static::updating(function ($model) {
             $model->updated_by = \Auth::user()->username;
         });
+    }
+
+    public function seller()
+    {
+        return $this->hasMany('App\Seller', 'product_id', 'id');
     }
 }

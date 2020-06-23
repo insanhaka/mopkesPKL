@@ -17,6 +17,7 @@ class CreateAgreementsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('attachment', 100);
+            $table->string('status', 20);
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

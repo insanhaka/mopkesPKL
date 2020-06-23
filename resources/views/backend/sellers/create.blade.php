@@ -2,6 +2,15 @@
 
 @section('css')
 {!! Html::style('assets/vendors/select2/dist/css/select2.min.css') !!}
+<style>
+    .select-kelompokhide {
+        visibility: hidden;
+    }
+
+    .select-kelompokshow {
+        visibility: visible;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -36,11 +45,11 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilikec', 'Domisili (Kecamatan)') !!}
-                                {!! Form::select('name', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilides', 'Domisili (Desa)') !!}
-                                {!! Form::select('name', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
@@ -48,11 +57,11 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpkec', 'Alamat sesuai KTP (Kecamatan)') !!}
-                                {!! Form::select('name', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('ktp_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpdes', 'Alamat sesuai KTP (Desa)') !!}
-                                {!! Form::select('name', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('ktp_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpaddr', 'Alamat Sesuai KTP Lengkap') !!}
@@ -60,11 +69,11 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakkec', 'Lokasi Jualan (Kecamatan)') !!}
-                                {!! Form::select('name', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lapak_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakdes', 'Lokasi Jualan (Desa)') !!}
-                                {!! Form::select('name', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lapak_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakaddr', 'Alamat Lokasi Jualan Lengkap') !!}
@@ -72,17 +81,31 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('product', 'Jenis produk') !!}
-                                {!! Form::select('product_name', $productparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('product_id', $productparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('spesifikproduk', 'Spesifik Jenis Produk') !!}
-                                {!! Form::text('spesifik_produk', null ,['id'=>'spesifik_produk','class'=>'form-control','placeholder'=>'Tulis sepesifik produk','required'=>'true']) !!}
+                                {!! Form::text('product_specific', null ,['id'=>'spesifik_produk','class'=>'form-control','placeholder'=>'Tulis sepesifik produk','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('waktu_jualan', 'Waktu Jualan') !!}
                                 <div class="col-lg-4 pl-0">
-                                    {!! Form::select('waktu_jualan', ['0'=>'Pagi','1'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                    {!! Form::select('waktu_jual', ['0'=>'Pagi','1'=>'Malam'], null, ['class'=>'form-control']) !!}
                                 </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('menu_kelompok', 'Anggota Kelompok?') !!}
+                                <div class="col-lg-4 pl-0">
+                                    {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
+                                    <select class="form-control" id="menu_kelompok" name="menu_kelompok" onchange="menukelompok()">
+                                        <option value="Tidak">Tidak</option>
+                                        <option value="Ya">Ya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group select-kelompokhide col-lg-4 col-12" id="select_kelompok">
+                                {!! Form::label('kelompok', 'Nama Kelompok') !!}
+                                {!! Form::select('kelompok_id', $kelompokparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                         </div>
                     </div>
@@ -141,5 +164,19 @@
             });
             InitiateSimpleValidate.init();
         });
+    </script>
+
+    <script>
+        function menukelompok() {
+            var i = document.getElementById("menu_kelompok").value;
+            // console.log(i);
+            if(i === "Ya"){
+                $('#select_kelompok').removeClass("select-kelompokhide");
+                $('#select_kelompok').addClass("select-kelompokshow");
+            }else {
+                $('#select_kelompok').removeClass("select-kelompokshow");
+                $('#select_kelompok').addClass("select-kelompokhide");
+            }
+        }
     </script>
 @endsection

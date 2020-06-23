@@ -34,10 +34,8 @@ class CreateSellersTable extends Migration
             $table->string('lapak_addr');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-
-            $table->char('kelompok_id');
+            $table->unsignedBigInteger('kelompok_id');
             $table->foreign('kelompok_id')->references('id')->on('kelompoks');
-
             $table->string('product_specific');
             $table->string('waktu_jual');
             $table->string('created_by', 50);

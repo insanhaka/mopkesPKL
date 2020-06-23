@@ -31,6 +31,12 @@
                                 {!! Form::label('Nama pihak yang menyetujui', 'Nama pihak yang menyetujui') !!}
                                 {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!}
                             </div>
+                            <div class="form-group col-lg-3 col-12">
+                                {!! Form::label('menu_kelompok', 'Kelompok / Individu') !!}
+                                <div class="col-lg-5 pl-0">
+                                    {!! Form::select('menu_kelompok', ['0'=>'Kelompok','1'=>'Individu'], null, ['class'=>'form-control']) !!}
+                                </div>
+                            </div>
                             <div class="form-group col-lg-8 col-12" style="margin: 7px;">
                                 {!! Form::label('Bukti', 'Bukti') !!}
                                 {!! Form::file('attachment', null ,['id'=>'attachment','class'=>'form-control','placeholder'=>'Attachment','required'=>'true']) !!}

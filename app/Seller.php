@@ -22,6 +22,11 @@ class Seller extends Model
         return $this->belongsTo('App\Product', 'product_id', 'id');
     }
 
+    public function kelompok()
+    {
+        return $this->belongsTo('App\Kelompok', 'kelompok_id', 'id');
+    }
+
     public function district_dom()
     {
         return $this->belongsTo('App\District', 'domisili_kec', 'id');

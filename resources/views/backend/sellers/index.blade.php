@@ -38,6 +38,8 @@
                                     <th>Alamat KTP</th>
                                     <th>Alamat Lapak</th>
                                     <th>Produk</th>
+                                    <th>Waktu Jualan</th>
+                                    <th>Kelompok</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
@@ -65,12 +67,6 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">

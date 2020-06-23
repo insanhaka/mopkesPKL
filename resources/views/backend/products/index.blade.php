@@ -32,7 +32,7 @@
                                     <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th>
-                                    <th>Nama Product</th>
+                                    <th>Jenis Product</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>

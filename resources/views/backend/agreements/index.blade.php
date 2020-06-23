@@ -34,6 +34,7 @@
                                     </th> --}}
                                     <th>No.</th>
                                     <th>Nama Pihak Yang Menyetujui</th>
+                                    <th>Kelompok / Individu</th>
                                     <th>Bukti</th>
                                     <th>Display</th>
                                     <th>Act</th>
@@ -45,6 +46,7 @@
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
+                                    <td>{!! $data->status !!}</td>
                                     <td><a href="{{asset('agreement_file/'.$data->attachment)}}" alt="Image description" target="_blank" style="display: inline-block; width: 100%; height: 100%;">Preview</a></td>
                                     <td><img src="{{asset('agreement_file/'.$data->attachment)}}" class="card-img-top" style="width: 50px; height: 50px;" alt="..."></td>
                                     <td align="center">
