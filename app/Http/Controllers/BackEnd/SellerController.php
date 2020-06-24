@@ -13,10 +13,10 @@ use App\Village;
 class SellerController extends Controller
 {
     public function __construct(){
-        $this->kecparent = District::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'name')->prepend('Pilih Kecamatan', '0');
-        $this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'name')->prepend('Pilih Desa', '0');
-        $this->productparent = Product::where('product_name', 0)->orderBy('product_name', 'asc')->pluck('product_name', 'id')->prepend('Pilih Produk', '0');
-        $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '0');
+        $this->kecparent = District::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
+        $this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
+        $this->productparent = Product::where('product_name', 0)->orderBy('product_name', 'asc')->pluck('product_name', 'id')->prepend('Pilih Produk', 0);
+        $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
     }
 
     public function index()
@@ -53,9 +53,27 @@ class SellerController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
+        // dd($request->all());
 
-        $status = Seller::create($request->all());
+        $dataseller = new Seller;
+        $dataseller->name = $request->name;
+        $dataseller->nik = $request->nik;
+        $dataseller->domisili_kec = $request->domisili_kec;
+        $dataseller->domisili_desa = $request->domisili_desa;
+        $dataseller->domisili_addr = $request->domisili_addr;
+        $dataseller->ktp_kec = $request->ktp_kec;
+        $dataseller->ktp_desa = $request->ktp_desa;
+        $dataseller->ktp_addr = $request->ktp_addr;
+        $dataseller->lapak_kec = $request->lapak_kec;
+        $dataseller->lapak_desa = $request->lapak_desa;
+        $dataseller->lapak_addr = $request->lapak_addr;
+        $dataseller->product_id = $request->product_id;
+        $dataseller->product_specific = $request->product_specific;
+        $dataseller->waktu_jual = $request->waktu_jual;
+        $dataseller->status_kelompok = $request->status_kelompok;
+        $dataseller->kelompok_id = $request->kelompok_id;
+
+        $status = $dataseller->save();
         if ($status) {
             $data['status'] = true;
             $data['message'] = "Data berhasil disimpan!!!";

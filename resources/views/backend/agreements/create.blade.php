@@ -66,52 +66,53 @@
 {!! Html::script('assets/vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js') !!}
 {!! Html::script('js/pages/validate-init.js') !!}
     <script type="text/javascript">
-        // $(document).ready(function(){
+        $(document).ready(function(){
 
-            @if ($message = Session::get('success'))
-            // url = APP_URL_ADMIN +'/agreement';
-            // history.pushState(null, null, url);
-            // load(url);
-            iziToast.success({
-                        title: 'Success',
-                        message: 'Data Berhasil Disimpan',
-                        position: 'topRight'
-                    });
-            @endif
-
-            // $(".select2").select2();
-            // // SAVE
-            // $.validator.setDefaults({
-            //     submitHandler: function () {
-            //         var $this = $('form#simpan');
-            //         $.ajax({
-            //             url : $this.attr('action'),
-            //             type : 'POST',
-            //             data : new FormData($('form#simpan')[0]),
-            //             dataType: 'json',
-            //             success:function(response){
-            //                 console.log(response.data.status);
-            //                 if(response.data.status){
-            //                     url = APP_URL_ADMIN +'/agreement';
-            //                     history.pushState(null, null, url);
-            //                     load(url);
-            //                     iziToast.success({
-            //                         title: 'Success',
-            //                         message: response.data.message,
-            //                         position: 'topRight'
-            //                     });
-            //                 }else{
-            //                     iziToast.error({
-            //                         title: 'Failed',
-            //                         message: response.data.message,
-            //                         position: 'topRight'
-            //                     });
-            //                 }
-            //             }
+            // @if ($message = Session::get('success'))
+            // // url = APP_URL_ADMIN +'/agreement';
+            // // history.pushState(null, null, url);
+            // // load(url);
+            // iziToast.success({
+            //             title: 'Success',
+            //             message: 'Data Berhasil Disimpan',
+            //             position: 'topRight'
             //         });
-            //     }
-            // });
-            // InitiateSimpleValidate.init();
-        // });
+            // @endif
+
+            $(".select2").select2();
+            // SAVE
+            $.validator.setDefaults({
+                submitHandler: function () {
+                    var $this = $('form#simpan');
+                    console.log($this.serialize());
+                    $.ajax({
+                        url : $this.attr('action'),
+                        type : 'POST',
+                        data : $this.serialize(),
+                        dataType: 'json',
+                        success:function(response){
+                            console.log(response.data.status);
+                            if(response.data.status){
+                                url = APP_URL_ADMIN +'/agreement';
+                                history.pushState(null, null, url);
+                                load(url);
+                                iziToast.success({
+                                    title: 'Success',
+                                    message: response.data.message,
+                                    position: 'topRight'
+                                });
+                            }else{
+                                iziToast.error({
+                                    title: 'Failed',
+                                    message: response.data.message,
+                                    position: 'topRight'
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            InitiateSimpleValidate.init();
+        });
     </script>
 @endsection

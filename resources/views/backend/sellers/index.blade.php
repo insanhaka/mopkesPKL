@@ -53,6 +53,12 @@
                                     <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
                                     <td>{!! $data->product->product_name !!}</td>
+                                    <td>{!! $data->waktu_jual !!}</td>
+                                    @if ($data->status_kelompok === "Ya")
+                                    <td>{!! $data->kelompok->name !!}</td>
+                                    @else
+                                    <td>Individu</td>
+                                    @endif
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

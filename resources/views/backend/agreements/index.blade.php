@@ -109,81 +109,81 @@
             $('#simpledatatable').DataTable( {
                 "pagingType": "full_numbers"
             } );
-            // $('#simpledatatable').on('click','.btn-hapus',function(e){
-            //     e.preventDefault();
-            //     var $this =$(this);
-            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-            //         if (confirm) {
-            //             $.ajax({
-            //                 url: $this.attr('data-url') + '/delete',
-            //                 type: 'POST',
-            //                 data: {
-            //                     'id' : $this.attr('data-id'),
-            //                     '_token' : ''
-            //                 },
-            //                 success: function(response) {
-            //                     if(response){
-            //                         $this.closest('tr').fadeOut(300,function(){
-            //                             $this.remove();
-            //                         });
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
+            $('#simpledatatable').on('click','.btn-hapus',function(e){
+                e.preventDefault();
+                var $this =$(this);
+                bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
+                    if (confirm) {
+                        $.ajax({
+                            url: $this.attr('data-url') + '/delete',
+                            type: 'POST',
+                            data: {
+                                'id' : $this.attr('data-id'),
+                                '_token' : ''
+                            },
+                            success: function(response) {
+                                if(response){
+                                    $this.closest('tr').fadeOut(300,function(){
+                                        $this.remove();
+                                    });
+                                    iziToast.success({
+                                        title: 'Success',
+                                        message: response.data.message,
+                                        position: 'topRight'
+                                    });
+                                }else{
+                                    iziToast.error({
+                                        title: 'Failed',
+                                        message: response.data.message,
+                                        position: 'topRight'
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+                });
+            });
 
-            // Hapus Semua
-            // $('#form-delete').on('submit',function(e){
-            //     e.preventDefault();
-            //     var $this = $(this);
-            //     bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
-            //         if(confirm){
-            //             $.ajax({
-            //                 url : $this.attr('action') + '/delete',
-            //                 type : 'POST',
-            //                 data : $this.serialize(),
-            //                 success:function(response){
-            //                     // console.log(response);
-            //                     if(response.data.status){
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                         $this.find('input[type=checkbox]').each(function (t){
-            //                             if($(this).is(':checked')){
-            //                                 $(this).closest('tr').fadeOut(100,function(){
-            //                                     $(this).remove();
-            //                                 });
-            //                             }
-            //                         });
-            //                         $('#deleteall').fadeOut(300);
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
+            Hapus Semua
+            $('#form-delete').on('submit',function(e){
+                e.preventDefault();
+                var $this = $(this);
+                bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
+                    if(confirm){
+                        $.ajax({
+                            url : $this.attr('action') + '/delete',
+                            type : 'POST',
+                            data : $this.serialize(),
+                            success:function(response){
+                                // console.log(response);
+                                if(response.data.status){
+                                    iziToast.success({
+                                        title: 'Success',
+                                        message: response.data.message,
+                                        position: 'topRight'
+                                    });
+                                    $this.find('input[type=checkbox]').each(function (t){
+                                        if($(this).is(':checked')){
+                                            $(this).closest('tr').fadeOut(100,function(){
+                                                $(this).remove();
+                                            });
+                                        }
+                                    });
+                                    $('#deleteall').fadeOut(300);
+                                }else{
+                                    iziToast.error({
+                                        title: 'Failed',
+                                        message: response.data.message,
+                                        position: 'topRight'
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+                });
+            });
         });
     </script>
 @endsection

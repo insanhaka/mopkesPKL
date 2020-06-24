@@ -16,7 +16,7 @@ class CreateSellersTable extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('nik');
+            $table->bigInteger('nik');
             $table->char('domisili_kec');
             $table->foreign('domisili_kec')->references('id')->on('districts');
             $table->char('domisili_desa');
@@ -34,10 +34,11 @@ class CreateSellersTable extends Migration
             $table->string('lapak_addr');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->unsignedBigInteger('kelompok_id');
+            $table->unsignedBigInteger('kelompok_id')->nullable();
             $table->foreign('kelompok_id')->references('id')->on('kelompoks');
             $table->string('product_specific');
             $table->string('waktu_jual');
+            $table->string('status_kelompok');
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

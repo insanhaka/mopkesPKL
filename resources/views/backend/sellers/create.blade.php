@@ -90,14 +90,14 @@
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('waktu_jualan', 'Waktu Jualan') !!}
                                 <div class="col-lg-4 pl-0">
-                                    {!! Form::select('waktu_jual', ['0'=>'Pagi','1'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                    {!! Form::select('waktu_jual', ['Pagi'=>'Pagi','Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
                                 </div>
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('menu_kelompok', 'Anggota Kelompok?') !!}
                                 <div class="col-lg-4 pl-0">
                                     {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
-                                    <select class="form-control" id="menu_kelompok" name="menu_kelompok" onchange="menukelompok()">
+                                    <select class="form-control" id="status_kelompok" name="status_kelompok" onchange="menukelompok()">
                                         <option value="Tidak">Tidak</option>
                                         <option value="Ya">Ya</option>
                                     </select>
@@ -132,7 +132,7 @@
     <script>
         $(document).ready(function(){
             $(".selectku").select2();
-            // SAVE
+            //SAVE
             $.validator.setDefaults({
                 submitHandler: function () {
                     var $this = $('form#simpan');
@@ -142,6 +142,7 @@
                         data : $this.serialize(),
                         dataType: 'json',
                         success:function(response){
+                            console.log(response.data.status);
                             if(response.data.status){
                                 url = APP_URL_ADMIN +'/seller';
                                 history.pushState(null, null, url);
@@ -168,7 +169,7 @@
 
     <script>
         function menukelompok() {
-            var i = document.getElementById("menu_kelompok").value;
+            var i = document.getElementById("status_kelompok").value;
             // console.log(i);
             if(i === "Ya"){
                 $('#select_kelompok').removeClass("select-kelompokhide");
