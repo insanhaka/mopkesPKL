@@ -29,10 +29,10 @@
                         <table class="table table-striped dt-responsive" id="simpledatatable">
                             <thead>
                                 <tr>
-                                    {{-- <th class="text-center no-sort" width="50px">
+                                    <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
-                                    </th> --}}
-                                    <th>No.</th>
+                                    </th>
+                                    {{-- <th>No.</th> --}}
                                     <th>Nama Pihak Yang Menyetujui</th>
                                     <th>Kelompok / Individu</th>
                                     <th>Bukti</th>
@@ -43,8 +43,8 @@
                             <tbody>
                                 @foreach ($agreements as $data)
                                 <tr>
-                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
-                                    <td>{{$loop->iteration}}</td>
+                                    <td>{!! GHelper::cbDelete($data->id); !!}</td>
+                                    {{-- <td>{{$loop->iteration}}</td> --}}
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->status !!}</td>
                                     <td><a href="{{asset('agreement_file/'.$data->attachment)}}" alt="Image description" target="_blank" style="display: inline-block; width: 100%; height: 100%;">Preview</a></td>
@@ -64,12 +64,6 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
@@ -92,7 +86,7 @@
     {!! Html::script('assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') !!}
     {!! Html::script('js/pages/datatables-init.js') !!}
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         @if ($message = Session::get('success'))
             iziToast.success({
                         title: 'Success',
@@ -100,15 +94,12 @@
                         position: 'topRight'
                     });
             @endif
-    </script>
+    </script> --}}
 
 
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            $('#simpledatatable').DataTable( {
-                "pagingType": "full_numbers"
-            } );
             $('#simpledatatable').on('click','.btn-hapus',function(e){
                 e.preventDefault();
                 var $this =$(this);
@@ -119,7 +110,7 @@
                             type: 'POST',
                             data: {
                                 'id' : $this.attr('data-id'),
-                                '_token' : ''
+                                '_token' : '{{csrf_token()}}'
                             },
                             success: function(response) {
                                 if(response){
@@ -145,45 +136,45 @@
                 });
             });
 
-            Hapus Semua
-            $('#form-delete').on('submit',function(e){
-                e.preventDefault();
-                var $this = $(this);
-                bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
-                    if(confirm){
-                        $.ajax({
-                            url : $this.attr('action') + '/delete',
-                            type : 'POST',
-                            data : $this.serialize(),
-                            success:function(response){
-                                // console.log(response);
-                                if(response.data.status){
-                                    iziToast.success({
-                                        title: 'Success',
-                                        message: response.data.message,
-                                        position: 'topRight'
-                                    });
-                                    $this.find('input[type=checkbox]').each(function (t){
-                                        if($(this).is(':checked')){
-                                            $(this).closest('tr').fadeOut(100,function(){
-                                                $(this).remove();
-                                            });
-                                        }
-                                    });
-                                    $('#deleteall').fadeOut(300);
-                                }else{
-                                    iziToast.error({
-                                        title: 'Failed',
-                                        message: response.data.message,
-                                        position: 'topRight'
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-                });
-            });
+            //Hapus Semua
+            // $('#form-delete').on('submit',function(e){
+            //     e.preventDefault();
+            //     var $this = $(this);
+            //     bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
+            //         if(confirm){
+            //             $.ajax({
+            //                 url : $this.attr('action') + '/delete',
+            //                 type : 'POST',
+            //                 data : $this.serialize(),
+            //                 success:function(response){
+            //                     // console.log(response);
+            //                     if(response.data.status){
+            //                         iziToast.success({
+            //                             title: 'Success',
+            //                             message: response.data.message,
+            //                             position: 'topRight'
+            //                         });
+            //                         $this.find('input[type=checkbox]').each(function (t){
+            //                             if($(this).is(':checked')){
+            //                                 $(this).closest('tr').fadeOut(100,function(){
+            //                                     $(this).remove();
+            //                                 });
+            //                             }
+            //                         });
+            //                         $('#deleteall').fadeOut(300);
+            //                     }else{
+            //                         iziToast.error({
+            //                             title: 'Failed',
+            //                             message: response.data.message,
+            //                             position: 'topRight'
+            //                         });
+            //                     }
+            //                 }
+            //             });
+            //         }
+            //     }
+            //     });
+            // });
         });
     </script>
 @endsection

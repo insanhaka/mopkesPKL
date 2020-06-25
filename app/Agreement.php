@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 class Agreement extends Model
 {
 
-    protected $table = "agreements";
+    // protected $table = "agreements";
 
-    protected $fillable = ['name','attachment', 'status'];
+    // protected $fillable = ['name','attachment', 'status'];
 
     protected $guarded = [];
     public static function boot()

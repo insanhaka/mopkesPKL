@@ -18,7 +18,7 @@
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.0",
         "ramsey/uuid": "^4.0",
-        "simplesoftwareio/simple-qrcode": "^3.0",
+        "simplesoftwareio/simple-qrcode": "~3",
         "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {

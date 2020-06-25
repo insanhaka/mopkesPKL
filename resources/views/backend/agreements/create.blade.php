@@ -65,7 +65,7 @@
 {!! Html::script('assets/vendors/select2/dist/js/select2.min.js') !!}
 {!! Html::script('assets/vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js') !!}
 {!! Html::script('js/pages/validate-init.js') !!}
-    <script type="text/javascript">
+    <script>
         $(document).ready(function(){
 
             // @if ($message = Session::get('success'))
@@ -82,13 +82,15 @@
             $(".select2").select2();
             // SAVE
             $.validator.setDefaults({
-                submitHandler: function () {
-                    var $this = $('form#simpan');
-                    console.log($this.serialize());
+                submitHandler: function (e) {
+                    e.preventDefault();
+                    // var $this = $('form#simpan');
+                    var dataku = new FormData($(this)[0]);
+                    console.log(dataku);
                     $.ajax({
                         url : $this.attr('action'),
                         type : 'POST',
-                        data : $this.serialize(),
+                        data : dataku,
                         dataType: 'json',
                         success:function(response){
                             console.log(response.data.status);

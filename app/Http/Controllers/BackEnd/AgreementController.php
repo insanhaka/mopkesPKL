@@ -42,7 +42,7 @@ class AgreementController extends Controller
     {
 
         $data_kelompok = $request->menu_kelompok;
-        // dd($data_kelompok);
+        // dd($request->all());
 
         $this->validate($request, [
 			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
@@ -72,18 +72,17 @@ class AgreementController extends Controller
                 'name' => $request->name,
             ]);
             // $status = Agreement::create($request->all());
-            // if ($status) {
-            //     $data['status'] = true;
-            //     $data['message'] = "Data berhasil disimpan!!!";
-            // } else {
-            //     $data['status'] = false;
-            //     $data['message'] = "Data gagal disimpan!!!";
-            // }
+            if ($status) {
+                $data['status'] = true;
+                $data['message'] = "Data berhasil disimpan!!!";
+            } else {
+                $data['status'] = false;
+                $data['message'] = "Data gagal disimpan!!!";
+            }
 
-            // return response()->json(['code' => 200,'data' => $data], 200);
-            return back()->with('success','Data Berhasil Disimpan');
+            return response()->json(['code' => 200,'data' => $data], 200);
+            // return back()->with('success','Data Berhasil Disimpan');
             // $agreements = Agreement::all();
-            // return view('backend.agreements.index', compact('agreements'))->with('oke');
 
         } else {
 
@@ -102,16 +101,16 @@ class AgreementController extends Controller
                 'name' => $request->name,
             ]);
             // $status = Agreement::create($request->all());
-            // if ($status) {
-            //     $data['status'] = true;
-            //     $data['message'] = "Data berhasil disimpan!!!";
-            // } else {
-            //     $data['status'] = false;
-            //     $data['message'] = "Data gagal disimpan!!!";
-            // }
+            if ($input) {
+                $data['status'] = true;
+                $data['message'] = "Data berhasil disimpan!!!";
+            } else {
+                $data['status'] = false;
+                $data['message'] = "Data gagal disimpan!!!";
+            }
 
-            // return response()->json(['code' => 200,'data' => $data], 200);
-            return back()->with('success','Data Berhasil Disimpan');
+            return response()->json(['code' => 200,'data' => $data], 200);
+            // return back()->with('success','Data Berhasil Disimpan');
             // $agreements = Agreement::all();
             // return view('backend.agreements.index', compact('agreements'))->with('oke');
 
