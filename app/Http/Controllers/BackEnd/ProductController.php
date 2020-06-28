@@ -86,7 +86,7 @@ class ProductController extends Controller
         return response()->json(['code' => 200,'data' => $data], 200);
     }
 
-    public function delete(Request $request)
+   public function delete(Request $request)
     {
         $ids = $request->id;
         if (is_array($ids)) {

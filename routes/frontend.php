@@ -1,4 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
-// Route::get('/sqrcode/{nik}', 'QrcodeController@sqrcode');
+Route::get('/qrcode/{nik}', 'ReportController@preview');
+Route::get('/laporan/{id}', 'ReportController@laporanform');

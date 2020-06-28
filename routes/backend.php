@@ -11,7 +11,6 @@ Route::get('/login', function () {
 })->name('admin.login');
 Route::post('/login', 'LoginController@doLogin')->name('admin.dologin');
 
-
 Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
@@ -61,3 +60,8 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
         return response()->json(['code' => 200,'data' => $arrVillages], 200);
     })->name('getvillagesfromdistrict');
 });
+
+Route::resource('report', 'ReportController');
+Route::post('report/delete', 'ReportController@delete')->name('report.delete');
+
+// Route::get('/qrcode', 'ReportController@preview');
