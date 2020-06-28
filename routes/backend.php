@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
     Route::get('/agreement/{id}/delete', 'AgreementController@delete');
 
+    Route::resource('report', 'ReportController');
+    Route::post('report/delete', 'ReportController@delete')->name('report.delete');
+
     Route::match(['get', 'post'],'/logout','LoginController@doLogout')->name('logout');
 
     Route::post('/getRegenciesFromProvince', function (Request $request) {
@@ -60,8 +63,5 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
         return response()->json(['code' => 200,'data' => $arrVillages], 200);
     })->name('getvillagesfromdistrict');
 });
-
-Route::resource('report', 'ReportController');
-Route::post('report/delete', 'ReportController@delete')->name('report.delete');
 
 // Route::get('/qrcode', 'ReportController@preview');

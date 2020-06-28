@@ -35,6 +35,7 @@
                                     <th>Seller Name</th>
                                     <th>NIK</th>
                                     <th>Report's About</th>
+                                    <th>Preview</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
@@ -42,7 +43,10 @@
                                 @foreach ($reports as $data)
                                 <tr>
                                     <td>{!! GHelper::cbDelete($data->id); !!}</td>
-                                    {{-- Add Something Here --}}
+                                    <td>{!! $data->seller->name !!}</td>
+                                    <td>{!! $data->seller->nik !!}</td>
+                                    <td>{!! $data->about !!}</td>
+                                    <td>preview</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

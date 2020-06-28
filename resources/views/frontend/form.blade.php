@@ -19,7 +19,8 @@
     </div> --}}
     <img src="{{asset('assets/img/header-lapor-01.jpg')}}" style="width: 100%; height: auto;">
     <div class="container" style="margin-top: 5%;">
-    	<form>
+    	<form action="/kirim" method="POST">
+        {{ csrf_field() }}
     		@foreach($laporan as $data)
 			  <input type="text" class="form-control" name="nik_id" value="{!! $data->id !!}" style="visibility: hidden; margin-top: -5%;">
 			  <div class="form-group">

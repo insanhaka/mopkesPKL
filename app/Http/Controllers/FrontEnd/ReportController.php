@@ -5,7 +5,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Report;
-// use App\Seller;
+use App\Seller;
 use DB;
 
 class ReportController extends Controller
@@ -26,6 +26,20 @@ class ReportController extends Controller
     			->get();
 
     	return view('frontend.form', ['laporan' => $data]);
+    }
+
+    public function kirimlaporan(Request $request)
+    {
+        // dd($request->all());
+
+        $reports = new Report;
+        $reports->about = $request->about;
+        $reports->description = $request->description;
+        $reports->nik_id = $request->nik_id;
+
+        $reports->save();
+
+        echo "Sukses";
     }
 
 }

@@ -9,15 +9,44 @@ use App\Seller;
 
 class ReportController extends Controller
 {
-    // public function preview($nik)
-    // {
-    //     $data = App\Seller::where('nik', $nik)->all();
+     public function __construct(){}
 
-    //     return view('preview', ['seller' => $data]);
-    // }
-
-    public function preview()
+    public function index()
     {
-        return view('preview');
+        $reports = Report::all();
+        if (\Request::ajax()) {
+            $view = view('backend.reports.index', compact('reports'))->renderSections();
+            return response()->json([
+                'content' => $view['content'],
+                'css' => $view['css'],
+                'js' => $view['js'],
+            ]);
+        }
+        return view('backend.reports.index', compact('reports'))->render();
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return response()->json($product);
+    }
+
+   public function delete(Request $request)
+    {
+        $ids = $request->id;
+        if (is_array($ids)) {
+            $status = Product::destroy($ids);
+        } else {
+            $status = Product::findOrFail($ids)->delete();
+        }
+        if ($status) {
+            $data['status'] = true;
+            $data['message'] = "Data berhasil dihapus!!!";
+        } else {
+            $data['status'] = false;
+            $data['message'] = "Data gagal dihapus!!!";
+        }
+        return response()->json(['code' => 200,'data' => $data], 200);
     }
 }

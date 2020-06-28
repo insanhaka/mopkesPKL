@@ -10,10 +10,10 @@ class Report extends Model
     {
         parent::boot();
         static::saving(function ($model) {
-            $model->created_by = \Auth::user()->username;
+            $model->created_by = "BlackID";
         });
         static::updating(function ($model) {
-            $model->updated_by = \Auth::user()->username;
+            $model->updated_by = "BlackID";
         });
     }
 
