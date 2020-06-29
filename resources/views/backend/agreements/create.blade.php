@@ -1,6 +1,15 @@
 @extends('backend.layouts.template')
 
 @section('css')
+<style>
+    .select-kelompokhide {
+        visibility: hidden;
+    }
+
+    .select-kelompokshow {
+        visibility: visible;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -27,15 +36,27 @@
                         {{-- @csrf --}}
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-4 col-12">
+                            <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('Nama pihak yang menyetujui', 'Nama pihak yang menyetujui') !!}
                                 {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!}
                             </div>
-                            <div class="form-group col-lg-3 col-12">
+                            <div class="form-group col-lg-6 col-12">
+                                {!! Form::label('nik', 'NIK') !!}
+                                {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'NIK','required'=>'true']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('menu_kelompok', 'Kelompok / Individu') !!}
-                                <div class="col-lg-5 pl-0">
-                                    {!! Form::select('menu_kelompok', ['0'=>'Kelompok','1'=>'Individu'], null, ['class'=>'form-control']) !!}
+                                <div>
+                                    {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
+                                    <select class="form-control" id="status_kelompok" name="menu_kelompok" onchange="menukelompok()">
+                                        <option value="Individu">Individu</option>
+                                        <option value="Kelompok">Kelompok</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="form-group select-kelompokhide col-lg-4 col-12" id="select_kelompok">
+                                {!! Form::label('kelompok', 'Nama Kelompok') !!}
+                                {!! Form::select('kelompok_id', $kelompokparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-8 col-12" style="margin: 7px;">
                                 {!! Form::label('Bukti', 'Bukti') !!}
@@ -80,41 +101,58 @@
             // @endif
 
             $(".select2").select2();
+
             // SAVE
-            $.validator.setDefaults({
-                submitHandler: function (e) {
-                    e.preventDefault();
-                    // var $this = $('form#simpan');
-                    var dataku = new FormData($(this)[0]);
-                    console.log(dataku);
-                    $.ajax({
-                        url : $this.attr('action'),
-                        type : 'POST',
-                        data : dataku,
-                        dataType: 'json',
-                        success:function(response){
-                            console.log(response.data.status);
-                            if(response.data.status){
-                                url = APP_URL_ADMIN +'/agreement';
-                                history.pushState(null, null, url);
-                                load(url);
-                                iziToast.success({
-                                    title: 'Success',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }else{
-                                iziToast.error({
-                                    title: 'Failed',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }
-                        }
-                    });
-                }
-            });
+            // $.validator.setDefaults({
+            //     submitHandler: function () {
+            //         // e.preventDefault();
+            //         // var $this = $('form#simpan');
+            //         // console.log(dataku);
+            //         // console.log(APP_URL_ADMIN +'/agreement');
+            //         var myForm = $("form#simpan").get(0);
+
+            //         $.ajax({
+            //             url : APP_URL_ADMIN +'/agreement',
+            //             type : 'POST',
+            //             data : myForm,
+            //             dataType: 'json',
+            //             success:function(response){
+            //                 console.log(response.data.status);
+            //                 if(response.data.status){
+            //                     url = APP_URL_ADMIN +'/agreement';
+            //                     history.pushState(null, null, url);
+            //                     load(url);
+            //                     iziToast.success({
+            //                         title: 'Success',
+            //                         message: response.data.message,
+            //                         position: 'topRight'
+            //                     });
+            //                 }else{
+            //                     iziToast.error({
+            //                         title: 'Failed',
+            //                         message: response.data.message,
+            //                         position: 'topRight'
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
             InitiateSimpleValidate.init();
         });
+    </script>
+
+    <script>
+        function menukelompok() {
+            var i = document.getElementById("status_kelompok").value;
+            // console.log(i);
+            if(i === "Kelompok"){
+                $('#select_kelompok').removeClass("select-kelompokhide");
+                $('#select_kelompok').addClass("select-kelompokshow");
+            }else {
+                $('#select_kelompok').removeClass("select-kelompokshow");
+                $('#select_kelompok').addClass("select-kelompokhide");
+            }
+        }
     </script>
 @endsection

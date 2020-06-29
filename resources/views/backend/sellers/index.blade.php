@@ -29,9 +29,10 @@
                         <table class="table table-striped dt-responsive" id="simpledatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-center no-sort" width="50px">
+                                    {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
-                                    </th>
+                                    </th> --}}
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>NIK</th>
                                     <th>Alamat Domisili</th>
@@ -39,8 +40,8 @@
                                     <th>Alamat Lapak</th>
                                     <th>Produk</th>
                                     <th>Spesifik Produk</th>
-                                    {{-- <th>Waktu Jualan</th> --}}
-                                    {{-- <th>Kelompok</th> --}}
+                                    <th>Waktu Jualan</th>
+                                    <th>Kelompok</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
@@ -48,7 +49,8 @@
                             <tbody>
                                 @foreach ($sellers as $data)
                                 <tr>
-                                    <td>{!! GHelper::cbDelete($data->id); !!}</td>
+                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik !!}</td>
                                     <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
@@ -56,12 +58,12 @@
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
                                     <td>{!! $data->product->product_name !!}</td>
                                     <td>{!! $data->product_specific !!}</td>
-                                    {{-- <td>{!! $data->waktu_jual !!}</td> --}}
-                                    {{-- @if ($data->status_kelompok === "Ya")
+                                    <td>{!! $data->waktu_jual !!}</td>
+                                    @if ($data->status_kelompok === "Ya")
                                     <td>{!! $data->kelompok->name !!}</td>
                                     @else
                                     <td>Individu</td>
-                                    @endif --}}
+                                    @endif
                                     <td>
                                         <div class="visible-print text-center">
                                             {{-- <p>{!! $data->name !!}</p>
@@ -78,9 +80,6 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <button class="btn" type="button" style="color: #0984e3;">
-                                                    Download Qr Code
-                                                </button>
                                                 {!! GHelper::btnEdit($data->id) !!}
                                                 {!! GHelper::btnDelete($data->id) !!}
                                             </div>
@@ -135,8 +134,8 @@
     function showQr() {
         new QRCode(document.getElementById("qrcode"+ {!! $d->id !!}), {
             text : window.location.origin + "/qrcode/"+ {!! $d->nik !!},
-            width: 200,
-            height: 200,
+            width: 300,
+            height: 300,
             colorDark: "#000000",
             colorLight: "#ffffff",
 

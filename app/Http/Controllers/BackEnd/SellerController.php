@@ -9,6 +9,7 @@ use App\District;
 use App\Kelompok;
 use App\Product;
 use App\Village;
+use App\Agreement;
 
 class SellerController extends Controller
 {
@@ -16,7 +17,8 @@ class SellerController extends Controller
         $this->kecparent = District::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
         $this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->productparent = Product::where('product_name', 0)->orderBy('product_name', 'asc')->pluck('product_name', 'id')->prepend('Pilih Produk', 0);
-        $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
+        // $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
+        $this->nikparent = Agreement::where('nik', 0)->orderBy('nik', 'asc')->pluck('nik', 'id')->prepend('NIK', '');
     }
 
     public function index()
@@ -38,22 +40,25 @@ class SellerController extends Controller
         $kecparent = $this->kecparent;
         $desparent = $this->desparent;
         $productparent = $this->productparent;
-        $kelompokparent = $this->kelompokparent;
+        // $kelompokparent = $this->kelompokparent;
+        $nikparent = $this->nikparent;
         if (\Request::ajax()) {
-            $view = view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent', 'kelompokparent'))->renderSections();
+            $view = view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent', 'nikparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent', 'kelompokparent'))->render();
+        return view('backend.sellers.create', compact('kecparent', 'desparent', 'productparent', 'nikparent'))->render();
     }
 
     public function store(Request $request)
     {
 
         // dd($request->all());
+
+        // $datakelompok = Kelompok::find()
 
         $dataseller = new Seller;
         $dataseller->name = $request->name;

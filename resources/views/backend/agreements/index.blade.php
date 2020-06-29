@@ -29,12 +29,14 @@
                         <table class="table table-striped dt-responsive" id="simpledatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-center no-sort" width="50px">
+                                    {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
-                                    </th>
-                                    {{-- <th>No.</th> --}}
+                                    </th> --}}
+                                    <th>No.</th>
                                     <th>Nama Pihak Yang Menyetujui</th>
+                                    <th>NIK</th>
                                     <th>Kelompok / Individu</th>
+                                    <th>Nama Kelompok</th>
                                     <th>Bukti</th>
                                     <th>Display</th>
                                     <th>Act</th>
@@ -43,10 +45,16 @@
                             <tbody>
                                 @foreach ($agreements as $data)
                                 <tr>
-                                    <td>{!! GHelper::cbDelete($data->id); !!}</td>
-                                    {{-- <td>{{$loop->iteration}}</td> --}}
+                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
+                                    <td>{!! $data->nik !!}</td>
                                     <td>{!! $data->status !!}</td>
+                                    @if ($data->status === "Kelompok")
+                                    <td>{!! $data->kelompok->name !!}</td>
+                                    @else
+                                    <td>---</td>
+                                    @endif
                                     <td><a href="{{asset('agreement_file/'.$data->attachment)}}" alt="Image description" target="_blank" style="display: inline-block; width: 100%; height: 100%;">Preview</a></td>
                                     <td><img src="{{asset('agreement_file/'.$data->attachment)}}" class="card-img-top" style="width: 50px; height: 50px;" alt="..."></td>
                                     <td align="center">
@@ -86,57 +94,63 @@
     {!! Html::script('assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') !!}
     {!! Html::script('js/pages/datatables-init.js') !!}
 
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
         @if ($message = Session::get('success'))
             iziToast.success({
+                        title: 'Success',
+                        message: 'Data Berhasil Disimpan',
+                        position: 'topRight'
+                    });
+        @elseif ($message = Session::get('warning'))
+            iziToast.warning({
                         title: 'Success',
                         message: 'Data Berhasil Dihapus',
                         position: 'topRight'
                     });
-            @endif
-    </script> --}}
+        @endif
+    </script>
 
 
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            $('#simpledatatable').on('click','.btn-hapus',function(e){
-                e.preventDefault();
-                var $this =$(this);
-                bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-                    if (confirm) {
-                        $.ajax({
-                            url: $this.attr('data-url') + '/delete',
-                            type: 'POST',
-                            data: {
-                                'id' : $this.attr('data-id'),
-                                '_token' : '{{csrf_token()}}'
-                            },
-                            success: function(response) {
-                                if(response){
-                                    $this.closest('tr').fadeOut(300,function(){
-                                        $this.remove();
-                                    });
-                                    iziToast.success({
-                                        title: 'Success',
-                                        message: response.data.message,
-                                        position: 'topRight'
-                                    });
-                                }else{
-                                    iziToast.error({
-                                        title: 'Failed',
-                                        message: response.data.message,
-                                        position: 'topRight'
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-                });
-            });
+            // $('#simpledatatable').on('click','.btn-hapus',function(e){
+            //     e.preventDefault();
+            //     var $this =$(this);
+            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
+            //         if (confirm) {
+            //             $.ajax({
+            //                 url: $this.attr('data-url') + '/delete',
+            //                 type: 'POST',
+            //                 data: {
+            //                     'id' : $this.attr('data-id'),
+            //                     '_token' : '{{csrf_token()}}'
+            //                 },
+            //                 success: function(response) {
+            //                     if(response){
+            //                         $this.closest('tr').fadeOut(300,function(){
+            //                             $this.remove();
+            //                         });
+            //                         iziToast.success({
+            //                             title: 'Success',
+            //                             message: response.data.message,
+            //                             position: 'topRight'
+            //                         });
+            //                     }else{
+            //                         iziToast.error({
+            //                             title: 'Failed',
+            //                             message: response.data.message,
+            //                             position: 'topRight'
+            //                         });
+            //                     }
+            //                 }
+            //             });
+            //         }
+            //     }
+            //     });
+            // });
 
-            //Hapus Semua
+            // //Hapus Semua
             // $('#form-delete').on('submit',function(e){
             //     e.preventDefault();
             //     var $this = $(this);

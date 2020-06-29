@@ -21,4 +21,9 @@ class Kelompok extends Model
     {
         return $this->hasMany('App\Seller', 'product_id', 'id');
     }
+
+    public function agreement()
+    {
+        return $this->hasMany('App\Agreement', 'kelompok_id', 'id');
+    }
 }

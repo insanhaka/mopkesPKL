@@ -34,7 +34,8 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::post('permission/delete', 'PermissionController@delete')->name('permission.delete');
 
     Route::resource('product', 'ProductController');
-    Route::post('product/delete', 'ProductController@delete')->name('product.delete');
+    // Route::post('product/delete', 'ProductController@delete')->name('product.delete');
+    Route::get('/product/{id}/delete', 'ProductController@delete');
 
     Route::resource('seller', 'SellerController');
     Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
@@ -45,6 +46,10 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
 
     Route::resource('report', 'ReportController');
     Route::post('report/delete', 'ReportController@delete')->name('report.delete');
+
+    Route::resource('kelompok', 'KelompokController');
+    // Route::post('kelompok/delete', 'KelompokController@delete')->name('kelompok.delete');
+    Route::get('/kelompok/{id}/delete', 'KelompokController@delete');
 
     Route::match(['get', 'post'],'/logout','LoginController@doLogout')->name('logout');
 

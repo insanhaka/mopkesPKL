@@ -16,7 +16,8 @@ class CreateSellersTable extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('nik');
+            $table->foreign('nik_id')->references('id')->on('agreements')->onDelete('cascade');
+            $table->unsignedBigInteger('nik_id');
             $table->char('domisili_kec');
             $table->foreign('domisili_kec')->references('id')->on('districts');
             $table->char('domisili_desa');
@@ -33,9 +34,9 @@ class CreateSellersTable extends Migration
             $table->foreign('lapak_desa')->references('id')->on('villages');
             $table->string('lapak_addr');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('kelompok_id')->nullable();
-            $table->foreign('kelompok_id')->references('id')->on('kelompoks');
+            $table->foreign('kelompok_id')->references('id')->on('kelompoks')->onDelete('cascade');
             $table->string('product_specific');
             $table->string('waktu_jual');
             $table->string('status_kelompok');

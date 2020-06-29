@@ -6,7 +6,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Product</h1>
+        <h1>Kelompok</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -17,17 +17,17 @@
     <div class="section-body">
         <h2 class="section-title">Form</h2>
         <p class="section-lead">
-            Form untuk menambah <b>product</b>
+            Form untuk menambah <b>kelompok</b>
         </p>
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!!Form::open(['route'=>'admin.product.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
+                    {!!Form::open(['route'=>'admin.kelompok.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('product_name', 'Jenis Produk') !!}
-                                {!! Form::text('product_name', null ,['id'=>'product_name','class'=>'form-control','placeholder'=>'Tulis Jenis Produk','required'=>'true']) !!}
+                                {!! Form::label('kelompok_name', 'Nama Kelompok') !!}
+                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Tulis Nama Kelompok','required'=>'true']) !!}
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         dataType: 'json',
                         success:function(response){
                             if(response.data.status){
-                                url = APP_URL_ADMIN +'/product';
+                                url = APP_URL_ADMIN +'/kelompok';
                                 history.pushState(null, null, url);
                                 load(url);
                                 iziToast.success({

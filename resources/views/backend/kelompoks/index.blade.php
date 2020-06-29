@@ -8,7 +8,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Product</h1>
+        <h1>Kelompok</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -19,7 +19,7 @@
     <div class="section-body">
         <h2 class="section-title">List</h2>
         <p class="section-lead">
-            Daftar <b>product</b>.
+            Daftar <b>kelompok</b>.
         </p>
         <div class="row">
             <div class="col-12">
@@ -33,16 +33,16 @@
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
                                     <th>No</th>
-                                    <th>Jenis Product</th>
+                                    <th>Nama Kelompok</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $data)
+                                @foreach ($kelompoks as $data)
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{!! $data->product_name !!}</td>
+                                    <td>{!! $data->name !!}</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,6 +57,12 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
@@ -94,59 +100,19 @@
             //                     '_token' : '{{csrf_token()}}'
             //                 },
             //                 success: function(response) {
-            //                     if(response){
+            //                     if(response.data.status){
             //                         $this.closest('tr').fadeOut(300,function(){
             //                             $this.remove();
             //                         });
             //                         iziToast.success({
             //                             title: 'Success',
-            //                             message: response.data.message,
+            //                             message: 'Data berhasil dihapus',
             //                             position: 'topRight'
             //                         });
             //                     }else{
             //                         iziToast.error({
             //                             title: 'Failed',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
-
-            // Hapus Semua
-            // $('#form-delete').on('submit',function(e){
-            //     e.preventDefault();
-            //     var $this = $(this);
-            //     bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
-            //         if(confirm){
-            //             $.ajax({
-            //                 url : $this.attr('action') + '/delete',
-            //                 type : 'POST',
-            //                 data : $this.serialize(),
-            //                 success:function(response){
-            //                     // console.log(response);
-            //                     if(response.data.status){
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                         $this.find('input[type=checkbox]').each(function (t){
-            //                             if($(this).is(':checked')){
-            //                                 $(this).closest('tr').fadeOut(100,function(){
-            //                                     $(this).remove();
-            //                                 });
-            //                             }
-            //                         });
-            //                         $('#deleteall').fadeOut(300);
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: response.data.message,
+            //                             message: 'Data gagal dihapus',
             //                             position: 'topRight'
             //                         });
             //                     }

@@ -21,4 +21,14 @@ class Agreement extends Model
             $model->updated_by = \Auth::user()->username;
         });
     }
+
+    public function kelompok()
+    {
+        return $this->belongsTo('App\Kelompok', 'kelompok_id', 'id');
+    }
+
+    public function seller()
+    {
+        return $this->hasMany('App\Seller', 'nik_id', 'id');
+    }
 }

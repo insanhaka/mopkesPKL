@@ -35,13 +35,13 @@
                     {!!Form::open(['route'=>'admin.seller.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-8 col-12">
-                                {!! Form::label('nama', 'Nama') !!}
-                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
+                            <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('nik', 'NIK') !!}
-                                {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'nik','required'=>'true']) !!}
+                                {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'NIK','required'=>'true']) !!}
+                            </div>
+                            <div class="form-group col-lg-6 col-12">
+                                {!! Form::label('name', 'Nama') !!}
+                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilikec', 'Domisili (Kecamatan)') !!}
@@ -92,20 +92,6 @@
                                 <div class="col-lg-4 pl-0">
                                     {!! Form::select('waktu_jual', ['Pagi'=>'Pagi','Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
                                 </div>
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('menu_kelompok', 'Anggota Kelompok?') !!}
-                                <div class="col-lg-4 pl-0">
-                                    {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
-                                    <select class="form-control" id="status_kelompok" name="status_kelompok" onchange="menukelompok()">
-                                        <option value="Tidak">Tidak</option>
-                                        <option value="Ya">Ya</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group select-kelompokhide col-lg-4 col-12" id="select_kelompok">
-                                {!! Form::label('kelompok', 'Nama Kelompok') !!}
-                                {!! Form::select('kelompok_id', $kelompokparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                         </div>
                     </div>
