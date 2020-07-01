@@ -17,8 +17,8 @@ class Report extends Model
         });
     }
 
-    public function seller()
+    public function pengusaha()
     {
-        return $this->belongsTo('App\Seller', 'nik_id', 'id');
+        return $this->belongsTo('App\Pengusaha', 'nik_id', 'id');
     }
 }

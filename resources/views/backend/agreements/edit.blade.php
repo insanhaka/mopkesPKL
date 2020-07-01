@@ -43,10 +43,10 @@
                                 {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'NIK','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('menu_kelompok', 'Kelompok / Individu (*)') !!}
+                                {!! Form::label('menu_communities', 'Kelompok / Individu (*)') !!}
                                 <div>
                                     {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
-                                    <select class="form-control" id="status_kelompok" name="menu_kelompok" onchange="menukelompok()">
+                                    <select class="form-control" id="status_kelompok" name="menu_communities" onchange="menukelompok()">
                                         <option value="Individu">Individu</option>
                                         <option value="Kelompok">Kelompok</option>
                                     </select>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group select-kelompokhide col-lg-4 col-12" id="select_kelompok">
                                 {!! Form::label('kelompok', 'Nama Kelompok (*)') !!}
-                                {!! Form::select('kelompok_id', $kelompokparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('community_id', $communitiesparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-8 col-12" style="margin: 7px;">
                                 {!! Form::label('bukti', 'Bukti (*)') !!}

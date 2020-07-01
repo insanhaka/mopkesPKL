@@ -6,7 +6,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Kelompok</h1>
+        <h1>Sektor</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -17,17 +17,17 @@
     <div class="section-body">
         <h2 class="section-title">Form</h2>
         <p class="section-lead">
-            Form untuk edit <b>kelompok</b>
+            Form untuk edit <b>sektor</b>
         </p>
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!! Form::model($kelompok, ['route' => ['admin.kelompok.update', $kelompok->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
+                    {!! Form::model($sector, ['route' => ['admin.sector.update', $sector->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('kelompok_name', 'Nama Kelompok') !!}
-                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Tulis Nama Kelompok','required'=>'true']) !!}
+                        <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('sector_name', 'Nama Produk') !!}
+                                {!! Form::text('sector_name', null ,['id'=>'sector_name','class'=>'form-control','placeholder'=>'Nama Produk','required'=>'true']) !!}
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     success:function(response){
                         console.log(response);
                         if(response.data.status){
-                            url = APP_URL_ADMIN+'/kelompok';
+                            url = APP_URL_ADMIN+'/sector';
                             history.pushState(null, null, url);
                             load(url);
                             iziToast.success({

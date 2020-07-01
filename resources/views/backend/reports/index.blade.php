@@ -29,10 +29,11 @@
                         <table class="table table-striped dt-responsive" id="simpledatatable">
                             <thead>
                                 <tr>
-                                    <th class="text-center no-sort" width="50px">
+                                    {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
-                                    </th>
-                                    <th>Seller Name</th>
+                                    </th> --}}
+                                    <th>No</th>
+                                    <th>Name</th>
                                     <th>NIK</th>
                                     <th>Report's About</th>
                                     <th>Preview</th>
@@ -42,11 +43,16 @@
                             <tbody>
                                 @foreach ($reports as $data)
                                 <tr>
-                                    <td>{!! GHelper::cbDelete($data->id); !!}</td>
-                                    <td>{!! $data->seller->name !!}</td>
-                                    <td>{!! $data->seller->nik !!}</td>
+                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{!! $data->pengusaha->name !!}</td>
+                                    <td>{!! $data->pengusaha->nik_id !!}</td>
                                     <td>{!! $data->about !!}</td>
-                                    <td>preview</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                            Baca Laporan
+                                        </button>
+                                    </td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,6 +87,28 @@
         </div>
     </div>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        @foreach ($reports as $d)
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{!! $d->about !!}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {!! $d->description !!}
+        </div>
+        @endforeach
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('js')
@@ -88,44 +116,62 @@
     {!! Html::script('assets/vendors/datatables/media/js/jquery.dataTables.responsive.min.js') !!}
     {!! Html::script('assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') !!}
     {!! Html::script('js/pages/datatables-init.js') !!}
+
+
+    <script type="text/javascript">
+        @if ($message = Session::get('success'))
+            iziToast.success({
+                        title: 'Success',
+                        message: 'Data Berhasil Disimpan',
+                        position: 'topRight'
+                    });
+        @elseif ($message = Session::get('warning'))
+            iziToast.warning({
+                        title: 'Success',
+                        message: 'Data Berhasil Dihapus',
+                        position: 'topRight'
+                    });
+        @endif
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            $('#simpledatatable').on('click','.btn-hapus',function(e){
-                e.preventDefault();
-                var $this =$(this);
-                bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-                    if (confirm) {
-                        $.ajax({
-                            url: $this.attr('data-url') + '/delete',
-                            type: 'POST',
-                            data: {
-                                'id' : $this.attr('data-id'),
-                                '_token' : '{{csrf_token()}}'
-                            },
-                            success: function(response) {
-                                if(response.data.status){
-                                    $this.closest('tr').fadeOut(300,function(){
-                                        $this.remove();
-                                    });
-                                    iziToast.success({
-                                        title: 'Success',
-                                        message: 'Data berhasil dihapus',
-                                        position: 'topRight'
-                                    });
-                                }else{
-                                    iziToast.error({
-                                        title: 'Failed',
-                                        message: 'Data gagal dihapus',
-                                        position: 'topRight'
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-                });
-            });
+            // $('#simpledatatable').on('click','.btn-hapus',function(e){
+            //     e.preventDefault();
+            //     var $this =$(this);
+            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
+            //         if (confirm) {
+            //             $.ajax({
+            //                 url: $this.attr('data-url') + '/delete',
+            //                 type: 'POST',
+            //                 data: {
+            //                     'id' : $this.attr('data-id'),
+            //                     '_token' : '{{csrf_token()}}'
+            //                 },
+            //                 success: function(response) {
+            //                     if(response.data.status){
+            //                         $this.closest('tr').fadeOut(300,function(){
+            //                             $this.remove();
+            //                         });
+            //                         iziToast.success({
+            //                             title: 'Success',
+            //                             message: 'Data berhasil dihapus',
+            //                             position: 'topRight'
+            //                         });
+            //                     }else{
+            //                         iziToast.error({
+            //                             title: 'Failed',
+            //                             message: 'Data gagal dihapus',
+            //                             position: 'topRight'
+            //                         });
+            //                     }
+            //                 }
+            //             });
+            //         }
+            //     }
+            //     });
+            // });
         });
     </script>
 @endsection

@@ -6,7 +6,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Seller</h1>
+        <h1>Kelompok</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -17,15 +17,26 @@
     <div class="section-body">
         <h2 class="section-title">Form</h2>
         <p class="section-lead">
-            Form untuk edit <b>seller</b>
+            Form untuk edit <b>kelompok</b>
         </p>
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!! Form::model($seller, ['route' => ['admin.seller.update', $seller->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
+                    {!! Form::model($communities, ['route' => ['admin.communities.update', $communities->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
                     <div class="card-body">
                         <div class="row">
-                            {{-- Add Something Here --}}
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('communities_name', 'Nama Kelompok') !!}
+                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Tulis Nama Kelompok','required'=>'true']) !!}
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('chairman_name', 'Nama Ketua') !!}
+                                {!! Form::text('chairman_name', null ,['id'=>'chairman_name','class'=>'form-control','placeholder'=>'Nama Ketua']) !!}
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('chairman_nik', 'NIK Ketua') !!}
+                                {!! Form::text('chairman_nik', null ,['id'=>'chairman_nik','class'=>'form-control','placeholder'=>'NIK Ketua']) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer border-top">
@@ -60,7 +71,7 @@
                     success:function(response){
                         console.log(response);
                         if(response.data.status){
-                            url = APP_URL_ADMIN+'/seller';
+                            url = APP_URL_ADMIN+'/communities';
                             history.pushState(null, null, url);
                             load(url);
                             iziToast.success({

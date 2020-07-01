@@ -37,10 +37,10 @@
       <p>Kategori bidang usaha :</p>
       <div class="row" style="margin-top: -3%;">
         <div class="col-1"><img src="{{asset('assets/img/list.png')}}" style="width: 20px;"></div>
-        <div class="col-10">{!! $data->product_name !!}</div>
+        <div class="col-10">{!! $data->sector_name !!}</div>
       </div>
       <hr>
-    
+
       <div class="lapor text-center">
         <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
       </div>

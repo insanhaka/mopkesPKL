@@ -51,7 +51,7 @@
                                     <td>{!! $data->nik !!}</td>
                                     <td>{!! $data->status !!}</td>
                                     @if ($data->status === "Kelompok")
-                                    <td>{!! $data->kelompok->name !!}</td>
+                                    <td>{!! $data->community->name !!}</td>
                                     @else
                                     <td>---</td>
                                     @endif

@@ -34,15 +34,19 @@
                                     </th> --}}
                                     <th>No</th>
                                     <th>Nama Kelompok</th>
+                                    <th>Nama Ketua</th>
+                                    <th>NIK Ketua</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kelompoks as $data)
+                                @foreach ($communities as $data)
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
+                                    <td>{!! $data->chairman_name !!}</td>
+                                    <td>{!! $data->chairman_nik !!}</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

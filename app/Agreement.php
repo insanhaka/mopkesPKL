@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 class Agreement extends Model
 {
 
-    // protected $table = "agreements";
-
-    // protected $fillable = ['name','attachment', 'status'];
-
     protected $guarded = [];
     public static function boot()
     {
@@ -22,13 +18,13 @@ class Agreement extends Model
         });
     }
 
-    public function kelompok()
+    public function community()
     {
-        return $this->belongsTo('App\Kelompok', 'kelompok_id', 'id');
+        return $this->belongsTo('App\Community', 'community_id', 'id');
     }
 
-    public function seller()
+    public function business()
     {
-        return $this->hasMany('App\Seller', 'nik_id', 'id');
+        return $this->hasMany('App\Business', 'nik_id', 'id');
     }
 }

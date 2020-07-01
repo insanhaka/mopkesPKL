@@ -3,7 +3,7 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
-class Kelompok extends Model
+class Community extends Model
 {
     protected $guarded = [];
     public static function boot()
@@ -17,13 +17,13 @@ class Kelompok extends Model
         });
     }
 
-    public function seller()
+    public function business()
     {
-        return $this->hasMany('App\Seller', 'product_id', 'id');
+        return $this->hasMany('App\Bussiness', 'community_id', 'id');
     }
 
     public function agreement()
     {
-        return $this->hasMany('App\Agreement', 'kelompok_id', 'id');
+        return $this->hasMany('App\Agreement', 'community_id', 'id');
     }
 }

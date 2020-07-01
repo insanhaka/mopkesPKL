@@ -3,7 +3,7 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Sector extends Model
 {
     protected $guarded = [];
     public static function boot()
@@ -19,6 +19,6 @@ class Product extends Model
 
     public function seller()
     {
-        return $this->hasMany('App\Seller', 'product_id', 'id');
+        return $this->hasMany('App\Seller', 'sector_id', 'id');
     }
 }

@@ -16,11 +16,11 @@ class CreateAgreementsTable extends Migration
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('nik', 20);
+            $table->bigInteger('nik');
             $table->string('attachment', 100);
             $table->string('status', 20);
-            $table->unsignedBigInteger('kelompok_id')->nullable();
-            $table->foreign('kelompok_id')->references('id')->on('kelompoks')->onDelete('cascade');
+            $table->unsignedBigInteger('community_id')->nullable();
+            $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

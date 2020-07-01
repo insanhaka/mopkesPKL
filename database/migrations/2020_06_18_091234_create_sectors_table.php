@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKelompoksTable extends Migration
+class CreateSectorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateKelompoksTable extends Migration
      */
     public function up()
     {
-        Schema::create('kelompoks', function (Blueprint $table) {
+        Schema::create('sectors', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
+            $table->string('sector_name', 100);
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateKelompoksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelompoks');
+        Schema::dropIfExists('sectors');
     }
 }

@@ -8,7 +8,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Product</h1>
+        <h1>Sektor</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -19,7 +19,7 @@
     <div class="section-body">
         <h2 class="section-title">List</h2>
         <p class="section-lead">
-            Daftar <b>product</b>.
+            Daftar <b>sektor</b>.
         </p>
         <div class="row">
             <div class="col-12">
@@ -33,16 +33,16 @@
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
                                     <th>No</th>
-                                    <th>Jenis Product</th>
+                                    <th>Jenis Sektor</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $data)
+                                @foreach ($sectors as $data)
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{!! $data->product_name !!}</td>
+                                    <td>{!! $data->sector_name !!}</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

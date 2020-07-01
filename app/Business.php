@@ -3,8 +3,10 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
-class Seller extends Model
+class Business extends Model
 {
+    protected $table = 'business';
+
     protected $guarded = [];
     public static function boot()
     {
@@ -17,9 +19,9 @@ class Seller extends Model
         });
     }
 
-    public function product()
+    public function sector()
     {
-        return $this->belongsTo('App\Product', 'product_id', 'id');
+        return $this->belongsTo('App\Sector', 'sector_id', 'id');
     }
 
     public function report()
@@ -27,9 +29,9 @@ class Seller extends Model
         return $this->hasMany('App\Report', 'nik_id', 'id');
     }
 
-    public function kelompok()
+    public function community()
     {
-        return $this->belongsTo('App\Kelompok', 'kelompok_id', 'id');
+        return $this->belongsTo('App\Community', 'community_id', 'id');
     }
 
     public function agreement()

@@ -2,21 +2,12 @@
 
 @section('css')
 {!! Html::style('assets/vendors/select2/dist/css/select2.min.css') !!}
-<style>
-    .select-kelompokhide {
-        visibility: hidden;
-    }
-
-    .select-kelompokshow {
-        visibility: visible;
-    }
-</style>
 @endsection
 
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Seller</h1>
+        <h1>Pengusaha</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">{!! Html::decode(GHelper::breadcrumb('dashboard')) !!}</div>
             <div class="breadcrumb-item">{!! GHelper::breadcrumb('menu') !!}</div>
@@ -27,21 +18,29 @@
     <div class="section-body">
         <h2 class="section-title">Form</h2>
         <p class="section-lead">
-            Form untuk menambah <b>seller</b>
+            Form untuk edit <b>pengusaha</b>
         </p>
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!!Form::open(['route'=>'admin.seller.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
+                    {!! Form::model($business, ['route' => ['admin.business.update', $business->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-6 col-12">
-                                {!! Form::label('nik', 'NIK') !!}
-                                {!! Form::text('nik', null ,['id'=>'nik','class'=>'form-control','placeholder'=>'NIK','required'=>'true']) !!}
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('nik_id', 'NIK (*)') !!}
+                                <div>
+                                    {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
+                                    <select class="form-control selectku" id="selected_nik" name="nik_id" onchange="nik()">
+                                        @foreach ($nikparent as $item)
+                                        <option value="{!! $item !!}">{!! $item !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('name', 'Nama') !!}
-                                {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!}
+                                {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
+                                <input class="form-control" type="text" id="name" name="name" readonly value="{!!$business->name!!}">
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilikec', 'Domisili (Kecamatan)') !!}
@@ -80,8 +79,8 @@
                                 {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('product', 'Jenis produk') !!}
-                                {!! Form::select('product_id', $productparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::label('sector', 'Jenis produk') !!}
+                                {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('spesifikproduk', 'Spesifik Jenis Produk') !!}
@@ -94,6 +93,7 @@
                                 </div>
                             </div>
                         </div>
+                        <p style="margin-top: 10%; font-size: 12px; color: #e84118;">Tanda (*) wajib di input ulang</p>
                     </div>
                     <div class="card-footer border-top">
                         <div class="row">
@@ -115,55 +115,71 @@
 {!! Html::script('assets/vendors/select2/dist/js/select2.min.js') !!}
 {!! Html::script('assets/vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js') !!}
 {!! Html::script('js/pages/validate-init.js') !!}
-    <script>
-        $(document).ready(function(){
-            $(".selectku").select2();
-            //SAVE
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    var $this = $('form#simpan');
-                    $.ajax({
-                        url : $this.attr('action'),
-                        type : 'POST',
-                        data : $this.serialize(),
-                        dataType: 'json',
-                        success:function(response){
-                            console.log(response.data.status);
-                            if(response.data.status){
-                                url = APP_URL_ADMIN +'/seller';
-                                history.pushState(null, null, url);
-                                load(url);
-                                iziToast.success({
-                                    title: 'Success',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }else{
-                                iziToast.error({
-                                    title: 'Failed',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-            InitiateSimpleValidate.init();
-        });
-    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
     <script>
-        function menukelompok() {
-            var i = document.getElementById("status_kelompok").value;
-            // console.log(i);
-            if(i === "Ya"){
-                $('#select_kelompok').removeClass("select-kelompokhide");
-                $('#select_kelompok').addClass("select-kelompokshow");
-            }else {
-                $('#select_kelompok').removeClass("select-kelompokshow");
-                $('#select_kelompok').addClass("select-kelompokhide");
-            }
+
+        function nik() {
+            var x = document.getElementById("selected_nik").value;
+
+            // Make a request for a user with a given ID
+            axios.get('/api/data-agreement')
+            .then(function (response) {
+                var val = response.data.value;
+
+                for (var n in val) {
+                    if (val[n].nik == x){
+                        document.getElementById("name").value=val[n].name;
+                    }
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+
         }
+
     </script>
+
+
+<script>
+    $(document).ready(function(){
+        $(".selectku").select2();
+        // SAVE
+        $.validator.setDefaults({
+            submitHandler: function () {
+                var $this = $('form#simpan');
+                $.ajax({
+                    url : $this.attr('action'),
+                    type : 'PUT',
+                    data : $this.serialize(),
+                    success:function(response){
+                        console.log(response);
+                        if(response.data.status){
+                            url = APP_URL_ADMIN+'/business';
+                            history.pushState(null, null, url);
+                            load(url);
+                            iziToast.success({
+                                title: 'Success',
+                                message: response.data.message,
+                                position: 'topRight'
+                            });
+                            }else{
+                            iziToast.error({
+                                title: 'Failed',
+                                message: response.data.message,
+                                position: 'topRight'
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        InitiateSimpleValidate.init();
+    });
+</script>
 @endsection

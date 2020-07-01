@@ -5,23 +5,23 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Report;
-use App\Seller;
+use App\Pengusaha;
 use DB;
 
 class ReportController extends Controller
 {
     public function preview($nik)
     {
-        $data = DB::table('sellers')
-        		->join('products', 'sellers.product_id', '=', 'products.id')
-        		->where('nik', $nik)->get();
+        $data = DB::table('pengusahas')
+        		->join('sectors', 'pengusahas.sector_id', '=', 'sectors.id')
+        		->where('nik_id', $nik)->get();
 
-        return view('frontend.preview', ['seller' => $data]);
+        return view('frontend.preview', ['pengusaha' => $data]);
     }
 
     public function laporanform($id)
     {
-    	$data = DB::table('sellers')
+    	$data = DB::table('pengusahas')
     			->where('id', $id)
     			->get();
 

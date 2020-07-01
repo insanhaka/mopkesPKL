@@ -4,42 +4,42 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Kelompok;
+use App\Sector;
 
-class KelompokController extends Controller
+class SectorController extends Controller
 {
     public function __construct(){}
 
     public function index()
     {
-        $kelompoks = Kelompok::all();
+        $sectors = Sector::all();
         if (\Request::ajax()) {
-            $view = view('backend.kelompoks.index', compact('kelompoks'))->renderSections();
+            $view = view('backend.sectors.index', compact('sectors'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.kelompoks.index', compact('kelompoks'))->render();
+        return view('backend.sectors.index', compact('sectors'))->render();
     }
 
     public function create()
     {
         if (\Request::ajax()) {
-            $view = view('backend.kelompoks.create')->renderSections();
+            $view = view('backend.sectors.create')->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.kelompoks.create')->render();
+        return view('backend.sectors.create')->render();
     }
 
     public function store(Request $request)
     {
-        $status = Kelompok::create($request->all());
+        $status = Sector::create($request->all());
         if ($status) {
             $data['status'] = true;
             $data['message'] = "Data berhasil disimpan!!!";
@@ -52,29 +52,29 @@ class KelompokController extends Controller
 
     public function show($id)
     {
-        $kelompok = Kelompok::findOrFail($id);
+        $sector = Sector::findOrFail($id);
 
-        return response()->json($kelompok);
+        return response()->json($sector);
     }
 
     public function edit($id)
     {
-        $kelompok = Kelompok::findOrFail($id);
+        $sector = Sector::findOrFail($id);
         if (\Request::ajax()) {
-            $view = view('backend.kelompoks.edit', compact('kelompok'))->renderSections();
+            $view = view('backend.sectors.edit', compact('sector'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.kelompoks.edit', compact('kelompok'));
+        return view('backend.sectors.edit', compact('sector'));
     }
 
     public function update(Request $request, $id)
     {
-        $kelompok = Kelompok::findOrFail($id);
-        $status = $kelompok->update($request->all());
+        $sector = Sector::findOrFail($id);
+        $status = $sector->update($request->all());
 
         if ($status) {
             $data['status'] = true;
@@ -88,26 +88,26 @@ class KelompokController extends Controller
 
     public function delete($id)
     {
-        $data = Kelompok::find($id);
+        $data = Sector::find($id);
         $data->delete();
         return back()->with('warning','Data Berhasil Dihapus');
     }
 
-    // public function delete(Request $request)
-    // {
-    //     $ids = $request->id;
-    //     if (is_array($ids)) {
-    //         $status = Kelompok::destroy($ids);
-    //     } else {
-    //         $status = Kelompok::findOrFail($ids)->delete();
-    //     }
-    //     if ($status) {
-    //         $data['status'] = true;
-    //         $data['message'] = "Data berhasil dihapus!!!";
-    //     } else {
-    //         $data['status'] = false;
-    //         $data['message'] = "Data gagal dihapus!!!";
-    //     }
-    //     return response()->json(['code' => 200,'data' => $data], 200);
-    // }
+//    public function delete(Request $request)
+//     {
+//         $ids = $request->id;
+//         if (is_array($ids)) {
+//             $status = Product::destroy($ids);
+//         } else {
+//             $status = Product::findOrFail($ids)->delete();
+//         }
+//         if ($status) {
+//             $data['status'] = true;
+//             $data['message'] = "Data berhasil dihapus!!!";
+//         } else {
+//             $data['status'] = false;
+//             $data['message'] = "Data gagal dihapus!!!";
+//         }
+//         return response()->json(['code' => 200,'data' => $data], 200);
+//     }
 }

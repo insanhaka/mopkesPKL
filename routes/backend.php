@@ -33,23 +33,25 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::resource('permission', 'PermissionController');
     Route::post('permission/delete', 'PermissionController@delete')->name('permission.delete');
 
-    Route::resource('product', 'ProductController');
+    Route::resource('sector', 'SectorController');
     // Route::post('product/delete', 'ProductController@delete')->name('product.delete');
-    Route::get('/product/{id}/delete', 'ProductController@delete');
+    Route::get('/sector/{id}/delete', 'SectorController@delete');
 
-    Route::resource('seller', 'SellerController');
-    Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
+    Route::resource('business', 'BusinessController');
+    // Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
+    Route::get('/business/{id}/delete', 'BusinessController@delete');
 
     Route::resource('agreement', 'AgreementController');
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
     Route::get('/agreement/{id}/delete', 'AgreementController@delete');
 
     Route::resource('report', 'ReportController');
-    Route::post('report/delete', 'ReportController@delete')->name('report.delete');
+    // Route::post('report/delete', 'ReportController@delete')->name('report.delete');
+    Route::get('/report/{id}/delete', 'ReportController@delete');
 
-    Route::resource('kelompok', 'KelompokController');
+    Route::resource('communities', 'CommunityController');
     // Route::post('kelompok/delete', 'KelompokController@delete')->name('kelompok.delete');
-    Route::get('/kelompok/{id}/delete', 'KelompokController@delete');
+    Route::get('/communities/{id}/delete', 'CommunityController@delete');
 
     Route::match(['get', 'post'],'/logout','LoginController@doLogout')->name('logout');
 

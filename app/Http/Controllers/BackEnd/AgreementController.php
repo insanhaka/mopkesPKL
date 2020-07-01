@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Agreement;
-use App\Kelompok;
+use App\Community;
+use DB;
 
 class AgreementController extends Controller
 {
     public function __construct(){
-        $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
+        $this->communitiesparent = Community::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
     }
 
     public function index()
     {
         $agreements = Agreement::all();
+
+        // dd($agreements);
+
         if (\Request::ajax()) {
             $view = view('backend.agreements.index', compact('agreements'))->renderSections();
             return response()->json([
@@ -29,16 +33,16 @@ class AgreementController extends Controller
 
     public function create()
     {
-        $kelompokparent = $this->kelompokparent;
+        $communitiesparent = $this->communitiesparent;
         if (\Request::ajax()) {
-            $view = view('backend.agreements.create', compact('kelompokparent'))->renderSections();
+            $view = view('backend.agreements.create', compact('communitiesparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.agreements.create', compact('kelompokparent'))->render();
+        return view('backend.agreements.create', compact('communitiesparent'))->render();
     }
 
     public function store(Request $request)
@@ -46,18 +50,18 @@ class AgreementController extends Controller
 
         // dd($request->all());
 
-        $data_kelompok = $request->menu_kelompok;
+        $data_communities = $request->menu_communities;
         // dd($data_kelompok);
 
         $this->validate($request, [
 			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required',
             'nik' => 'required',
-            'menu_kelompok' => 'required'
+            'menu_communities' => 'required'
 			// 'attachment' => 'required',
         ]);
 
-        if ($data_kelompok === "Kelompok"){
+        if ($data_communities === "Kelompok"){
 
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('attachment');
@@ -70,10 +74,10 @@ class AgreementController extends Controller
 
             $input =  Agreement::create([
                 'attachment' => $nama_file,
-                'status' => $data_kelompok,
+                'status' => $data_communities,
                 'name' => $request->name,
                 'nik' => $request->nik,
-                'kelompok_id' => $request->kelompok_id,
+                'community_id' => $request->community_id,
             ]);
 
             return redirect(url()->current())->with('success','Data Berhasil Disimpan');
@@ -91,10 +95,10 @@ class AgreementController extends Controller
 
             $input =  Agreement::create([
                 'attachment' => $nama_file,
-                'status' => $data_kelompok,
+                'status' => $data_communities,
                 'name' => $request->name,
                 'nik' => $request->nik,
-                'kelompok_id' => $request->kelompok_id,
+                'community_id' => $request->community_id,
             ]);
 
             return redirect(url()->current())->with('success','Data Berhasil Disimpan');
@@ -120,31 +124,32 @@ class AgreementController extends Controller
     public function edit($id)
     {
         $agreement = Agreement::findOrFail($id);
-        $kelompokparent = $this->kelompokparent;
+        $communitiesparent = $this->communitiesparent;
         if (\Request::ajax()) {
-            $view = view('backend.agreements.edit', compact('agreement', 'kelompokparent'))->renderSections();
+            $view = view('backend.agreements.edit', compact('agreement', 'communitiesparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.agreements.edit', compact('agreement', 'kelompokparent'));
+        return view('backend.agreements.edit', compact('agreement', 'communitiesparent'));
     }
 
     public function update(Request $request, $id)
     {
 
-        $data_kelompok = $request->menu_kelompok;
+        $data_communities = $request->menu_communities;
 
         $this->validate($request, [
-			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            // 'attachment' => 'required|mimes:pdf,xlx,csv',
             'name' => 'required',
-            'menu_kelompok' => 'required'
+            'menu_communities' => 'required'
 			// 'attachment' => 'required',
         ]);
 
-        if ($data_kelompok === "Kelompok"){
+        if ($data_communities === "Kelompok"){
 
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('attachment');
@@ -167,8 +172,8 @@ class AgreementController extends Controller
 
             $data = Agreement::find($id);
             $data->name = $request->name;
-            $data->status = $data_kelompok;
-            $data->kelompok_id = $request->kelompok_id;
+            $data->status = $data_communities;
+            $data->community_id = $request->community_id;
             $data->attachment = $nama_file;
             $data->save();
 
@@ -190,8 +195,8 @@ class AgreementController extends Controller
 
             $data = Agreement::find($id);
             $data->name = $request->name;
-            $data->status = $data_kelompok;
-            $data->kelompok_id = $request->kelompok_id;
+            $data->status = $data_communities;
+            $data->community_id = $request->community_id;
             $data->attachment = $nama_file;
             $data->save();
 
@@ -227,4 +232,6 @@ class AgreementController extends Controller
     //     }
     //     return response()->json(['code' => 200,'data' => $data], 200);
     // }
+
+
 }
