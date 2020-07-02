@@ -19,8 +19,8 @@
     </div> --}}
     <img src="{{asset('assets/img/header-preview.jpg')}}" style="width: 100%; height: auto;">
     <div class="container" style="margin-top: 5%;">
-    @foreach($seller as $data)
-      <p style="font-size: 20px; font-weight: bold;">{!! $data->product_specific !!}</p>
+    @foreach($business as $data)
+      <p style="font-size: 20px; font-weight: bold;">{!! $data->Business_specific !!}</p>
       <hr>
       <p>Nama pemilik :</p>
       <div class="row" style="margin-top: -3%;">
@@ -42,7 +42,7 @@
       <hr>
 
       <div class="lapor text-center">
-        <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
+        <a class="btn" href="/laporan/{!!$data->nik_id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
       </div>
       @endforeach
     </div>

@@ -20,4 +20,9 @@ class ApiControl extends Controller
             'value' => $data
         ]);
     }
+
+    public function activation(Request $request)
+    {
+        dd($request->all());
+    }
 }

@@ -15,8 +15,7 @@ class BusinessController extends Controller
         $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
         //$this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
-        // $this->kelompokparent = Kelompok::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
-        $this->nikparent = Agreement::get(['id', 'nik'])->pluck('nik', 'id')->prepend('NIK', '');
+        $this->nikparent = Agreement::leftJoin('business', 'nik_id', '=', 'nik')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
     }
 
     public function index()
@@ -78,23 +77,24 @@ class BusinessController extends Controller
         }else {
             $databusiness->status_kelompok = "Ya";
         }
+        $databusiness->is_active = 1;
         $databusiness->community_id = $datakelompok->community_id;
-        $databusiness->save();
+        // $databusiness->save();
 
-        $url = url()->current();
-        $fixurl = str_replace( array( $id ), ' ', $url);
+        // $url = url()->current();
+        // $fixurl = str_replace( array( $id ), ' ', $url);
 
-        return redirect($fixurl)->with('success','Data Berhasil Disimpan');
+        // return redirect($fixurl)->with('success','Data Berhasil Disimpan');
 
-        // $status = $databusiness->save();
-        // if ($status) {
-        //     $data['status'] = true;
-        //     $data['message'] = "Data berhasil disimpan!!!";
-        // } else {
-        //     $data['status'] = false;
-        //     $data['message'] = "Data gagal disimpan!!!";
-        // }
-        // return response()->json(['code' => 200,'data' => $data], 200);
+        $status = $databusiness->save();
+        if ($status) {
+            $data['status'] = true;
+            $data['message'] = "Data berhasil disimpan!!!";
+        } else {
+            $data['status'] = false;
+            $data['message'] = "Data gagal disimpan!!!";
+        }
+        return response()->json(['code' => 200,'data' => $data], 200);
     }
 
     public function show($id)
@@ -125,16 +125,23 @@ class BusinessController extends Controller
     public function update(Request $request, $id)
     {
         $business = Business::findOrFail($id);
-        $status = $business->update($request->all());
+        // dd($business);
+        $business->update($request->all());
 
-        if ($status) {
-            $data['status'] = true;
-            $data['message'] = "Data berhasil disimpan!!!";
-        } else {
-            $data['status'] = false;
-            $data['message'] = "Data gagal disimpan!!!";
-        }
-        return response()->json(['code' => 200,'data' => $data], 200);
+        $url = url()->current();
+        $fixurl = str_replace( array( $id ), ' ', $url);
+
+        return redirect($fixurl)->with('success','Data Berhasil Disimpan');
+
+        // $status = $business->update($request->all());
+        // if ($status) {
+        //     $data['status'] = true;
+        //     $data['message'] = "Data berhasil disimpan!!!";
+        // } else {
+        //     $data['status'] = false;
+        //     $data['message'] = "Data gagal disimpan!!!";
+        // }
+        // return response()->json(['code' => 200,'data' => $data], 200);
     }
 
     public function delete($id)
@@ -142,6 +149,16 @@ class BusinessController extends Controller
         $data = Business::find($id);
         $data->delete();
         return back()->with('warning','Data Berhasil Dihapus');
+    }
+
+    public function activation(Request $request)
+    {
+        // dd($request->all());
+
+        $id = $request->id;
+
+        $business = Business::findOrFail($id);
+        $business->update($request->is_active);
     }
 
     // public function delete(Request $request)

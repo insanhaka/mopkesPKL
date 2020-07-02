@@ -23,19 +23,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!! Form::model($business, ['route' => ['admin.business.update', $business->id],'class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>'']) !!}
+                    {!! Form::model($business, ['route' => ['admin.business.update', $business->id],'class'=>'form-horizontal validate','method'=>'PUT', 'id'=>'simpan','novalidate'=>'']) !!}
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('nik_id', 'NIK (*)') !!}
-                                <div>
-                                    {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
-                                    <select class="form-control selectku" id="selected_nik" name="nik_id" onchange="nik()">
-                                        @foreach ($nikparent as $item)
-                                        <option value="{!! $item !!}">{!! $item !!}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="form-group col-lg-6 col-12">
+                                {!! Form::label('nik', 'NIK') !!}
+                                {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
+                                <input class="form-control" type="text" id="nik_id" name="nik_id" readonly value="{!!$business->nik_id!!}">
                             </div>
                             <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('name', 'Nama') !!}
@@ -44,11 +38,11 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilikec', 'Domisili (Kecamatan)') !!}
-                                {!! Form::select('domisili_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_kec', $kecparent, null,['id'=>'domisili_kec', 'class'=>'form-control selectku','style'=>'width: 100%;', 'value'=>'']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisilides', 'Domisili (Desa)') !!}
-                                {!! Form::select('domisili_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_desa', [], null,['id'=>'domisili_desa', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
@@ -56,11 +50,11 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpkec', 'Alamat sesuai KTP (Kecamatan)') !!}
-                                {!! Form::select('ktp_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('ktp_kec', $kecparent, null,['id'=>'ktp_kec', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpdes', 'Alamat sesuai KTP (Desa)') !!}
-                                {!! Form::select('ktp_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('ktp_desa', [], null,['id'=>'ktp_desa', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('ktpaddr', 'Alamat Sesuai KTP Lengkap') !!}
@@ -68,23 +62,23 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakkec', 'Lokasi Jualan (Kecamatan)') !!}
-                                {!! Form::select('lapak_kec', $kecparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakdes', 'Lokasi Jualan (Desa)') !!}
-                                {!! Form::select('lapak_desa', $desparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lapak_desa', [], null,['id'=>'lapak_desa', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakaddr', 'Alamat Lokasi Jualan Lengkap') !!}
                                 {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('sector', 'Jenis produk') !!}
+                                {!! Form::label('sector', 'Sektor Usaha') !!}
                                 {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('spesifikproduk', 'Spesifik Jenis Produk') !!}
-                                {!! Form::text('product_specific', null ,['id'=>'spesifik_produk','class'=>'form-control','placeholder'=>'Tulis sepesifik produk','required'=>'true']) !!}
+                                {!! Form::label('spesifikbisnis', 'Nama Usaha') !!}
+                                {!! Form::text('Business_specific', null ,['id'=>'Business_specific','class'=>'form-control','placeholder'=>'Tulis Nama Usaha','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('waktu_jualan', 'Waktu Jualan') !!}
@@ -148,37 +142,40 @@
 
 <script>
     $(document).ready(function(){
+        $.comboAjax('#domisili_kec','#domisili_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+		$.comboAjax('#ktp_kec','#ktp_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+		$.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
         $(".selectku").select2();
         // SAVE
-        $.validator.setDefaults({
-            submitHandler: function () {
-                var $this = $('form#simpan');
-                $.ajax({
-                    url : $this.attr('action'),
-                    type : 'PUT',
-                    data : $this.serialize(),
-                    success:function(response){
-                        console.log(response);
-                        if(response.data.status){
-                            url = APP_URL_ADMIN+'/business';
-                            history.pushState(null, null, url);
-                            load(url);
-                            iziToast.success({
-                                title: 'Success',
-                                message: response.data.message,
-                                position: 'topRight'
-                            });
-                            }else{
-                            iziToast.error({
-                                title: 'Failed',
-                                message: response.data.message,
-                                position: 'topRight'
-                            });
-                        }
-                    }
-                });
-            }
-        });
+        // $.validator.setDefaults({
+        //     submitHandler: function () {
+        //         var $this = $('form#simpan');
+        //         $.ajax({
+        //             url : $this.attr('action'),
+        //             type : 'PUT',
+        //             data : $this.serialize(),
+        //             success:function(response){
+        //                 console.log(response);
+        //                 if(response.data.status){
+        //                     url = APP_URL_ADMIN+'/business';
+        //                     history.pushState(null, null, url);
+        //                     load(url);
+        //                     iziToast.success({
+        //                         title: 'Success',
+        //                         message: response.data.message,
+        //                         position: 'topRight'
+        //                     });
+        //                     }else{
+        //                     iziToast.error({
+        //                         title: 'Failed',
+        //                         message: response.data.message,
+        //                         position: 'topRight'
+        //                     });
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
         InitiateSimpleValidate.init();
     });
 </script>

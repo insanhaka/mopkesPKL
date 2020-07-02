@@ -3,6 +3,7 @@
 @section('css')
     {!! Html::style('assets/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
     {!! Html::style('assets/vendors/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -42,6 +43,7 @@
                                     <th>Nama Usaha</th>
                                     <th>Waktu Jualan</th>
                                     <th>Kelompok</th>
+                                    <th>Aktiv ?</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
@@ -57,13 +59,14 @@
                                     <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
                                     <td>{!! $data->sector->sector_name !!}</td>
-                                    <td>{!! $data->product_specific !!}</td>
+                                    <td>{!! $data->Business_specific !!}</td>
                                     <td>{!! $data->waktu_jual !!}</td>
                                     @if ($data->status_kelompok === "Ya")
                                     <td>{!! $data->community->name !!}</td>
                                     @else
                                     <td>Individu</td>
                                     @endif
+                                    <td><input type="checkbox" id="toggle-event{!!$data->id!!}" checked data-toggle="toggle" data-on="Aktiv" data-off="Tidak" data-onstyle="success" data-offstyle="danger"></td>
                                     <td>
                                         <div class="visible-print text-center">
                                             {{-- <p>{!! $data->name !!}</p>
@@ -192,45 +195,51 @@
         @endif
     </script>
 
-
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            // $('#simpledatatable').on('click','.btn-hapus',function(e){
-            //     e.preventDefault();
-            //     var $this =$(this);
-            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-            //         if (confirm) {
-            //             $.ajax({
-            //                 url: $this.attr('data-url') + '/delete',
-            //                 type: 'POST',
-            //                 data: {
-            //                     'id' : $this.attr('data-id'),
-            //                     '_token' : '{{csrf_token()}}'
-            //                 },
-            //                 success: function(response) {
-            //                     if(response.data.status){
-            //                         $this.closest('tr').fadeOut(300,function(){
-            //                             $this.remove();
-            //                         });
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: 'Data berhasil dihapus',
-            //                             position: 'topRight'
-            //                         });
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: 'Data gagal dihapus',
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    @foreach ($business as $v)
+    <script>
+        $(document).ready(function(){
+            var i = {!!$v->is_active!!};
+
+            if(i == 1){
+                $('#toggle-event{!!$v->id!!}').bootstrapToggle('on');
+            }else{
+                $('#toggle-event{!!$v->id!!}').bootstrapToggle('off');
+            }
+        });
+
+        $(function() {
+          $('#toggle-event{!!$v->id!!}').change(function() {
+
+                // For adding the token to axios header (add this only one time).
+                var token = document.head.querySelector('meta[name="csrf-token"]');
+                window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+
+                axios.post('/admin/business/active', {
+                    id: {!!$v->id!!},
+                    is_active: 1,
+                })
+                .then(function (response) {
+                    // console.log(response);
+                    iziToast.success({
+                        title: 'Success',
+                        message: 'Data Berhasil Disimpan',
+                        position: 'topRight'
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+          })
+        })
+    </script>
+    @endforeach
 @endsection

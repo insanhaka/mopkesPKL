@@ -40,6 +40,7 @@ class CreateBusinessTable extends Migration
             $table->string('Business_specific');
             $table->string('waktu_jual');
             $table->string('status_kelompok');
+            $table->boolean('is_active');
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

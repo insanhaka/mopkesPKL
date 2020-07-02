@@ -33,9 +33,9 @@
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>Name Pelaku Usaha</th>
                                     <th>NIK</th>
-                                    <th>Report's About</th>
+                                    <th>Tentang Laporan</th>
                                     <th>Preview</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
@@ -45,11 +45,11 @@
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{!! $data->pengusaha->name !!}</td>
-                                    <td>{!! $data->pengusaha->nik_id !!}</td>
+                                    <td>{!! $data->business->name !!}</td>
+                                    <td>{!! $data->business->nik_id !!}</td>
                                     <td>{!! $data->about !!}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{!! $data->id !!}">
                                             Baca Laporan
                                         </button>
                                     </td>
@@ -88,10 +88,10 @@
     </div>
 </section>
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+@foreach ($reports as $d)
+<div class="modal fade" id="exampleModalLong{!! $d->id !!}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        @foreach ($reports as $d)
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">{!! $d->about !!}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -101,14 +101,13 @@
         <div class="modal-body">
             {!! $d->description !!}
         </div>
-        @endforeach
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
+@endforeach
 @endsection
 
 @section('js')

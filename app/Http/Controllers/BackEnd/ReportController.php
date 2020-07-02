@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Report;
-use App\Pengusaha;
+use App\Sector;
 
 class ReportController extends Controller
 {
@@ -13,22 +13,22 @@ class ReportController extends Controller
 
     public function index()
     {
-        $reports = Report::all();
-        $pengusahas = Pengusaha::all();
+        $reports = Report::all()->sortByDesc('created_at');
+
         if (\Request::ajax()) {
-            $view = view('backend.reports.index', compact('reports', 'pengusahas'))->renderSections();
+            $view = view('backend.reports.index', compact('reports'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.reports.index', compact('reports', 'pengusahas'))->render();
+        return view('backend.reports.index', compact('reports'))->render();
     }
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Sector::findOrFail($id);
 
         return response()->json($product);
     }
