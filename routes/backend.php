@@ -40,7 +40,6 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::resource('business', 'BusinessController');
     // Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
     Route::get('/business/{id}/delete', 'BusinessController@delete');
-    Route::post('/business/active', 'BusinessController@activation');
 
     Route::resource('agreement', 'AgreementController');
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
@@ -71,5 +70,3 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
         return response()->json(['code' => 200,'data' => $arrVillages], 200);
     })->name('getvillagesfromdistrict');
 });
-
-// Route::get('/qrcode', 'ReportController@preview');

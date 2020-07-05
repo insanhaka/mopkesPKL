@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('data-agreement', 'ApiControl@apiAgreement');
-// Route::post('businessactive', 'ApiController@activation');
+Route::post('businessactive', 'ApiControl@activation');

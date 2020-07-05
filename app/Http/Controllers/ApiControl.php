@@ -23,6 +23,11 @@ class ApiControl extends Controller
 
     public function activation(Request $request)
     {
-        dd($request->all());
+        $active = $request->is_active;
+        $id = $request->id;
+
+         DB::table('business')
+            ->where('id', $id)
+            ->update(['is_active' => $active]);
     }
 }

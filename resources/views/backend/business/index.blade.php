@@ -40,9 +40,9 @@
                                     <th>Alamat KTP</th>
                                     <th>Alamat Lapak</th>
                                     <th>Sektor Usaha</th>
-                                    <th>Nama Usaha</th>
-                                    <th>Waktu Jualan</th>
-                                    <th>Kelompok</th>
+                                    {{-- <th>Nama Usaha</th> --}}
+                                    {{-- <th>Waktu Jualan</th> --}}
+                                    {{-- <th>Kelompok</th> --}}
                                     <th>Aktiv ?</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -54,19 +54,19 @@
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
-                                    <td>{!! $data->nik_id !!}</td>
+                                    <td>{!! $data->agreement->nik !!}</td>
                                     <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
                                     <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
                                     <td>{!! $data->sector->sector_name !!}</td>
-                                    <td>{!! $data->Business_specific !!}</td>
-                                    <td>{!! $data->waktu_jual !!}</td>
-                                    @if ($data->status_kelompok === "Ya")
+                                    {{-- <td>{!! $data->Business_specific !!}</td> --}}
+                                    {{-- <td>{!! $data->waktu_jual !!}</td> --}}
+                                    {{-- @if ($data->status_kelompok === "Ya")
                                     <td>{!! $data->community->name !!}</td>
                                     @else
                                     <td>Individu</td>
-                                    @endif
-                                    <td><input type="checkbox" id="toggle-event{!!$data->id!!}" checked data-toggle="toggle" data-on="Aktiv" data-off="Tidak" data-onstyle="success" data-offstyle="danger"></td>
+                                    @endif --}}
+                                    <td><input type="checkbox" id="{!!$data->id!!}" checked data-toggle="toggle" data-on="Aktiv" data-off="Tidak" data-onstyle="success" data-offstyle="danger"></td>
                                     <td>
                                         <div class="visible-print text-center">
                                             {{-- <p>{!! $data->name !!}</p>
@@ -209,35 +209,35 @@
         $(document).ready(function(){
             var i = {!!$v->is_active!!};
 
+            console.log(i);
+
             if(i == 1){
-                $('#toggle-event{!!$v->id!!}').bootstrapToggle('on');
+                $('#{!!$v->id!!}').bootstrapToggle('on');
             }else{
-                $('#toggle-event{!!$v->id!!}').bootstrapToggle('off');
+                $('#{!!$v->id!!}').bootstrapToggle('off');
             }
         });
 
         $(function() {
-          $('#toggle-event{!!$v->id!!}').change(function() {
+          $('#{!!$v->id!!}').change(function(event) {
 
-                // For adding the token to axios header (add this only one time).
-                var token = document.head.querySelector('meta[name="csrf-token"]');
-                window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+                var id = event.target.id;
+                var is_active = $(this).prop('checked');
 
-                axios.post('/admin/business/active', {
-                    id: {!!$v->id!!},
-                    is_active: 1,
+                console.log(is_active);
+                console.log(id);
+
+                axios.post('/api/businessactive', {
+                    is_active: is_active,
+                    id: id
                 })
-                .then(function (response) {
-                    // console.log(response);
-                    iziToast.success({
-                        title: 'Success',
-                        message: 'Data Berhasil Disimpan',
-                        position: 'topRight'
-                    });
+                  .then(function (response) {
+                    console.log(response);
                 })
-                .catch(function (error) {
+                  .catch(function (error) {
                     console.log(error);
                 });
+                
           })
         })
     </script>

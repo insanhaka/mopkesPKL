@@ -27,4 +27,9 @@ class Agreement extends Model
     {
         return $this->hasMany('App\Business', 'nik_id', 'id');
     }
+
+    public function report()
+    {
+        return $this->hasMany('App\Report', 'nik_id', 'id');
+    }
 }

@@ -21,4 +21,9 @@ class Report extends Model
     {
         return $this->belongsTo('App\Business', 'nik_id', 'id');
     }
+
+    public function agreement()
+    {
+        return $this->belongsTo('App\Agreement', 'nik_id', 'id');
+    }
 }

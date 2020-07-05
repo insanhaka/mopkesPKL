@@ -5,17 +5,19 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Business;
-use App\District;
+use App\Province;
 use App\Sector;
 use App\Agreement;
+use DB;
 
 class BusinessController extends Controller
 {
     public function __construct(){
-        $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
+        // $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
         //$this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
-        $this->nikparent = Agreement::leftJoin('business', 'nik_id', '=', 'nik')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
+        $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
+        $this->provparent = Province::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Provinsi', 0);
     }
 
     public function index()
@@ -34,19 +36,19 @@ class BusinessController extends Controller
 
     public function create()
     {
-        $kecparent = $this->kecparent;
+        $provparent = $this->provparent;
         //$desparent = $this->desparent;
         $sectorparent = $this->sectorparent;
         $nikparent = $this->nikparent;
         if (\Request::ajax()) {
-            $view = view('backend.business.create', compact('kecparent', 'sectorparent', 'nikparent'))->renderSections();
+            $view = view('backend.business.create', compact('provparent', 'sectorparent', 'nikparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.business.create', compact('kecparent', 'sectorparent', 'nikparent'))->render();
+        return view('backend.business.create', compact('provparent', 'sectorparent', 'nikparent'))->render();
     }
 
     public function store(Request $request)
@@ -55,17 +57,25 @@ class BusinessController extends Controller
         // dd($request->all());
 
         $datakelompok = Agreement::where('nik', $request->nik_id)->first();
-        // dd($datakelompok->kelompok_id);
+        // dd($datakelompok->nik);
+        $id_nik = Agreement::where('nik', $request->nik_id)->first();
+        // dd($id_nik->id);
 
         $databusiness = new Business;
         $databusiness->name = $request->name;
-        $databusiness->nik_id = $request->nik_id;
+        $databusiness->nik_id = $id_nik->id;
+        $databusiness->domisili_prov = $request->domisili_prov;
+        $databusiness->domisili_kab = $request->domisili_kab;
         $databusiness->domisili_kec = $request->domisili_kec;
         $databusiness->domisili_desa = $request->domisili_desa;
         $databusiness->domisili_addr = $request->domisili_addr;
+        $databusiness->ktp_prov = $request->ktp_prov;
+        $databusiness->ktp_kab = $request->ktp_kab;
         $databusiness->ktp_kec = $request->ktp_kec;
         $databusiness->ktp_desa = $request->ktp_desa;
         $databusiness->ktp_addr = $request->ktp_addr;
+        $databusiness->lapak_prov = $request->lapak_prov;
+        $databusiness->lapak_kab = $request->lapak_kab;
         $databusiness->lapak_kec = $request->lapak_kec;
         $databusiness->lapak_desa = $request->lapak_desa;
         $databusiness->lapak_addr = $request->lapak_addr;
@@ -107,19 +117,19 @@ class BusinessController extends Controller
     public function edit($id)
     {
         $business = Business::findOrFail($id);
-        $kecparent = $this->kecparent;
+        $provparent = $this->provparent;
         //$desparent = $this->desparent;
         $sectorparent = $this->sectorparent;
         $nikparent = $this->nikparent;
         if (\Request::ajax()) {
-            $view = view('backend.business.edit', compact('business', 'kecparent', 'sectorparent', 'nikparent'))->renderSections();
+            $view = view('backend.business.edit', compact('business', 'provparent', 'sectorparent', 'nikparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.business.edit', compact('business', 'kecparent', 'sectorparent', 'nikparent'));
+        return view('backend.business.edit', compact('business', 'provparent', 'sectorparent', 'nikparent'));
     }
 
     public function update(Request $request, $id)
@@ -149,16 +159,6 @@ class BusinessController extends Controller
         $data = Business::find($id);
         $data->delete();
         return back()->with('warning','Data Berhasil Dihapus');
-    }
-
-    public function activation(Request $request)
-    {
-        // dd($request->all());
-
-        $id = $request->id;
-
-        $business = Business::findOrFail($id);
-        $business->update($request->is_active);
     }
 
     // public function delete(Request $request)

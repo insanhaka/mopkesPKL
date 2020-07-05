@@ -30,7 +30,7 @@
                                 {!! Form::label('nik_id', 'NIK') !!}
                                 {!! Form::select('nik_id', $nikparent, null,['id'=>'selected_nik', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div> --}}
-                            <div class="form-group col-lg-4 col-12">
+                            <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('nik_id', 'NIK') !!}
                                 <div>
                                     {{-- {!! Form::select('menu_kelompok', ['0'=>'Tidak','1'=>'ya'], null, ['id'=>'menu_kelompok', 'class'=>'form-control', 'onchange'=>'menu_kelompok()'])  !!} --}}
@@ -46,11 +46,19 @@
                                 {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
                                 <input class="form-control" type="text" id="name" name="name" readonly>
                             </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('domisilikec', 'Domisili (Kecamatan)') !!}
-                                {!! Form::select('domisili_kec', $kecparent, null,['id'=>'domisili_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisiliprov', 'Domisili (Prov)') !!}
+                                {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
-                            <div class="form-group col-lg-4 col-12">
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisilikab', 'Domisili (Kab/Kota)') !!}
+                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisilikec', 'Domisili (Kec)') !!}
+                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('domisilides', 'Domisili (Desa)') !!}
                                 {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectku', 'style'=>'width: 100%;']) !!}
                             </div>
@@ -58,28 +66,44 @@
                                 {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
                                 {!! Form::text('domisili_addr', null ,['id'=>'domisili_addr','class'=>'form-control','placeholder'=>'Alamat domisili lengkap','required'=>'true']) !!}
                             </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('ktpkec', 'Alamat sesuai KTP (Kecamatan)') !!}
-                                {!! Form::select('ktp_kec', $kecparent, null,['id'=>'ktp_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('ktpprov', 'Alamat KTP (Prov)') !!}
+                                {!! Form::select('ktp_prov', $provparent, null,['id'=>'ktp_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('ktpdes', 'Alamat sesuai KTP (Desa)') !!}
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('ktpkab', 'Alamat KTP (Kab/Kota)') !!}
+                                {!! Form::select('ktp_kab', [], null,['id'=>'ktp_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('ktpkec', 'Alamat KTP (Kec)') !!}
+                                {!! Form::select('ktp_kec', [], null,['id'=>'ktp_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('ktpdes', 'Alamat KTP (Desa)') !!}
                                 {!! Form::select('ktp_desa', [], null,['id'=>'ktp_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('ktpaddr', 'Alamat Sesuai KTP Lengkap') !!}
+                                {!! Form::label('ktpaddr', 'Alamat KTP Lengkap') !!}
                                 {!! Form::text('ktp_addr', null ,['id'=>'ktp_addr','class'=>'form-control','placeholder'=>'Alamat sesuai KTP lengkap','required'=>'true']) !!}
                             </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakkec', 'Lokasi Jualan (Kecamatan)') !!}
-                                {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('lapakprov', 'Lokasi Jual (Prov)') !!}
+                                {!! Form::select('lapak_prov', $provparent, null,['id'=>'lapak_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakdes', 'Lokasi Jualan (Desa)') !!}
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('lapakkab', 'Lokasi Jual (Kab/Kota)') !!}
+                                {!! Form::select('lapak_kab', [], null,['id'=>'lapak_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('lapakkec', 'Lokasi Jual (Kec)') !!}
+                                {!! Form::select('lapak_kec', [], null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('lapakdes', 'Lokasi Jual (Desa)') !!}
                                 {!! Form::select('lapak_desa',[], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakaddr', 'Alamat Lokasi Jualan Lengkap') !!}
+                                {!! Form::label('lapakaddr', 'Alamat Lokasi Jual Lengkap') !!}
                                 {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
@@ -151,8 +175,16 @@
 
     <script>
         $(document).ready(function(){
+            $.comboAjax('#domisili_prov','#domisili_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
+            $.comboAjax('#domisili_kab','#domisili_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
 			$.comboAjax('#domisili_kec','#domisili_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+
+            $.comboAjax('#ktp_prov','#ktp_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
+            $.comboAjax('#ktp_kab','#ktp_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
 			$.comboAjax('#ktp_kec','#ktp_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+
+            $.comboAjax('#lapak_prov','#lapak_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
+            $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
 			$.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
             $(".selectku").select2();
             //SAVE

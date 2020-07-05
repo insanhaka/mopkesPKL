@@ -16,7 +16,7 @@ class CreateAgreementsTable extends Migration
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->bigInteger('nik');
+            $table->bigInteger('nik');            
             $table->string('attachment', 100);
             $table->string('status', 20);
             $table->unsignedBigInteger('community_id')->nullable();
