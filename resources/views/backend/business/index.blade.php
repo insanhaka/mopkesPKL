@@ -54,7 +54,7 @@
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
-                                    <td>{!! $data->agreement->nik !!}</td>
+                                    <td>{!! $data->nik_id !!}</td>
                                     <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
                                     <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
@@ -149,7 +149,7 @@
             titleHeight: 70,
             titleTop: 25,
 
-            subTitle: 'Code Numbering in hire',
+            subTitle: "{!! $d->nik_id !!}/{!! $d->sector->sector_name !!}",
             subTitleFont: "14px Arial",
             subTitleColor: "#004284",
             subTitleTop: 40,
@@ -237,7 +237,7 @@
                   .catch(function (error) {
                     console.log(error);
                 });
-                
+
           })
         })
     </script>

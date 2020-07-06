@@ -41,7 +41,7 @@ class ReportController extends Controller
 
         $reports->save();
 
-        echo "Sukses";
+        return view('frontend.thanks');
     }
 
 }

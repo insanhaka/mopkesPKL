@@ -58,12 +58,12 @@ class BusinessController extends Controller
 
         $datakelompok = Agreement::where('nik', $request->nik_id)->first();
         // dd($datakelompok->nik);
-        $id_nik = Agreement::where('nik', $request->nik_id)->first();
+        // $id_nik = Agreement::where('nik', $request->nik_id)->first();
         // dd($id_nik->id);
 
         $databusiness = new Business;
         $databusiness->name = $request->name;
-        $databusiness->nik_id = $id_nik->id;
+        $databusiness->nik_id = $request->nik_id;
         $databusiness->domisili_prov = $request->domisili_prov;
         $databusiness->domisili_kab = $request->domisili_kab;
         $databusiness->domisili_kec = $request->domisili_kec;

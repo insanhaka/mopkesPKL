@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('data-agreement', 'ApiControl@apiAgreement');
 Route::post('businessactive', 'ApiControl@activation');
+
+Route::get('business', 'ApiControl@getbusiness');
+Route::get('report', 'ApiControl@getreport');
+Route::get('reportmount', 'ApiControl@getreportMount');
