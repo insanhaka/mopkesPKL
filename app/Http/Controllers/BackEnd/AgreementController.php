@@ -177,10 +177,10 @@ class AgreementController extends Controller
             $data->attachment = $nama_file;
             $data->save();
 
-            $url = url()->current();
-            $fixurl = str_replace( array( $id ), ' ', $url);
+            // $url = url()->current();
+            // $fixurl = str_replace( array( $id ), ' ', $url);
 
-            return redirect($fixurl)->with('success','Data Berhasil Disimpan');
+            return redirect(url('/admin/agreement'))->with('success','Data Berhasil Disimpan');
 
         } else {
 
@@ -200,10 +200,10 @@ class AgreementController extends Controller
             $data->attachment = $nama_file;
             $data->save();
 
-            $url = url()->current();
-            $fixurl = str_replace( array( $id ), ' ', $url);
+            // $url = url()->current();
+            // $fixurl = str_replace( array( $id ), ' ', $url);
 
-            return redirect($fixurl)->with('success','Data Berhasil Disimpan');
+            return redirect(url('/admin/agreement'))->with('success','Data Berhasil Disimpan');
 
         }
     }

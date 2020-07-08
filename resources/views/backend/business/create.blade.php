@@ -46,26 +46,7 @@
                                 {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
                                 <input class="form-control" type="text" id="name" name="name" readonly>
                             </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisiliprov', 'Domisili (Prov)') !!}
-                                {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilikab', 'Domisili (Kab/Kota)') !!}
-                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilikec', 'Domisili (Kec)') !!}
-                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilides', 'Domisili (Desa)') !!}
-                                {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectku', 'style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
-                                {!! Form::text('domisili_addr', null ,['id'=>'domisili_addr','class'=>'form-control','placeholder'=>'Alamat domisili lengkap','required'=>'true']) !!}
-                            </div>
+
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('ktpprov', 'Alamat KTP (Prov)') !!}
                                 {!! Form::select('ktp_prov', $provparent, null,['id'=>'ktp_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
@@ -86,6 +67,39 @@
                                 {!! Form::label('ktpaddr', 'Alamat KTP Lengkap') !!}
                                 {!! Form::text('ktp_addr', null ,['id'=>'ktp_addr','class'=>'form-control','placeholder'=>'Alamat sesuai KTP lengkap','required'=>'true']) !!}
                             </div>
+                        </div>
+
+                        <div class="row" style="padding-left: 2%;">
+                            <div class="form-group col-lg-12 col-12">
+                                <input class="form-check-input" type="checkbox" value="" id="sesuai" onclick="sesuaiktp()">
+                                <label class="form-check-label" for="defaultCheck1">
+                                  Alamat Domisili Sesuai KTP?
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisiliprov', 'Domisili (Prov)') !!}
+                                {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisilikab', 'Domisili (Kab/Kota)') !!}
+                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisilikec', 'Domisili (Kec)') !!}
+                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-2 col-12">
+                                {!! Form::label('domisilides', 'Domisili (Desa)') !!}
+                                {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectku', 'style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
+                                {!! Form::text('domisili_addr', null ,['id'=>'domisili_addr','class'=>'form-control','placeholder'=>'Alamat domisili lengkap','required'=>'true']) !!}
+                            </div>
+
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('lapakprov', 'Lokasi Jual (Prov)') !!}
                                 {!! Form::select('lapak_prov', $provparent, null,['id'=>'lapak_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
@@ -221,5 +235,17 @@
             InitiateSimpleValidate.init();
         });
 
+    </script>
+
+    <script>
+        function sesuaiktp(){
+            var sama = document.getElementById("sesuai");
+            if (sama.checked == true){
+                var domisili_prov = document.getElementById("domisili_prov");
+                console.log(domisili_prov);
+            } else {
+                console.log('Tidak Sesuai');
+            }
+        }
     </script>
 @endsection

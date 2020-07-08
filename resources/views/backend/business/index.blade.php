@@ -52,6 +52,9 @@
                                 @foreach ($business as $data)
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
+                                    {{-- <td class="text-center no-sort" width="50px">
+                                        <input name="generate[]" type="checkbox" value="{!! $data->id !!}" id="generate" onclick="myCheckbox()" >
+                                    </td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik_id !!}</td>
@@ -125,13 +128,15 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+          {{-- <button type="button" class="btn btn-primary" onclick="tosave()">Save changes</button> --}}
         </div>
       </div>
     </div>
   </div>
 
   {!! Html::script('assets/vendors/qrcode/easy-qrcode.js') !!}
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
 
     function showQr() {
@@ -149,7 +154,7 @@
             titleHeight: 70,
             titleTop: 25,
 
-            subTitle: "{!! $d->nik_id !!}/{!! $d->sector->sector_name !!}",
+            subTitle: "{!! $d->Business_specific !!}/{!! $d->sector->sector_name !!}",
             subTitleFont: "14px Arial",
             subTitleColor: "#004284",
             subTitleTop: 40,
@@ -165,6 +170,10 @@
         });
     }
     showQr();
+
+    function tosave(){
+
+    }
 
   </script>
 
@@ -209,7 +218,7 @@
         $(document).ready(function(){
             var i = {!!$v->is_active!!};
 
-            console.log(i);
+            // console.log(i);
 
             if(i == 1){
                 $('#{!!$v->id!!}').bootstrapToggle('on');
@@ -224,9 +233,6 @@
                 var id = event.target.id;
                 var is_active = $(this).prop('checked');
 
-                console.log(is_active);
-                console.log(id);
-
                 axios.post('/api/businessactive', {
                     is_active: is_active,
                     id: id
@@ -240,6 +246,21 @@
 
           })
         })
+
     </script>
     @endforeach
+
+    {{-- @foreach ($business as $c) --}}
+    <script>
+        function myCheckbox(){
+            var checkBox = document.getElementById("generate");
+            if (checkBox.checked == true){
+                console.log("selected");
+            } else {
+                console.log("not selected");
+            }
+        }
+    </script>
+    {{-- @endforeach --}}
+
 @endsection

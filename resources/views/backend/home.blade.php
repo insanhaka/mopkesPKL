@@ -69,7 +69,7 @@
 
     <div class="row justify-content-center" style="margin-top: 50px;">
         <div class="col-4">
-            <div class="card" style="border-radius: 20px; padding: 3%;">
+            <div class="card" style="border-radius: 20px; padding-bottom: 5%; padding-top: 3%">
                 <div class="card-header">
                     <h5>Peroleh Laporan Terbanyak</h5>
                 </div>
@@ -77,18 +77,21 @@
                     {{-- <ul class="list-group list-group-flush">
                         <li class="list-group-item">{!!$top->agreement->name!!} = {!!$top->count!!}</li>
                     </ul> --}}
-                    <table class="table">
+                    <table class="table table-sm table-striped">
                         <thead>
                           <tr>
                             <th scope="col">Nama</th>
-                            <th scope="col">NIK</th>
-                            <th scope="col">Jumlah Laporan</th>
+                            <th scope="col">Nama Usaha</th>
+                            <th scope="col">Alamat Usaha</th>
+                            <th scope="col">Jumlah</th>
                           </tr>
                         </thead>
                         <tbody>
                             @foreach ($data->take(10) as $top)
                             <tr>
                                 <td>{!!$top->agreement->name!!}</td>
+                                <td>{!!$top->business->Business_specific!!}</td>
+                                <td>{!!$top->business->lapak_addr!!}</td>
                                 <td>{!!$top->count!!}</td>
                             </tr>
                             @endforeach

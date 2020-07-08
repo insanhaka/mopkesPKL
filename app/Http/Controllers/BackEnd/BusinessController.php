@@ -138,10 +138,10 @@ class BusinessController extends Controller
         // dd($business);
         $business->update($request->all());
 
-        $url = url()->current();
-        $fixurl = str_replace( array( $id ), ' ', $url);
+        // $url = url()->current();
+        // $fixurl = str_replace( array( $id ), ' ', $url);
 
-        return redirect($fixurl)->with('success','Data Berhasil Disimpan');
+        return redirect(url('/admin/business'))->with('success','Data Berhasil Disimpan');
 
         // $status = $business->update($request->all());
         // if ($status) {

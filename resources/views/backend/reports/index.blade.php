@@ -35,6 +35,8 @@
                                     <th>No</th>
                                     <th>Name Pelaku Usaha</th>
                                     <th>NIK</th>
+                                    <th>Nama Usaha</th>
+                                    <th>Lokasi Usaha</th>
                                     <th>Tentang Laporan</th>
                                     <th>Preview</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -47,6 +49,8 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->business->name !!}</td>
                                     <td>{!! $data->business->nik_id !!}</td>
+                                    <td>{!! $data->business->Business_specific !!}</td>
+                                    <td>{!! $data->business->lapak_addr !!}</td>
                                     <td>{!! $data->about !!}</td>
                                     <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{!! $data->id !!}">
@@ -90,16 +94,40 @@
 <!-- Modal -->
 @foreach ($reports as $d)
 <div class="modal fade" id="exampleModalLong{!! $d->id !!}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">{!! $d->about !!}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            <img src="{{asset('assets/img/laporan-01.jpg')}}" style="width: 100%; height: auto;">
         </div>
         <div class="modal-body">
-            {!! $d->description !!}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <p>Nama :</p>
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col-1"><img src="{{asset('assets/img/user.png')}}" style="width: 20px;"></div>
+                            <div class="col-10">{!! $d->business->name !!}</div>
+                        </div>
+                        <hr>
+                        <p>Nama Usaha :</p>
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col-1"><img src="{{asset('assets/img/shop.png')}}" style="width: 25px;"></div>
+                            <div class="col-10">{!! $d->business->Business_specific !!}</div>
+                        </div>
+                        <hr>
+                        <p>Lokasi jualan :</p>
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col-1"><img src="{{asset('assets/img/pin.png')}}" style="width: 20px;"></div>
+                            <div class="col-10">{!! $d->business->lapak_addr !!}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title" id="exampleModalLongTitle">{!! $d->about !!}</h5>
+                        <hr>
+                        {!! $d->description !!}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

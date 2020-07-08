@@ -166,7 +166,7 @@
 
 <script>
     $(document).ready(function(){
-        
+
         $.comboAjax('#domisili_prov','#domisili_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
         $.comboAjax('#domisili_kab','#domisili_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
         $.comboAjax('#domisili_kec','#domisili_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
@@ -178,7 +178,7 @@
         $.comboAjax('#lapak_prov','#lapak_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
         $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
         $.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
-        
+
         $(".selectku").select2();
         // SAVE
         // $.validator.setDefaults({

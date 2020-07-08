@@ -20,15 +20,15 @@
             <div class="d-flex flex-wrap align-items-stretch">
                 <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
                     <div class="p-4 m-3">
-                        {{-- <img src="{{ asset('assets/img/stisla-fill.svg') }}" alt="logo" width="80" 
+                        {{-- <img src="{{ asset('assets/img/stisla-fill.svg') }}" alt="logo" width="80"
                             class="shadow-light rounded-circle mb-5 mt-2">--}}
-                        <h4 class="text-dark font-weight-normal">Login to <span class="font-weight-bold">Crud v.2</span>
+                        <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">MOPKES</span>
                         </h4>
                         <p class="text-muted">Before you get started, you must login first.</p>
                         {!! Form::open(['route' => 'admin.login','class'=>'needs-validation','novalidate'=>'']) !!}
                         @if(Session::has('message'))
                             <div class="alert alert-danger alert-block">
-                                <button type="button" class="close" data-dismiss="alert">×</button>    
+                                <button type="button" class="close" data-dismiss="alert">×</button>
                                 <strong>{{ Session::get('message') }}</strong>
                             </div>
                         @endif
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom"
-                    data-background="{{ asset('assets/img/unsplash/login-bg3.jpg') }}">
+                    data-background="{{ asset('assets/img/unsplash/login-01.jpg') }}">
                     <div class="absolute-bottom-left index-2">
                         <div class="text-light p-5 pb-2">
                             Photo by <a class="text-light bb" target="_blank"
