@@ -26,10 +26,6 @@
                     {!!Form::open(['route'=>'admin.business.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
                     <div class="card-body">
                         <div class="row">
-                            {{-- <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('nik_id', 'NIK') !!}
-                                {!! Form::select('nik_id', $nikparent, null,['id'=>'selected_nik', 'class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div> --}}
                             <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('nik_id', 'NIK') !!}
                                 <div>
@@ -49,7 +45,14 @@
 
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('ktpprov', 'Alamat KTP (Prov)') !!}
-                                {!! Form::select('ktp_prov', $provparent, null,['id'=>'ktp_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {{-- {!! Form::select('ktp_prov', $provparent, null,['id'=>'ktp_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
+                                <div>
+                                    <select class="form-control selectku" id="ktp_prov" name="ktp_prov">
+                                        @foreach ($provparent as $key => $i)
+                                        <option value="{!! $key !!}">{!! $i !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('ktpkab', 'Alamat KTP (Kab/Kota)') !!}
@@ -81,38 +84,45 @@
                         <div class="row">
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('domisiliprov', 'Domisili (Prov)') !!}
-                                {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {{-- {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
+                                <div>
+                                    <select class="form-control selectdomprov" id="domisili_prov" name="domisili_prov">
+                                        @foreach ($provparent as $key => $i)
+                                        <option value="{!! $key !!}">{!! $i !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('domisilikab', 'Domisili (Kab/Kota)') !!}
-                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectdomkab','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('domisilikec', 'Domisili (Kec)') !!}
-                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectdomkec','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('domisilides', 'Domisili (Desa)') !!}
-                                {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectku', 'style'=>'width: 100%;']) !!}
+                                {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectdomdes', 'style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
                                 {!! Form::text('domisili_addr', null ,['id'=>'domisili_addr','class'=>'form-control','placeholder'=>'Alamat domisili lengkap','required'=>'true']) !!}
                             </div>
 
-                            <div class="form-group col-lg-2 col-12">
+                            {{-- <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('lapakprov', 'Lokasi Jual (Prov)') !!}
                                 {!! Form::select('lapak_prov', $provparent, null,['id'=>'lapak_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-2 col-12">
                                 {!! Form::label('lapakkab', 'Lokasi Jual (Kab/Kota)') !!}
                                 {!! Form::select('lapak_kab', [], null,['id'=>'lapak_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
+                            </div> --}}
+                            <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakkec', 'Lokasi Jual (Kec)') !!}
-                                {!! Form::select('lapak_kec', [], null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
-                            <div class="form-group col-lg-2 col-12">
+                            <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('lapakdes', 'Lokasi Jual (Desa)') !!}
                                 {!! Form::select('lapak_desa',[], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
@@ -201,6 +211,10 @@
             $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
 			$.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
             $(".selectku").select2();
+            $(".selectdomprov").select2();
+            $(".selectdomkab").select2();
+            $(".selectdomkec").select2();
+            $(".selectdomdes").select2();
             //SAVE
             $.validator.setDefaults({
                 submitHandler: function () {
@@ -233,6 +247,7 @@
                 }
             });
             InitiateSimpleValidate.init();
+            sesuaiktp()
         });
 
     </script>
@@ -241,11 +256,60 @@
         function sesuaiktp(){
             var sama = document.getElementById("sesuai");
             if (sama.checked == true){
-                var domisili_prov = document.getElementById("domisili_prov");
-                console.log(domisili_prov);
+                // Make a request for a user with a given ID
+                axios.get('/api/alamat')
+                .then(function (response) {
+                    var prov = response.data['prov'];
+                    var kab = response.data['kab'];
+                    var kec = response.data['kec'];
+                    var des = response.data['des'];
+
+                    var ktp_prov = document.getElementById("ktp_prov").value;
+                    $(".selectdomprov").val(ktp_prov);
+                    $(".selectdomprov").trigger('change');
+
+                    var ktp_kab = document.getElementById("ktp_kab").value;
+                    for (var n in kab) {
+                        if (kab[n].id == ktp_kab){
+                            $("#domisili_kab").html('<option value="' + kab[n].id + '">' + kab[n].name + '</option>');
+                            // console.log(kab[n]);
+                        }
+                    }
+
+                    var ktp_kec = document.getElementById("ktp_kec").value;
+                    for (var n in kec) {
+                        if (kec[n].id == ktp_kec){
+                            $("#domisili_kec").html('<option value="' + kec[n].id + '">' + kec[n].name + '</option>');
+                            // console.log(kec[n]);
+                        }
+                    }
+
+                    var ktp_des = document.getElementById("ktp_desa").value;
+                    for (var n in des) {
+                        if (des[n].id == ktp_des){
+                            $("#domisili_desa").html('<option value="' + des[n].id + '">' + des[n].name + '</option>');
+                            // console.log(kab[n]);
+                        }
+                    }
+
+                    var ktp_addr = document.getElementById("ktp_addr").value;
+                    document.getElementById("domisili_addr").value = ktp_addr;
+
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
             } else {
-                console.log('Tidak Sesuai');
+                $(".selectdomprov").val(0).trigger('change');
+                $(".selectdomkab").val(0).trigger('change');
+                $(".selectdomkec").val(0).trigger('change');
+                $(".selectdomdes").val(0).trigger('change');
+                document.getElementById("domisili_addr").value = "";
             }
         }
     </script>
+
+
 @endsection

@@ -3,7 +3,8 @@
 @section('css')
     {!! Html::style('assets/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
     {!! Html::style('assets/vendors/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    {!! Html::style('assets/css/lc_switch.css') !!}
+    {{-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> --}}
 @endsection
 
 @section('content')
@@ -40,9 +41,9 @@
                                     <th>Alamat KTP</th>
                                     <th>Alamat Lapak</th>
                                     <th>Sektor Usaha</th>
-                                    {{-- <th>Nama Usaha</th> --}}
-                                    {{-- <th>Waktu Jualan</th> --}}
-                                    {{-- <th>Kelompok</th> --}}
+                                    <th>Nama Usaha</th>
+                                    <th>Waktu Jualan</th>
+                                    <th>Kelompok</th>
                                     <th>Aktiv ?</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -62,14 +63,20 @@
                                     <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
                                     <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
                                     <td>{!! $data->sector->sector_name !!}</td>
-                                    {{-- <td>{!! $data->Business_specific !!}</td> --}}
-                                    {{-- <td>{!! $data->waktu_jual !!}</td> --}}
-                                    {{-- @if ($data->status_kelompok === "Ya")
+                                    <td>{!! $data->Business_specific !!}</td>
+                                    <td>{!! $data->waktu_jual !!}</td>
+                                    @if ($data->status_kelompok === "Ya")
                                     <td>{!! $data->community->name !!}</td>
                                     @else
                                     <td>Individu</td>
-                                    @endif --}}
-                                    <td><input type="checkbox" id="{!!$data->id!!}" checked data-toggle="toggle" data-on="Aktiv" data-off="Tidak" data-onstyle="success" data-offstyle="danger"></td>
+                                    @endif
+                                    <td>
+                                        @if ($data->is_active == 1)
+                                        <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" checked="1" autocomplete="off" />
+                                        @else
+                                        <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" autocomplete="off" />
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="visible-print text-center">
                                             {{-- <p>{!! $data->name !!}</p>
@@ -135,8 +142,8 @@
   </div>
 
   {!! Html::script('assets/vendors/qrcode/easy-qrcode.js') !!}
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  {{-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> --}}
   <script>
 
     function showQr() {
@@ -186,6 +193,9 @@
     {!! Html::script('assets/vendors/datatables/media/js/jquery.dataTables.responsive.min.js') !!}
     {!! Html::script('assets/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') !!}
     {!! Html::script('js/pages/datatables-init.js') !!}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {!! Html::script('assets/js/lc_switch.js') !!}
 
 
     <script type="text/javascript">
@@ -209,43 +219,39 @@
             var table = InitiateSimpleDataTable.init();
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @foreach ($business as $v)
     <script>
         $(document).ready(function(){
-            var i = {!!$v->is_active!!};
 
-            // console.log(i);
+            $('input').lc_switch();
 
-            if(i == 1){
-                $('#{!!$v->id!!}').bootstrapToggle('on');
-            }else{
-                $('#{!!$v->id!!}').bootstrapToggle('off');
-            }
-        });
-
-        $(function() {
-          $('#{!!$v->id!!}').change(function(event) {
-
+            // triggered each time a field changes status
+            $('body').delegate('.lcs_check{!!$v->id!!}', 'lcs-statuschange', function(event) {
+                var status = ($(this).is(':checked')) ? '1' : '0';
+                // console.log('field {!!$v->id!!} changed status: '+ status );
                 var id = event.target.id;
-                var is_active = $(this).prop('checked');
+                var is_active = status;
 
                 axios.post('/api/businessactive', {
                     is_active: is_active,
                     id: id
                 })
                   .then(function (response) {
-                    console.log(response);
+                    iziToast.success({
+                        title: 'Success',
+                        message: 'Berhasil',
+                        position: 'topRight'
+                    });
                 })
                   .catch(function (error) {
-                    console.log(error);
+                    iziToast.warning({
+                        title: 'Warning',
+                        message: 'Gagal Diproses',
+                        position: 'topRight'
+                    });
                 });
-
-          })
-        })
+            });
+        });
 
     </script>
     @endforeach

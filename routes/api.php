@@ -24,3 +24,4 @@ Route::post('businessactive', 'ApiControl@activation');
 Route::get('business', 'ApiControl@getbusiness');
 Route::get('report', 'ApiControl@getreport');
 Route::get('reportmount', 'ApiControl@getreportMount');
+Route::get('alamat', 'ApiControl@getalamat');

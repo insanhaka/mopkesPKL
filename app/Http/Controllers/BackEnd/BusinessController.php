@@ -8,12 +8,13 @@ use App\Business;
 use App\Province;
 use App\Sector;
 use App\Agreement;
+use App\District;
 use DB;
 
 class BusinessController extends Controller
 {
     public function __construct(){
-        // $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
+        $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
         //$this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
         $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
@@ -37,18 +38,18 @@ class BusinessController extends Controller
     public function create()
     {
         $provparent = $this->provparent;
-        //$desparent = $this->desparent;
+        $kecparent = $this->kecparent;
         $sectorparent = $this->sectorparent;
         $nikparent = $this->nikparent;
         if (\Request::ajax()) {
-            $view = view('backend.business.create', compact('provparent', 'sectorparent', 'nikparent'))->renderSections();
+            $view = view('backend.business.create', compact('provparent', 'kecparent', 'sectorparent', 'nikparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.business.create', compact('provparent', 'sectorparent', 'nikparent'))->render();
+        return view('backend.business.create', compact('provparent', 'kecparent', 'sectorparent', 'nikparent'))->render();
     }
 
     public function store(Request $request)
@@ -74,8 +75,8 @@ class BusinessController extends Controller
         $databusiness->ktp_kec = $request->ktp_kec;
         $databusiness->ktp_desa = $request->ktp_desa;
         $databusiness->ktp_addr = $request->ktp_addr;
-        $databusiness->lapak_prov = $request->lapak_prov;
-        $databusiness->lapak_kab = $request->lapak_kab;
+        $databusiness->lapak_prov = "33";
+        $databusiness->lapak_kab = "3328";
         $databusiness->lapak_kec = $request->lapak_kec;
         $databusiness->lapak_desa = $request->lapak_desa;
         $databusiness->lapak_addr = $request->lapak_addr;

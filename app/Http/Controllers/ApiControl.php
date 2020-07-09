@@ -31,7 +31,7 @@ class ApiControl extends Controller
             ->update(['is_active' => $active]);
     }
 
-    public function getbusiness(Request $request)
+    public function getbusiness()
     {
         $data = DB::table('business')
                     ->get();
@@ -41,7 +41,7 @@ class ApiControl extends Controller
         ]);
     }
 
-    public function getreport(Request $request)
+    public function getreport()
     {
         $data = DB::table('reports')
                     ->get();
@@ -51,9 +51,32 @@ class ApiControl extends Controller
         ]);
     }
 
-    public function getreportMount(Request $request)
+    public function getreportMount()
     {
         $data = Report::orderBy('count', 'desc')->select(DB::raw('nik_id,count(*) as count'))->groupBy('nik_id')->get();
+    }
+
+    public function getalamat()
+    {
+        $prov = DB::table('provinces')
+                    ->select('id','name')
+                    ->get();
+        $kab = DB::table('regencies')
+                    ->select('id', 'province_id', 'name')
+                    ->get();
+        $kec = DB::table('districts')
+                    ->select('id', 'regency_id', 'name')
+                    ->get();
+        $des = DB::table('villages')
+                    ->select('id', 'district_id', 'name')
+                    ->get();
+
+        return response()->json([
+            'prov' => $prov,
+            'kab' => $kab,
+            'kec' => $kec,
+            'des' => $des
+        ]);
     }
 
 }
