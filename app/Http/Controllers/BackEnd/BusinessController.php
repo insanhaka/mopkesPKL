@@ -17,7 +17,8 @@ class BusinessController extends Controller
         $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
         //$this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
-        $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
+        // $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
+        $this->nikparent = Agreement::where('nik', 0)->orderBy('nik', 'asc')->pluck('nik', 'nik')->prepend('NIK', 0);
         $this->provparent = Province::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Provinsi', 0);
     }
 
@@ -162,21 +163,24 @@ class BusinessController extends Controller
         return back()->with('warning','Data Berhasil Dihapus');
     }
 
-    // public function delete(Request $request)
+    public function generate($id)
+    {
+
+        $pedagang = DB::table('business')
+                ->join('agreements', 'business.nik_id', '=', 'agreements.nik')
+                ->where('business.id', '=', $id)
+                ->get();
+
+                // dd($pedagang);
+
+        return view('backend.business.qrcode', ['pedagang' => $pedagang]);
+    }
+
+    // public function qrall(Request $request)
     // {
-    //     $ids = $request->id;
-    //     if (is_array($ids)) {
-    //         $status = Seller::destroy($ids);
-    //     } else {
-    //         $status = Seller::findOrFail($ids)->delete();
-    //     }
-    //     if ($status) {
-    //         $data['status'] = true;
-    //         $data['message'] = "Data berhasil dihapus!!!";
-    //     } else {
-    //         $data['status'] = false;
-    //         $data['message'] = "Data gagal dihapus!!!";
-    //     }
-    //     return response()->json(['code' => 200,'data' => $data], 200);
+
+    //     return view('backend.business.qrcode', ['pedagang' => $pedagang]);
+        
     // }
+
 }

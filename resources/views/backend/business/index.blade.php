@@ -54,7 +54,7 @@
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     {{-- <td class="text-center no-sort" width="50px">
-                                        <input name="generate[]" type="checkbox" value="{!! $data->id !!}" id="generate" onclick="myCheckbox()" >
+                                        <input class="cekbox" name="generate[]" type="checkbox" value="{!! $data->id !!}" id="cek{!! $data->id !!}">
                                     </td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
@@ -82,9 +82,7 @@
                                             {{-- <p>{!! $data->name !!}</p>
                                             {!! QrCode::size(100)->generate(config('app.url')."/qrcode/"."{$data->nik}"); !!}
                                             <p>CODE QR IN HIRE</p> --}}
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cek{!!$data->id!!}">
-                                                Generate QR Code
-                                            </button>
+                                            <a class="btn btn-primary" href="/admin/business/{!!$data->id!!}/generate" role="button">Generate QR Code</a>
                                         </div>
                                     </td>
                                     <td align="center">
@@ -105,6 +103,7 @@
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
+                                {{-- <a class="btn btn-info" href="/admin/business/qrall" role="button">Generate All QR Code</a> --}}
                                 {!! GHelper::btnDeleteAll() !!}
                             </div>
                         </div>
@@ -115,76 +114,6 @@
         </div>
     </div>
 </section>
-
-
-@foreach ($business as $d)
-<!-- Modal -->
-<div class="modal fade" id="cek{!!$d->id!!}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Generate QR Code</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="gambar" style="display: flex; justify-content: center; align-items: center;">
-                <div id="qrcode{!!$d->id!!}"></div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          {{-- <button type="button" class="btn btn-primary" onclick="tosave()">Save changes</button> --}}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {!! Html::script('assets/vendors/qrcode/easy-qrcode.js') !!}
-  {{-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> --}}
-  <script>
-
-    function showQr() {
-        new QRCode(document.getElementById("qrcode"+ {!! $d->id !!}), {
-            text : window.location.origin + "/qrcode/"+ {!! $d->nik_id !!},
-            width: 300,
-            height: 300,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-
-            title: "{!! $d->name !!}",
-            titleFont: "bold 18px Arial",
-            titleColor: "#004284",
-            titleBgColor: "#fff",
-            titleHeight: 70,
-            titleTop: 25,
-
-            subTitle: "{!! $d->Business_specific !!}/{!! $d->sector->sector_name !!}",
-            subTitleFont: "14px Arial",
-            subTitleColor: "#004284",
-            subTitleTop: 40,
-
-            // logo:"logo-transparent.png", // LOGO
-            logo:"{{ asset('assets/img/logo-kabupaten-tegal.png') }}",
-            logoWidth:63, //
-            logoHeight:80,
-            logoBgColor:'#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-//					logoBgTransparent:false, // Whether use transparent image, default is false
-
-            correctLevel: QRCode.CorrectLevel.H
-        });
-    }
-    showQr();
-
-    function tosave(){
-
-    }
-
-  </script>
-
-@endforeach
 
 @endsection
 
@@ -223,12 +152,11 @@
     <script>
         $(document).ready(function(){
 
-            $('input').lc_switch();
+            $('.lcs_check{!!$v->id!!}').lc_switch();
 
             // triggered each time a field changes status
             $('body').delegate('.lcs_check{!!$v->id!!}', 'lcs-statuschange', function(event) {
                 var status = ($(this).is(':checked')) ? '1' : '0';
-                // console.log('field {!!$v->id!!} changed status: '+ status );
                 var id = event.target.id;
                 var is_active = status;
 
@@ -256,17 +184,22 @@
     </script>
     @endforeach
 
-    {{-- @foreach ($business as $c) --}}
+    @foreach ($business as $i)
     <script>
-        function myCheckbox(){
-            var checkBox = document.getElementById("generate");
-            if (checkBox.checked == true){
+
+        $('#cek{!!$i->id!!}').click(function(event) {
+            
+            var check = document.getElementById("cek{!!$i->id!!}");
+
+            if (check.checked == true){
                 console.log("selected");
             } else {
                 console.log("not selected");
             }
-        }
+
+        });
+
     </script>
-    {{-- @endforeach --}}
+    @endforeach
 
 @endsection

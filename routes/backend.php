@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::resource('business', 'BusinessController');
     // Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
     Route::get('/business/{id}/delete', 'BusinessController@delete');
+    Route::get('/business/{id}/generate', 'BusinessController@generate');
+    Route::get('/business/qrall', 'BusinessController@qrall');
 
     Route::resource('agreement', 'AgreementController');
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');

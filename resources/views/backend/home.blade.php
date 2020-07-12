@@ -73,7 +73,7 @@
                 <div class="card-header">
                     <h5>Peroleh Laporan Terbanyak</h5>
                 </div>
-                <div class="card-body" style="height: 300px;">
+                <div class="card-body" style="height: auto;">
                     {{-- <ul class="list-group list-group-flush">
                         <li class="list-group-item">{!!$top->agreement->name!!} = {!!$top->count!!}</li>
                     </ul> --}}
@@ -97,11 +97,14 @@
                             @endforeach
                         </tbody>
                       </table>
+                      <div class="seeall text-center">
+                          <a class="btn btn-primary" href="{!! url('/admin/report') !!}" role="button">Lihat Semua Laporan</a>
+                      </div>
                 </div>
             </div>
         </div>
         <div class="col-8">
-            <canvas id="myChart" width="400" height="150"></canvas>
+            <canvas id="myChart" width="400" height="200"></canvas>
         </div>
     </div>
 </div>

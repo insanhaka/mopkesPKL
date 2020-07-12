@@ -92,9 +92,7 @@
                     data-background="{{ asset('assets/img/unsplash/login-01.jpg') }}">
                     <div class="absolute-bottom-left index-2">
                         <div class="text-light p-5 pb-2">
-                            Photo by <a class="text-light bb" target="_blank"
-                                href="https://unsplash.com/@thomasble">Thomas Le</a> on <a
-                                class="text-light bb" target="_blank" href="https://unsplash.com">Unsplash</a>
+                            
                         </div>
                     </div>
                 </div>
