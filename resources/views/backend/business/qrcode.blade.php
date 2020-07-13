@@ -15,13 +15,17 @@
     	<div class="qrcode text-center">
     		<h3>QR CODE</h3>
     		<hr>
-    		@foreach ($pedagang as $d)
-    			<div style="display: flex; justify-content: center; align-items: center;">
-    				<div id="qrcode{!!$d->id!!}"></div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div class="row justify-content-around">
+                        @foreach ($pedagang as $d)
+                        <div class="col-md-3">
+                            <div id="qrcode{!!$d->id!!}"></div>
+                        </div>
+                        @endforeach
+                    </div>
     			</div>
-    		@endforeach
     		<div class="save" style="margin-top: 5%;">
-    			<button type="button" class="btn btn-primary" id="tosave">Download</button>
+                <button type="button" class="btn btn-primary" id="tosave">Download</button>
     			<a class="btn btn-secondary" href="/admin/business" role="button">Back</a>
     		</div>
     	</div>
@@ -30,7 +34,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 	{!! Html::script('assets/vendors/qrcode/easy-qrcode.js') !!}
 	<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 
 
 	@foreach ($pedagang as $i)
@@ -84,7 +88,7 @@
 	        // Open the image in a new window
 	        // window.open(base64image , "_blank");
 	    });
-	    
+
 
 
 	});

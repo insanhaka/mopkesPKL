@@ -41,7 +41,8 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     // Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
     Route::get('/business/{id}/delete', 'BusinessController@delete');
     Route::get('/business/{id}/generate', 'BusinessController@generate');
-    Route::get('/business/qrall', 'BusinessController@qrall');
+    Route::post('/business/generateall', 'BusinessController@qrall');
+    // Route::get('/business/cetak_pdf', 'BusinessController@cetak_pdf');
 
     Route::resource('agreement', 'AgreementController');
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');

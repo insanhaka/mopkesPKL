@@ -10,6 +10,7 @@ use App\Sector;
 use App\Agreement;
 use App\District;
 use DB;
+use PDF;
 
 class BusinessController extends Controller
 {
@@ -18,7 +19,7 @@ class BusinessController extends Controller
         //$this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
         // $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
-        $this->nikparent = Agreement::where('nik', 0)->orderBy('nik', 'asc')->pluck('nik', 'nik')->prepend('NIK', 0);
+        $this->nikparent = Agreement::get(['id', 'nik'])->pluck('nik', 'nik')->prepend('NIK', '');
         $this->provparent = Province::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Provinsi', 0);
     }
 
@@ -120,40 +121,28 @@ class BusinessController extends Controller
     {
         $business = Business::findOrFail($id);
         $provparent = $this->provparent;
-        //$desparent = $this->desparent;
+        $kecparent = $this->kecparent;
         $sectorparent = $this->sectorparent;
         $nikparent = $this->nikparent;
         if (\Request::ajax()) {
-            $view = view('backend.business.edit', compact('business', 'provparent', 'sectorparent', 'nikparent'))->renderSections();
+            $view = view('backend.business.edit', compact('business', 'kecparent', 'provparent', 'sectorparent', 'nikparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.business.edit', compact('business', 'provparent', 'sectorparent', 'nikparent'));
+        return view('backend.business.edit', compact('business', 'kecparent', 'provparent', 'sectorparent', 'nikparent'));
     }
 
     public function update(Request $request, $id)
     {
         $business = Business::findOrFail($id);
         // dd($business);
+
         $business->update($request->all());
 
-        // $url = url()->current();
-        // $fixurl = str_replace( array( $id ), ' ', $url);
-
         return redirect(url('/admin/business'))->with('success','Data Berhasil Disimpan');
-
-        // $status = $business->update($request->all());
-        // if ($status) {
-        //     $data['status'] = true;
-        //     $data['message'] = "Data berhasil disimpan!!!";
-        // } else {
-        //     $data['status'] = false;
-        //     $data['message'] = "Data gagal disimpan!!!";
-        // }
-        // return response()->json(['code' => 200,'data' => $data], 200);
     }
 
     public function delete($id)
@@ -176,11 +165,24 @@ class BusinessController extends Controller
         return view('backend.business.qrcode', ['pedagang' => $pedagang]);
     }
 
-    // public function qrall(Request $request)
-    // {
+    public function qrall(Request $request)
+    {
+        $ids = $request->generate;
+        $generate = Business::findOrFail($ids);
+        // dd($generate);
 
-    //     return view('backend.business.qrcode', ['pedagang' => $pedagang]);
-        
+        return view('backend.business.qrcode', ['pedagang' => $generate]);
+
+    }
+
+    // public function cetak_pdf(Request $request)
+    // {
+    //     $ids = $request->generate;
+    //     $generate = Business::findOrFail($ids);
+
+    //     $pdf = PDF::loadview('backend.business.qrcode', ['pedagang' => $generate]);
+    // 	return $pdf->download('QRcode-pdf');
     // }
+
 
 }

@@ -38,6 +38,7 @@
                                     <th>Nama Usaha</th>
                                     <th>Lokasi Usaha</th>
                                     <th>Tentang Laporan</th>
+                                    <th>Waktu Laporan</th>
                                     <th>Preview</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
@@ -52,6 +53,7 @@
                                     <td>{!! $data->business->Business_specific !!}</td>
                                     <td>{!! $data->business->lapak_addr !!}</td>
                                     <td>{!! $data->about !!}</td>
+                                    <td>{!! $data->created_at !!}</td>
                                     <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{!! $data->id !!}">
                                             Baca Laporan

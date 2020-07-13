@@ -5,6 +5,15 @@
     {!! Html::style('assets/vendors/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
     {!! Html::style('assets/css/lc_switch.css') !!}
     {{-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> --}}
+    <style>
+        .select-generatehide {
+            visibility: hidden;
+        }
+
+        .select-generateshow {
+            visibility: visible;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -26,7 +35,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    {!! Form::open(['url'=>\Request::path(),'class'=>'form-horizontal','id'=>'form-delete','method' => 'POST']) !!}
+                    {{-- {!! Form::open(['url'=>\Request::path(),'class'=>'form-horizontal','id'=>'form-delete','method' => 'POST']) !!} --}}
+                    <form action="/admin/business/generateall" method="POST">
+                        @csrf
                     <div class="card-body">
                         <table class="table table-striped dt-responsive" id="simpledatatable">
                             <thead>
@@ -34,7 +45,7 @@
                                     {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
-                                    <th>No</th>
+                                    <th></th>
                                     <th>Nama</th>
                                     <th>NIK</th>
                                     <th>Alamat Domisili</th>
@@ -53,10 +64,10 @@
                                 @foreach ($business as $data)
                                 <tr>
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
-                                    {{-- <td class="text-center no-sort" width="50px">
+                                    <td class="text-center no-sort" width="50px">
                                         <input class="cekbox" name="generate[]" type="checkbox" value="{!! $data->id !!}" id="cek{!! $data->id !!}">
-                                    </td> --}}
-                                    <td>{{$loop->iteration}}</td>
+                                    </td>
+                                    {{-- <td>{{$loop->iteration}}</td> --}}
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik_id !!}</td>
                                     <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
@@ -79,9 +90,6 @@
                                     </td>
                                     <td>
                                         <div class="visible-print text-center">
-                                            {{-- <p>{!! $data->name !!}</p>
-                                            {!! QrCode::size(100)->generate(config('app.url')."/qrcode/"."{$data->nik}"); !!}
-                                            <p>CODE QR IN HIRE</p> --}}
                                             <a class="btn btn-primary" href="/admin/business/{!!$data->id!!}/generate" role="button">Generate QR Code</a>
                                         </div>
                                     </td>
@@ -103,7 +111,7 @@
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
-                                {{-- <a class="btn btn-info" href="/admin/business/qrall" role="button">Generate All QR Code</a> --}}
+                                <button class="btn btn-primary select-generatehide" id="select-generate" type="submit">Generate All QR Code</button>
                                 {!! GHelper::btnDeleteAll() !!}
                             </div>
                         </div>
@@ -187,15 +195,33 @@
     @foreach ($business as $i)
     <script>
 
-        $('#cek{!!$i->id!!}').click(function(event) {
-            
-            var check = document.getElementById("cek{!!$i->id!!}");
+    $(document).ready(function(){
+        var check = document.getElementById("cek{!!$i->id!!}");
 
             if (check.checked == true){
                 console.log("selected");
+                $('#select_generate').removeClass("select-generatehide");
+                $('#select_generate').addClass("select-generateshow");
             } else {
                 console.log("not selected");
+                $('#select_generate').removeClass("select-generateshow");
+                $('#select_generate').addClass("select-generatehide");
             }
+    });
+
+        $('#cek{!!$i->id!!}').click(function(event) {
+
+            var check = document.getElementById("cek{!!$i->id!!}");
+
+            // if (check.checked == true){
+            //     console.log("selected");
+            //     $('#select_generate').removeClass("select-generatehide");
+            //     $('#select_generate').addClass("select-generateshow");
+            // } else {
+            //     console.log("not selected");
+            //     $('#select_generate').removeClass("select-generateshow");
+            //     $('#select_generate').addClass("select-generatehide");
+            // }
 
         });
 
