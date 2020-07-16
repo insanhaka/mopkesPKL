@@ -48,13 +48,8 @@
                                     <th></th>
                                     <th>Nama</th>
                                     <th>NIK</th>
-                                    <th>Alamat Domisili</th>
-                                    <th>Alamat KTP</th>
-                                    <th>Alamat Lapak</th>
-                                    <th>Sektor Usaha</th>
-                                    <th>Nama Usaha</th>
-                                    <th>Waktu Jualan</th>
-                                    <th>Kelompok</th>
+                                    <th>Jumlah Usaha</th>
+                                    <th>Data Usaha</th>
                                     <th>Aktiv ?</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -70,17 +65,6 @@
                                     {{-- <td>{{$loop->iteration}}</td> --}}
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik_id !!}</td>
-                                    <td>DESA {!! $data->village_dom->name !!}, KECAMATAN {!! $data->district_dom->name !!}</td>
-                                    <td>DESA {!! $data->village_ktp->name !!}, KECAMATAN {!! $data->district_ktp->name !!}</td>
-                                    <td>DESA {!! $data->village_lapak->name !!}, KECAMATAN {!! $data->district_lapak->name !!}</td>
-                                    <td>{!! $data->sector->sector_name !!}</td>
-                                    <td>{!! $data->Business_specific !!}</td>
-                                    <td>{!! $data->waktu_jual !!}</td>
-                                    @if ($data->status_kelompok === "Ya")
-                                    <td>{!! $data->community->name !!}</td>
-                                    @else
-                                    <td>Individu</td>
-                                    @endif
                                     <td>
                                         @if ($data->is_active == 1)
                                         <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" checked="1" autocomplete="off" />
@@ -111,7 +95,7 @@
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
-                                <button class="btn btn-primary select-generatehide" id="select-generate" type="submit">Generate All QR Code</button>
+                                <button class="select-generatehide btn btn-primary" id="qrku" type="submit">Generate All QR Code (Max 6)</button>
                                 {!! GHelper::btnDeleteAll() !!}
                             </div>
                         </div>
@@ -133,6 +117,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {!! Html::script('assets/js/lc_switch.js') !!}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 
     <script type="text/javascript">
@@ -195,33 +180,22 @@
     @foreach ($business as $i)
     <script>
 
-    $(document).ready(function(){
-        var check = document.getElementById("cek{!!$i->id!!}");
-
-            if (check.checked == true){
-                console.log("selected");
-                $('#select_generate').removeClass("select-generatehide");
-                $('#select_generate').addClass("select-generateshow");
-            } else {
-                console.log("not selected");
-                $('#select_generate').removeClass("select-generateshow");
-                $('#select_generate').addClass("select-generatehide");
-            }
-    });
-
         $('#cek{!!$i->id!!}').click(function(event) {
 
-            var check = document.getElementById("cek{!!$i->id!!}");
+            var favorite = [];
+            $.each($("input[name='generate[]']:checked"), function(){
+                favorite.push($(this).val());
+            });
+            // alert("My favourite sports are: " + favorite.join(", "));
+            var terpilih = favorite.length;
 
-            // if (check.checked == true){
-            //     console.log("selected");
-            //     $('#select_generate').removeClass("select-generatehide");
-            //     $('#select_generate').addClass("select-generateshow");
-            // } else {
-            //     console.log("not selected");
-            //     $('#select_generate').removeClass("select-generateshow");
-            //     $('#select_generate').addClass("select-generatehide");
-            // }
+            if(terpilih > 0){
+                $('#qrku').removeClass("select-generatehide");
+                $('#qrku').addClass("select-generateshow");
+            }else {
+                $('#qrku').removeClass("select-generateshow");
+                $('#qrku').addClass("select-generatehide");
+            }
 
         });
 

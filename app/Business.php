@@ -39,29 +39,9 @@ class Business extends Model
         return $this->belongsTo('App\Agreement', 'nik_id', 'id');
     }
 
-    public function district_dom()
-    {
-        return $this->belongsTo('App\District', 'domisili_kec', 'id');
-    }
-
-    public function district_ktp()
-    {
-        return $this->belongsTo('App\District', 'ktp_kec', 'id');
-    }
-
     public function district_lapak()
     {
         return $this->belongsTo('App\District', 'lapak_kec', 'id');
-    }
-
-    public function village_dom()
-    {
-        return $this->belongsTo('App\Village', 'domisili_desa', 'id');
-    }
-
-    public function village_ktp()
-    {
-        return $this->belongsTo('App\Village', 'ktp_desa', 'id');
     }
 
     public function village_lapak()

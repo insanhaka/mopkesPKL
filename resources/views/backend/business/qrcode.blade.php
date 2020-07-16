@@ -18,9 +18,9 @@
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="row justify-content-around">
                         @foreach ($pedagang as $d)
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3"> --}}
                             <div id="qrcode{!!$d->id!!}"></div>
-                        </div>
+                        {{-- </div> --}}
                         @endforeach
                     </div>
     			</div>

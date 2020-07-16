@@ -35,6 +35,8 @@
                                     <th>No.</th>
                                     <th>Nama Pihak Yang Menyetujui</th>
                                     <th>NIK</th>
+                                    <th>Alamat KTP</th>
+                                    <th>Alamat Domisili</th>
                                     <th>Kelompok / Individu</th>
                                     <th>Nama Kelompok</th>
                                     <th>Bukti</th>
@@ -49,6 +51,8 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik !!}</td>
+                                    <td>DESA {!! $data->village_ktp->name !!}, KEC. {!! $data->district_ktp->name !!}</td>
+                                    <td>DESA {!! $data->village_dom->name !!}, KEC. {!! $data->district_dom->name !!}</td>
                                     <td>{!! $data->status !!}</td>
                                     @if ($data->status === "Kelompok")
                                     <td>{!! $data->community->name !!}</td>

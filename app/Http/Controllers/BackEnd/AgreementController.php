@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Agreement;
 use App\Community;
+use App\Province;
+use App\District;
 use DB;
 
 class AgreementController extends Controller
 {
     public function __construct(){
         $this->communitiesparent = Community::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kelompok', '');
+        $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
+        $this->provparent = Province::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Provinsi', 0);
     }
 
     public function index()
@@ -34,15 +38,17 @@ class AgreementController extends Controller
     public function create()
     {
         $communitiesparent = $this->communitiesparent;
+        $provparent = $this->provparent;
+        $kecparent = $this->kecparent;
         if (\Request::ajax()) {
-            $view = view('backend.agreements.create', compact('communitiesparent'))->renderSections();
+            $view = view('backend.agreements.create', compact('communitiesparent', 'provparent', 'kecparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.agreements.create', compact('communitiesparent'))->render();
+        return view('backend.agreements.create', compact('communitiesparent', 'provparent', 'kecparent'))->render();
     }
 
     public function store(Request $request)
@@ -57,7 +63,7 @@ class AgreementController extends Controller
 			'attachment' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required',
             'nik' => 'required',
-            'menu_communities' => 'required'
+            // 'menu_communities' => 'required'
 			// 'attachment' => 'required',
         ]);
 
@@ -66,18 +72,28 @@ class AgreementController extends Controller
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('attachment');
 
-            $nama_file = time()."_".$file->getClientOriginalName();
+            $nama_file = time()."_".$request->name;
 
                     // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'agreement_file';
             $file->move($tujuan_upload,$nama_file);
 
             $input =  Agreement::create([
-                'attachment' => $nama_file,
-                'status' => $data_communities,
                 'name' => $request->name,
                 'nik' => $request->nik,
+                'ktp_prov' => $request->ktp_prov,
+                'ktp_kab' => $request->ktp_kab,
+                'ktp_kec' => $request->ktp_kec,
+                'ktp_desa' => $request->ktp_desa,
+                'ktp_addr' => $request->ktp_addr,
+                'domisili_prov' => $request->domisili_prov,
+                'domisili_kab' => $request->domisili_kab,
+                'domisili_kec' => $request->domisili_kec,
+                'domisili_desa' => $request->domisili_desa,
+                'domisili_addr' => $request->domisili_addr,
+                'status' => $data_communities,
                 'community_id' => $request->community_id,
+                'attachment' => $nama_file,
             ]);
 
             return redirect(url()->current())->with('success','Data Berhasil Disimpan');
@@ -94,11 +110,21 @@ class AgreementController extends Controller
             $file->move($tujuan_upload,$nama_file);
 
             $input =  Agreement::create([
-                'attachment' => $nama_file,
-                'status' => $data_communities,
                 'name' => $request->name,
                 'nik' => $request->nik,
+                'ktp_prov' => $request->ktp_prov,
+                'ktp_kab' => $request->ktp_kab,
+                'ktp_kec' => $request->ktp_kec,
+                'ktp_desa' => $request->ktp_desa,
+                'ktp_addr' => $request->ktp_addr,
+                'domisili_prov' => $request->domisili_prov,
+                'domisili_kab' => $request->domisili_kab,
+                'domisili_kec' => $request->domisili_kec,
+                'domisili_desa' => $request->domisili_desa,
+                'domisili_addr' => $request->domisili_addr,
+                'status' => $data_communities,
                 'community_id' => $request->community_id,
+                'attachment' => $nama_file,
             ]);
 
             return redirect(url()->current())->with('success','Data Berhasil Disimpan');

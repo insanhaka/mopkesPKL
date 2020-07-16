@@ -22,7 +22,7 @@
                     <div class="p-4 m-3">
                         {{-- <img src="{{ asset('assets/img/stisla-fill.svg') }}" alt="logo" width="80"
                             class="shadow-light rounded-circle mb-5 mt-2">--}}
-                        <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">MOPKES</span>
+                        <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">MUTAN</span>
                         </h4>
                         <p class="text-muted">Before you get started, you must login first.</p>
                         {!! Form::open(['route' => 'admin.login','class'=>'needs-validation','novalidate'=>'']) !!}
@@ -92,7 +92,7 @@
                     data-background="{{ asset('assets/img/unsplash/login-01.jpg') }}">
                     <div class="absolute-bottom-left index-2">
                         <div class="text-light p-5 pb-2">
-                            
+
                         </div>
                     </div>
                 </div>
