@@ -48,12 +48,9 @@
 
                         </div>
 
-                        <div id="writeforms">
-                        <div class="writeform">
-                        <fieldset>
                             <br>
-                            <button type="button" class="btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"><i class="fa fa-close"></i></button>
-                            <hr style="border: solid 1px #4b7bec; margin-top: -20px; margin-bottom: 3%;">
+                            <h6>Data Usaha 1</h6>
+                            <hr style="border: solid 1px #4b7bec; margin-bottom: 3%;">
 
                             <div class="row">
 
@@ -110,9 +107,6 @@
                                 </div>
 
                             </div>
-                        </fieldset>
-                        </div>
-                        </div>
 
                     </div>
                     <div class="card-footer border-top">
@@ -210,56 +204,6 @@
             });
 
         }
-    </script>
-
-    <script>
-        //define template
-        var template = $('#writeforms .writeform:first').clone();
-
-        //define counter
-        var sectionsCount = 1;
-
-        //add new section
-        $('body').on('click', '#tambahusaha', function() {
-
-
-            $.comboAjax('#lapak_prov','#lapak_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
-            $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
-            $.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
-            $(".selectku").select2();
-
-            //increment
-            sectionsCount++;
-
-            //loop through each input
-            var section = template.clone().find(':input').each(function(){
-
-                //set id to store the updated section number
-                var newId = this.id + sectionsCount;
-
-                //update for label
-                $(this).prev().attr('for', newId);
-
-                //update id
-                this.id = newId;
-
-            }).end()
-
-            //inject new section
-            .appendTo('#writeforms');
-            return false;
-        });
-
-        //remove section
-        // $('#writeforms').on('click', '.remove', function() {
-        //     //fade out section
-        //     $(this).parent().fadeOut(300, function(){
-        //         //remove parent element (main section)
-        //         $(this).parent().parent().empty();
-        //         return false;
-        //     });
-        //     return false;
-        // });
     </script>
 
     <script>
