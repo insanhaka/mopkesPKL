@@ -72,7 +72,7 @@ class AgreementController extends Controller
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('attachment');
 
-            $nama_file = time()."_".$request->name;
+            $nama_file = time()."_".$file->getClientOriginalName();
 
                     // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'agreement_file';
@@ -151,15 +151,17 @@ class AgreementController extends Controller
     {
         $agreement = Agreement::findOrFail($id);
         $communitiesparent = $this->communitiesparent;
+        $provparent = $this->provparent;
+        $kecparent = $this->kecparent;
         if (\Request::ajax()) {
-            $view = view('backend.agreements.edit', compact('agreement', 'communitiesparent'))->renderSections();
+            $view = view('backend.agreements.edit', compact('agreement', 'communitiesparent', 'provparent', 'kecparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.agreements.edit', compact('agreement', 'communitiesparent'));
+        return view('backend.agreements.edit', compact('agreement', 'communitiesparent', 'provparent', 'kecparent'));
     }
 
     public function update(Request $request, $id)
@@ -182,19 +184,9 @@ class AgreementController extends Controller
 
             $nama_file = time()."_".$file->getClientOriginalName();
 
-                    // isi dengan nama folder tempat kemana file diupload
+            // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'agreement_file';
             $file->move($tujuan_upload,$nama_file);
-
-            // $input =  Agreement::create([
-            //     'attachment' => $nama_file,
-            //     'status' => 'Kelompok',
-            //     'name' => $request->name,
-            // ]);
-
-            // $status = Kelompok::create([
-            //     'name' => $request->name,
-            // ]);
 
             $data = Agreement::find($id);
             $data->name = $request->name;
@@ -202,9 +194,6 @@ class AgreementController extends Controller
             $data->community_id = $request->community_id;
             $data->attachment = $nama_file;
             $data->save();
-
-            // $url = url()->current();
-            // $fixurl = str_replace( array( $id ), ' ', $url);
 
             return redirect(url('/admin/agreement'))->with('success','Data Berhasil Disimpan');
 

@@ -25,7 +25,7 @@
             <div class="col-12">
                 <div class="card card-primary">
 
-                    {!!Form::open(['route'=>'admin.business.store','class'=>'form-horizontal validate','id'=>'simpan','novalidate'=>''])!!}
+                    {!!Form::open(['route'=>'admin.business.store','class'=>'form-horizontal validate', 'method'=>'POST', 'enctype'=>'multipart/form-data', 'id'=>'simpan','novalidate'=>''])!!}
                     <div class="card-body">
                         <div class="row">
 
@@ -48,77 +48,68 @@
 
                         </div>
 
-                        <div id="writeforms">
-                        <div class="writeform">
-                        <fieldset>
-                            <br>
-                            <button type="button" class="btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"><i class="fa fa-close"></i></button>
-                            <hr style="border: solid 1px #4b7bec; margin-top: -20px; margin-bottom: 3%;">
+                        <div class="clonedInput" id="removeId1" style="padding: 1%;">
 
-                            <div class="row">
+                            <div id="clonedInput">
+                                <br>
+                                <hr style="border: solid 1px #4b7bec; margin-top: -20px; margin-bottom: 2%;">
 
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('sector', 'Sektor Usaha') !!}
-                                    {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('spesifikproduk', 'Nama Usaha') !!}
-                                    {!! Form::text('Business_specific', null ,['id'=>'Business_specific','class'=>'form-control','placeholder'=>'Tulis nama usaha','required'=>'true']) !!}
-                                </div>
-                                <div class="form-group col-lg-2 col-12">
-                                    {!! Form::label('mulai_jual', 'Mulai Jualan') !!}
-                                    <div class="col-lg-12 pl-0">
-                                        {!! Form::select('mulai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                <div class="row">
+
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('sector', 'Sektor Usaha') !!}
+                                        {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                                     </div>
-                                </div>
-                                <div class="form-group col-lg-2 col-12">
-                                    {!! Form::label('selesai_jual', 'Selesai Jualan') !!}
-                                    <div class="col-lg-12 pl-0">
-                                        {!! Form::select('selesai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('spesifikproduk', 'Nama Usaha') !!}
+                                        {!! Form::text('business_name', null ,['id'=>'business_name','class'=>'form-control','placeholder'=>'Tulis nama usaha','required'=>'true']) !!}
                                     </div>
-                                </div>
-
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('lapakkec', 'Lokasi Jual (Kec)') !!}
-                                    {{-- {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
-                                    <div>
-                                        <select class="form-control selectku" id="lapak_kec" name="lapak_kec" onchange="lapakkec()">
-                                            @foreach ($kecparent as $key=>$i)
-                                            <option value="{!! $key !!}">{!! $i !!}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="form-group col-lg-2 col-12">
+                                        {!! Form::label('mulai_jual', 'Mulai Jualan') !!}
+                                        <div class="col-lg-12 pl-0">
+                                            {!! Form::select('mulai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('lapakdes', 'Lokasi Jual (Desa)') !!}
-                                    {!! Form::select('lapak_desa', [], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                                </div>
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('lapakaddr', 'Alamat Lokasi Jual Lengkap') !!}
-                                    {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
-                                </div>
+                                    <div class="form-group col-lg-2 col-12">
+                                        {!! Form::label('selesai_jual', 'Selesai Jualan') !!}
+                                        <div class="col-lg-12 pl-0">
+                                            {!! Form::select('selesai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                        </div>
+                                    </div>
 
-                                <div class="form-group col-lg-4 col-12">
-                                    {!! Form::label('contact', 'Nomor HP') !!}
-                                    <input class="form-control" type="tel" placeholder="ex : 087712345432" id="contact" name="contact">
-                                </div>
-                                <div class="form-group col-lg-8 col-12" style="margin: 7px;">
-                                    {!! Form::label('photo', 'Foto Usaha (jpeg/png/jpg | max:2MB)') !!}
-                                    <br>
-                                    <input type="file" id="photo" name="photo" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                                    <img id="blah" alt="your image" width="100" height="100" />
-                                </div>
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('lapakkec', 'Lokasi Jual (Kec)') !!}
+                                        {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                    </div>
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('lapakdes', 'Lokasi Jual (Desa)') !!}
+                                        {!! Form::select('lapak_desa', [], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                    </div>
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('lapakaddr', 'Alamat Lokasi Jual Lengkap') !!}
+                                        {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
+                                    </div>
 
+                                    <div class="form-group col-lg-4 col-12">
+                                        {!! Form::label('contact', 'Nomor HP') !!}
+                                        <input class="form-control" type="tel" placeholder="ex : 087712345432" id="contact" name="contact">
+                                    </div>
+                                    <div class="form-group col-lg-8 col-12" style="margin: 7px;">
+                                        {!! Form::label('photo', 'Foto Usaha (jpeg/png/jpg | max:2MB)') !!}
+                                        <br>
+                                        <input type="file" id="photo" name="photo" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                        <img id="blah" alt="your image" width="100" height="100" />
+                                    </div>
+
+                                </div>
                             </div>
-                        </fieldset>
-                        </div>
                         </div>
 
                     </div>
                     <div class="card-footer border-top">
                         <div class="row justify-content-between">
                             <div class="col-4 text-md-left text-center">
-                                <button type="button" class="btn btn-primary" id="tambahusaha">Tambah Data Usaha</button>
+                                {{-- <button type="button" class="btn btn-primary" id="tambahusaha">Tambah Data Usaha</button> --}}
                             </div>
                             <div class="col-4 text-md-right text-center">
                                 {!! GHelper::btnSave() !!}
@@ -153,36 +144,6 @@
             $.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
             $(".selectku").select2();
             //SAVE
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    var $this = $('form#simpan');
-                    $.ajax({
-                        url : $this.attr('action'),
-                        type : 'POST',
-                        data : $this.serialize(),
-                        dataType: 'json',
-                        success:function(response){
-                            console.log(response.data.status);
-                            if(response.data.status){
-                                url = APP_URL_ADMIN +'/business';
-                                history.pushState(null, null, url);
-                                load(url);
-                                iziToast.success({
-                                    title: 'Success',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }else{
-                                iziToast.error({
-                                    title: 'Failed',
-                                    message: response.data.message,
-                                    position: 'topRight'
-                                });
-                            }
-                        }
-                    });
-                }
-            });
             InitiateSimpleValidate.init();
         });
 
@@ -213,63 +174,35 @@
     </script>
 
     <script>
-        //define template
-        var template = $('#writeforms .writeform:first').clone();
-
-        //define counter
-        var sectionsCount = 1;
-
-        //add new section
-        $('body').on('click', '#tambahusaha', function() {
-
-
-            $.comboAjax('#lapak_prov','#lapak_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
-            $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
-            $.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
-            $(".selectku").select2();
-
-            //increment
-            sectionsCount++;
-
-            //loop through each input
-            var section = template.clone().find(':input').each(function(){
-
-                //set id to store the updated section number
-                var newId = this.id + sectionsCount;
-
-                //update for label
-                $(this).prev().attr('for', newId);
-
-                //update id
-                this.id = newId;
-
-            }).end()
-
-            //inject new section
-            .appendTo('#writeforms');
-            return false;
+    $(document).ready(function() {
+        $('#test').isiaFormRepeater({
+            addButton: '<div class="repeat-add-wrapper"><a data-repeat-add-btn class="repeat-add pure-button pure-button-primary" href="#">Add</a></div>',
+            removeButton: '<a data-repeat-remove-btn class="repeat-remove pure-button pure-button-primary" href="#">Remove</a>'
         });
-
-        //remove section
-        // $('#writeforms').on('click', '.remove', function() {
-        //     //fade out section
-        //     $(this).parent().fadeOut(300, function(){
-        //         //remove parent element (main section)
-        //         $(this).parent().parent().empty();
-        //         return false;
-        //     });
-        //     return false;
-        // });
+        $('#test2').isiaFormRepeater();
+    });
     </script>
 
-    <script>
-        function lapakkec() {
-            var i = document.getElementById("lapak_kec").value;
-
-            console.log(i);
-
+    {{-- <script type="text/javascript">
+        function createClone() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: APP_URL_ADMIN +'/business/clone',
+                type : 'POST',
+                data: {'_token': CSRF_TOKEN, 'div_count': $('.clonedInput').length + 1},
+                success: function(data){
+                    var obj = JSON.parse(data);
+                    $('#clonedInput').before(obj);
+                }
+            });
         }
-    </script>
+        function removedClone(id){
+            var r = confirm("Are you sure you want to delete?");
+            if (r == true) {
+                $(id).remove();
+            }
+        }
+    </script> --}}
 
 
 @endsection

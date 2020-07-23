@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
-                    {!! Form::model($business, ['route' => ['admin.business.update', $business->id],'class'=>'form-horizontal validate','method'=>'PUT', 'id'=>'simpan','novalidate'=>'']) !!}
+                    {!! Form::model($business, ['route' => ['admin.business.update', $business->id],'class'=>'form-horizontal validate','method'=>'PUT', 'enctype'=>'multipart/form-data', 'id'=>'simpan','novalidate'=>'']) !!}
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-lg-6 col-12">
@@ -35,106 +35,65 @@
                                 {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
                                 <input class="form-control" type="text" id="name" name="name" value="{!!$business->name!!}" readonly>
                             </div>
-
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('ktpprov', 'Alamat KTP (Prov) (*)') !!}
-                                {{-- {!! Form::select('ktp_prov', $provparent, null,['id'=>'ktp_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
-                                <div>
-                                    <select class="form-control selectku" id="ktp_prov" name="ktp_prov">
-                                        @foreach ($provparent as $key => $i)
-                                        <option value="{!! $key !!}">{!! $i !!}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('ktpkab', 'Alamat KTP (Kab/Kota) (*)') !!}
-                                {!! Form::select('ktp_kab', [], null,['id'=>'ktp_kab','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('ktpkec', 'Alamat KTP (Kec) (*)') !!}
-                                {!! Form::select('ktp_kec', [], null,['id'=>'ktp_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('ktpdes', 'Alamat KTP (Desa) (*)') !!}
-                                {!! Form::select('ktp_desa', [], null,['id'=>'ktp_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('ktpaddr', 'Alamat KTP Lengkap') !!}
-                                {!! Form::text('ktp_addr', null ,['id'=>'ktp_addr','class'=>'form-control','placeholder'=>'Alamat sesuai KTP lengkap','required'=>'true']) !!}
-                            </div>
                         </div>
+                        <div id="writeforms">
+                            {{-- <br> --}}
+                            {{-- <hr style="border: solid 1px #4b7bec; margin-top: -20px; margin-bottom: 2%;"> --}}
 
-                        <div class="row" style="padding-left: 2%;">
-                            <div class="form-group col-lg-12 col-12">
-                                <input class="form-check-input" type="checkbox" value="" id="sesuai" onclick="sesuaiktp()">
-                                <label class="form-check-label" for="defaultCheck1">
-                                  Alamat Domisili Sesuai KTP?
-                                </label>
-                            </div>
-                        </div>
+                            <div class="row">
 
-                        <div class="row">
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisiliprov', 'Domisili (Prov) (*)') !!}
-                                {{-- {!! Form::select('domisili_prov', $provparent, null,['id'=>'domisili_prov','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
-                                <div>
-                                    <select class="form-control selectdomprov" id="domisili_prov" name="domisili_prov">
-                                        @foreach ($provparent as $key => $i)
-                                        <option value="{!! $key !!}">{!! $i !!}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('sector', 'Sektor Usaha') !!}
+                                    {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                                 </div>
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilikab', 'Domisili (Kab/Kota) (*)') !!}
-                                {!! Form::select('domisili_kab', [], null,['id'=>'domisili_kab','class'=>'form-control selectdomkab','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilikec', 'Domisili (Kec) (*)') !!}
-                                {!! Form::select('domisili_kec', [], null,['id'=>'domisili_kec','class'=>'form-control selectdomkec','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-2 col-12">
-                                {!! Form::label('domisilides', 'Domisili (Desa) (*)') !!}
-                                {!! Form::select('domisili_desa',[], null,['id'=>'domisili_desa','class'=>'form-control selectdomdes', 'style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('domisiliaddr', 'Alamat Domisili Lengkap') !!}
-                                {!! Form::text('domisili_addr', null ,['id'=>'domisili_addr','class'=>'form-control','placeholder'=>'Alamat domisili lengkap','required'=>'true']) !!}
-                            </div>
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('spesifikproduk', 'Nama Usaha') !!}
+                                    {!! Form::text('business_name', null ,['id'=>'business_name','class'=>'form-control','placeholder'=>'Tulis nama usaha','required'=>'true']) !!}
+                                </div>
+                                <div class="form-group col-lg-2 col-12">
+                                    {!! Form::label('mulai_jual', 'Mulai Jualan') !!}
+                                    <div class="col-lg-12 pl-0">
+                                        {!! Form::select('mulai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2 col-12">
+                                    {!! Form::label('selesai_jual', 'Selesai Jualan') !!}
+                                    <div class="col-lg-12 pl-0">
+                                        {!! Form::select('selesai_jual', ['Pagi'=>'Pagi', 'Siang'=>'Siang', 'Sore'=>'Sore', 'Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                    </div>
+                                </div>
 
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakkec', 'Lokasi Jual (Kec) (*)') !!}
-                                {{-- {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!} --}}
-                                <div>
-                                    <select class="form-control selectdomprov" id="lapak_kec" name="lapak_kec">
-                                        @foreach ($kecparent as $key => $k)
-                                        <option value="{!! $key !!}">{!! $k !!}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('lapakkec', 'Lokasi Jual (Kec) *') !!}
+                                    {!! Form::select('lapak_kec', $kecparent, null,['id'=>'lapak_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                                    {{-- <div>
+                                        <select class="form-control selectku" id="lapak_kec" name="lapak_kec" onchange="lapakkec()">
+                                            @foreach ($kecparent as $key=>$i)
+                                            <option value="{!! $key !!}">{!! $i !!}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
                                 </div>
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakdes', 'Lokasi Jual (Desa) (*)') !!}
-                                {!! Form::select('lapak_desa',[], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('lapakaddr', 'Alamat Lokasi Jual Lengkap') !!}
-                                {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('sector', 'Sektor Usaha') !!}
-                                {!! Form::select('sector_id', $sectorparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('spesifikproduk', 'Nama Usaha') !!}
-                                {!! Form::text('Business_specific', null ,['id'=>'Business_specific','class'=>'form-control','placeholder'=>'Tulis nama usaha','required'=>'true']) !!}
-                            </div>
-                            <div class="form-group col-lg-4 col-12">
-                                {!! Form::label('waktu_jualan', 'Waktu Jualan') !!}
-                                <div class="col-lg-4 pl-0">
-                                    {!! Form::select('waktu_jual', ['Pagi'=>'Pagi','Malam'=>'Malam'], null, ['class'=>'form-control']) !!}
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('lapakdes', 'Lokasi Jual (Desa) *') !!}
+                                    {!! Form::select('lapak_desa', [], null,['id'=>'lapak_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                                 </div>
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('lapakaddr', 'Alamat Lokasi Jual Lengkap') !!}
+                                    {!! Form::text('lapak_addr', null ,['id'=>'lapak_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
+                                </div>
+
+                                <div class="form-group col-lg-4 col-12">
+                                    {!! Form::label('contact', 'Nomor HP *') !!}
+                                    <input class="form-control" type="tel" placeholder="ex : 087712345432" id="contact" name="contact">
+                                </div>
+                                <div class="form-group col-lg-8 col-12" style="margin: 7px;">
+                                    {!! Form::label('photo', 'Foto Usaha * (jpeg/png/jpg | max:2MB)') !!}
+                                    <br>
+                                    <input type="file" id="photo" name="photo" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                    <img id="blah" alt="your image" width="100" height="100" />
+                                </div>
+
                             </div>
                         </div>
                         <p style="margin-top: 10%; font-size: 12px; color: #e84118;">Tanda (*) wajib di input ulang</p>
@@ -165,49 +124,12 @@
 
 
     <script>
-
-        function nik() {
-            var x = document.getElementById("selected_nik").value;
-
-            // Make a request for a user with a given ID
-            axios.get('/api/data-agreement')
-            .then(function (response) {
-                var val = response.data.value;
-
-                for (var n in val) {
-                    if (val[n].nik == x){
-                        document.getElementById("name").value=val[n].name;
-                    }
-                }
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            });
-
-        }
-
-    </script>
-
-
-    <script>
         $(document).ready(function(){
-            $.comboAjax('#domisili_prov','#domisili_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
-            $.comboAjax('#domisili_kab','#domisili_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
-			$.comboAjax('#domisili_kec','#domisili_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
-
-            $.comboAjax('#ktp_prov','#ktp_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
-            $.comboAjax('#ktp_kab','#ktp_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
-			$.comboAjax('#ktp_kec','#ktp_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
 
             $.comboAjax('#lapak_prov','#lapak_kab',APP_URL_ADMIN+'/getRegenciesFromProvince');
             $.comboAjax('#lapak_kab','#lapak_kec',APP_URL_ADMIN+'/getDistrictsFromRegency');
-			$.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+            $.comboAjax('#lapak_kec','#lapak_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
             $(".selectku").select2();
-            $(".selectdomprov").select2();
-            $(".selectdomkab").select2();
-            $(".selectdomkec").select2();
-            $(".selectdomdes").select2();
             //SAVE
             // $.validator.setDefaults({
             //     submitHandler: function () {
@@ -240,67 +162,31 @@
             //     }
             // });
             InitiateSimpleValidate.init();
-            sesuaiktp()
         });
 
     </script>
 
+
     <script>
-        function sesuaiktp(){
-            var sama = document.getElementById("sesuai");
-            if (sama.checked == true){
-                // Make a request for a user with a given ID
-                axios.get('/api/alamat')
-                .then(function (response) {
-                    var prov = response.data['prov'];
-                    var kab = response.data['kab'];
-                    var kec = response.data['kec'];
-                    var des = response.data['des'];
+        function nik() {
+            var x = document.getElementById("selected_nik").value;
 
-                    var ktp_prov = document.getElementById("ktp_prov").value;
-                    $(".selectdomprov").val(ktp_prov);
-                    $(".selectdomprov").trigger('change');
+            // Make a request for a user with a given ID
+            axios.get('/api/data-agreement')
+            .then(function (response) {
+                var val = response.data.value;
 
-                    var ktp_kab = document.getElementById("ktp_kab").value;
-                    for (var n in kab) {
-                        if (kab[n].id == ktp_kab){
-                            $("#domisili_kab").html('<option value="' + kab[n].id + '">' + kab[n].name + '</option>');
-                            // console.log(kab[n]);
-                        }
+                for (var n in val) {
+                    if (val[n].nik == x){
+                        document.getElementById("name").value=val[n].name;
                     }
+                }
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            });
 
-                    var ktp_kec = document.getElementById("ktp_kec").value;
-                    for (var n in kec) {
-                        if (kec[n].id == ktp_kec){
-                            $("#domisili_kec").html('<option value="' + kec[n].id + '">' + kec[n].name + '</option>');
-                            // console.log(kec[n]);
-                        }
-                    }
-
-                    var ktp_des = document.getElementById("ktp_desa").value;
-                    for (var n in des) {
-                        if (des[n].id == ktp_des){
-                            $("#domisili_desa").html('<option value="' + des[n].id + '">' + des[n].name + '</option>');
-                            // console.log(kab[n]);
-                        }
-                    }
-
-                    var ktp_addr = document.getElementById("ktp_addr").value;
-                    document.getElementById("domisili_addr").value = ktp_addr;
-
-
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                });
-            } else {
-                $(".selectdomprov").val(0).trigger('change');
-                $(".selectdomkab").val(0).trigger('change');
-                $(".selectdomkec").val(0).trigger('change');
-                $(".selectdomdes").val(0).trigger('change');
-                document.getElementById("domisili_addr").value = "";
-            }
         }
     </script>
 

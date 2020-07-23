@@ -15,6 +15,7 @@ class CreateBusinessTable extends Migration
     {
         Schema::create('business', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
             $table->unsignedBigInteger('nik_id');
             $table->foreign('nik_id')->references('id')->on('agreements')->onDelete('cascade');
             $table->string('business_name');

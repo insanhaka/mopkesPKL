@@ -56,7 +56,7 @@
 	        titleHeight: 70,
 	        titleTop: 25,
 
-	        subTitle: "{!! $i->Business_specific !!}",
+	        subTitle: "{!! $i->business_name !!}",
 	        subTitleFont: "14px Arial",
 	        subTitleColor: "#004284",
 	        subTitleTop: 40,

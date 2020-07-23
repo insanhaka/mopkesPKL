@@ -48,8 +48,9 @@
                                     <th></th>
                                     <th>Nama</th>
                                     <th>NIK</th>
-                                    <th>Jumlah Usaha</th>
-                                    <th>Data Usaha</th>
+                                    <th>Lokasi Usaha</th>
+                                    <th>Nama Usaha</th>
+                                    <th>Waktu Usaha</th>
                                     <th>Aktiv ?</th>
                                     <th>QR Code</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -65,6 +66,9 @@
                                     {{-- <td>{{$loop->iteration}}</td> --}}
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->nik_id !!}</td>
+                                    <td>{!! $data->lapak_addr !!} </td>
+                                    <td>{!! $data->business_name !!}</td>
+                                    <td>{!! $data->mulai_jual !!} - {!! $data->selesai_jual !!}</td>
                                     <td>
                                         @if ($data->is_active == 1)
                                         <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" checked="1" autocomplete="off" />

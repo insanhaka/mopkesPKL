@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     Route::get('/business/{id}/generate', 'BusinessController@generate');
     Route::post('/business/generateall', 'BusinessController@qrall');
     // Route::get('/business/cetak_pdf', 'BusinessController@cetak_pdf');
+    Route::post('/business/clone', 'BusinessController@getCloneFields');
 
     Route::resource('agreement', 'AgreementController');
     // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');

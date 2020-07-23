@@ -12,6 +12,7 @@ use App\District;
 use App\Village;
 use DB;
 use PDF;
+use Illuminate\Support\Facades\Input;
 
 class BusinessController extends Controller
 {
@@ -27,6 +28,7 @@ class BusinessController extends Controller
     public function index()
     {
         $business = Business::all();
+
         if (\Request::ajax()) {
             $view = view('backend.business.index', compact('business'))->renderSections();
             return response()->json([
@@ -60,19 +62,33 @@ class BusinessController extends Controller
 
         // dd($request->all());
 
+        $this->validate($request, [
+            'photo' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('photo');
+
+        $nama_file = time()."_".$file->getClientOriginalName();
+
+                // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'foto_usaha';
+        $file->move($tujuan_upload,$nama_file);
+
         $datakelompok = Agreement::where('nik', $request->nik_id)->first();
-        // dd($datakelompok->nik);
-        // $id_nik = Agreement::where('nik', $request->nik_id)->first();
-        // dd($id_nik->id);
 
         $databusiness = new Business;
+        $databusiness->name = $request->name;
         $databusiness->nik_id = $request->nik_id;
         $databusiness->lapak_kec = $request->lapak_kec;
         $databusiness->lapak_desa = $request->lapak_desa;
         $databusiness->lapak_addr = $request->lapak_addr;
         $databusiness->sector_id = $request->sector_id;
-        $databusiness->Business_specific = $request->Business_specific;
-        $databusiness->waktu_jual = $request->waktu_jual;
+        $databusiness->business_name = $request->business_name;
+        $databusiness->mulai_jual = $request->mulai_jual;
+        $databusiness->selesai_jual = $request->selesai_jual;
+        $databusiness->contact = $request->contact;
+        $databusiness->photo = $nama_file;
         if($datakelompok->community_id == null){
             $databusiness->status_kelompok = "Tidak";
         }else {
@@ -80,22 +96,18 @@ class BusinessController extends Controller
         }
         $databusiness->is_active = 1;
         $databusiness->community_id = $datakelompok->community_id;
-        // $databusiness->save();
-
-        // $url = url()->current();
-        // $fixurl = str_replace( array( $id ), ' ', $url);
-
-        // return redirect($fixurl)->with('success','Data Berhasil Disimpan');
 
         $status = $databusiness->save();
-        if ($status) {
-            $data['status'] = true;
-            $data['message'] = "Data berhasil disimpan!!!";
-        } else {
-            $data['status'] = false;
-            $data['message'] = "Data gagal disimpan!!!";
-        }
-        return response()->json(['code' => 200,'data' => $data], 200);
+        // if ($status) {
+        //     $data['status'] = true;
+        //     $data['message'] = "Data berhasil disimpan!!!";
+        // } else {
+        //     $data['status'] = false;
+        //     $data['message'] = "Data gagal disimpan!!!";
+        // }
+        // return response()->json(['code' => 200,'data' => $data], 200);
+
+        return redirect(url()->current())->with('success','Data Berhasil Disimpan');
     }
 
     public function show($id)
@@ -125,10 +137,51 @@ class BusinessController extends Controller
 
     public function update(Request $request, $id)
     {
-        $business = Business::findOrFail($id);
+
+        // dd($request);
+
+        $this->validate($request, [
+            'photo' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('photo');
+
+        $nama_file = time()."_".$file->getClientOriginalName();
+
+                // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'foto_usaha';
+        $file->move($tujuan_upload,$nama_file);
+
+        // $business = Business::findOrFail($id);
         // dd($business);
 
-        $business->update($request->all());
+        $datakelompok = Agreement::where('nik', $request->nik_id)->first();
+
+        $databusiness = Business::find($id);
+
+        $databusiness->name = $request->name;
+        $databusiness->nik_id = $request->nik_id;
+        $databusiness->lapak_kec = $request->lapak_kec;
+        $databusiness->lapak_desa = $request->lapak_desa;
+        $databusiness->lapak_addr = $request->lapak_addr;
+        $databusiness->sector_id = $request->sector_id;
+        $databusiness->business_name = $request->business_name;
+        $databusiness->mulai_jual = $request->mulai_jual;
+        $databusiness->selesai_jual = $request->selesai_jual;
+        $databusiness->contact = $request->contact;
+        $databusiness->photo = $nama_file;
+        if($datakelompok->community_id == null){
+            $databusiness->status_kelompok = "Tidak";
+        }else {
+            $databusiness->status_kelompok = "Ya";
+        }
+        $databusiness->is_active = 1;
+        $databusiness->community_id = $datakelompok->community_id;
+
+        $databusiness->save();
+
+        // $business->update($request->all());
 
         return redirect(url('/admin/business'))->with('success','Data Berhasil Disimpan');
     }
@@ -174,6 +227,35 @@ class BusinessController extends Controller
     //     $pdf = PDF::loadview('backend.business.qrcode', ['pedagang' => $generate]);
     // 	return $pdf->download('QRcode-pdf');
     // }
+
+    public function getCloneFields(Request $request) {
+
+        $input = $request->all();
+        $id = $input['div_count'];
+        $varId = 'removeId'. $id;
+        $data = '
+        <div class="clonedInput" id="'. $varId .'">
+            <div class="row" id="clonedInput">
+                <div class="col-md-3">
+                    <input type="text" name="name[]" id="name'. $id .'" placeholder="Enter Your Name" class="form-control" required/>
+                    <label class="control-label col-md-8"></label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="language" id="language'. $id .'" placeholder="Enter Your Language"  class="form-control" required/>
+                    <label class="control-label col-md-8"></label>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="age[]" id="age'. $id .'" placeholder="Enter Your Age"  class="form-control" required/>
+                    <label class="control-label col-md-8"></label>
+                </div>
+                <div class="col-md-1">
+                    <input type="button" class="btn btn-danger" name="del_item" value="Delete" onClick="removedClone('. $varId .');" />
+                </div>
+            </div>
+        </div>
+        ';
+        echo json_encode($data);
+    }
 
 
 }

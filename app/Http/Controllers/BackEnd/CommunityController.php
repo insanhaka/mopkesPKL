@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Community;
+use App\District;
 
 class CommunityController extends Controller
 {
-    public function __construct(){}
+    public function __construct(){
+        $this->kecparent = District::where('regency_id', 3328)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Kecamatan', 0);
+    }
 
     public function index()
     {
@@ -26,15 +29,16 @@ class CommunityController extends Controller
 
     public function create()
     {
+        $kecparent = $this->kecparent;
         if (\Request::ajax()) {
-            $view = view('backend.communities.create')->renderSections();
+            $view = view('backend.communities.create', compact('kecparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.communities.create')->render();
+        return view('backend.communities.create', compact('kecparent'))->render();
     }
 
     public function store(Request $request)
@@ -60,15 +64,16 @@ class CommunityController extends Controller
     public function edit($id)
     {
         $communities = Community::findOrFail($id);
+        $kecparent = $this->kecparent;
         if (\Request::ajax()) {
-            $view = view('backend.communities.edit', compact('communities'))->renderSections();
+            $view = view('backend.communities.edit', compact('communities', 'kecparent'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.communities.edit', compact('communities'));
+        return view('backend.communities.edit', compact('communities', 'kecparent'));
     }
 
     public function update(Request $request, $id)

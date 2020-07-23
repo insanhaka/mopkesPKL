@@ -50,7 +50,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->business->name !!}</td>
                                     <td>{!! $data->business->nik_id !!}</td>
-                                    <td>{!! $data->business->Business_specific !!}</td>
+                                    <td>{!! $data->business->business_name !!}</td>
                                     <td>{!! $data->business->lapak_addr !!}</td>
                                     <td>{!! $data->about !!}</td>
                                     <td>{!! $data->created_at !!}</td>
@@ -114,7 +114,7 @@
                         <p>Nama Usaha :</p>
                         <div class="row" style="margin-top: -3%;">
                             <div class="col-1"><img src="{{asset('assets/img/shop.png')}}" style="width: 25px;"></div>
-                            <div class="col-10">{!! $d->business->Business_specific !!}</div>
+                            <div class="col-10">{!! $d->business->business_name !!}</div>
                         </div>
                         <hr>
                         <p>Lokasi jualan :</p>

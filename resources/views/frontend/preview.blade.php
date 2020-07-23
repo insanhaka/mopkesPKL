@@ -19,9 +19,9 @@
     </div> --}}
     @foreach($business as $data)
     @if ($data->is_active == 1)
-        <img src="{{asset('assets/img/header-preview.jpg')}}" style="width: 100%; height: auto;">
+        <img src="{{asset('foto_usaha/'.$data->photo)}}" style="width: 100%; height: auto;">
         <div class="container" style="margin-top: 5%;">
-            <p style="font-size: 20px; font-weight: bold;">{!! $data->Business_specific !!}</p>
+            <p style="font-size: 20px; font-weight: bold;">{!! $data->business_name !!}</p>
             <hr>
             <p>Nama pemilik :</p>
             <div class="row" style="margin-top: -3%;">

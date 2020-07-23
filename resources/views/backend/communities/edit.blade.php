@@ -1,6 +1,7 @@
 @extends('backend.layouts.template')
 
 @section('css')
+{!! Html::style('assets/vendors/select2/dist/css/select2.min.css') !!}
 @endsection
 
 @section('content')
@@ -37,6 +38,18 @@
                                 {!! Form::label('chairman_nik', 'NIK Ketua') !!}
                                 {!! Form::text('chairman_nik', null ,['id'=>'chairman_nik','class'=>'form-control','placeholder'=>'NIK Ketua']) !!}
                             </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('officekec', 'Alamat (Kec)') !!}
+                                {!! Form::select('office_kec', $kecparent, null,['id'=>'office_kec','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('officedes', 'Alamat (Desa)') !!}
+                                {!! Form::select('office_desa', [], null,['id'=>'office_desa','class'=>'form-control selectku','style'=>'width: 100%;']) !!}
+                            </div>
+                            <div class="form-group col-lg-4 col-12">
+                                {!! Form::label('officeaddr', 'Alamat Lengkap') !!}
+                                {!! Form::text('office_addr', null ,['id'=>'office_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer border-top">
@@ -56,10 +69,13 @@
 @endsection
 
 @section('js')
+{!! Html::script('assets/vendors/select2/dist/js/select2.min.js') !!}
 {!! Html::script('assets/vendors/jquery-validation-1.19.1/dist/jquery.validate.min.js') !!}
 {!! Html::script('js/pages/validate-init.js') !!}
 <script>
     $(document).ready(function(){
+        $.comboAjax('#office_kec','#office_desa',APP_URL_ADMIN+'/getVillagesFromDistrict');
+        $(".selectku").select2();
         // SAVE
         $.validator.setDefaults({
             submitHandler: function () {

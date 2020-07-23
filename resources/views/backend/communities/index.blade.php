@@ -36,6 +36,7 @@
                                     <th>Nama Kelompok</th>
                                     <th>Nama Ketua</th>
                                     <th>NIK Ketua</th>
+                                    <th>Alamat</th>
                                     <th width="80" class="no-sort">Act</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,7 @@
                                     <td>{!! $data->name !!}</td>
                                     <td>{!! $data->chairman_name !!}</td>
                                     <td>{!! $data->chairman_nik !!}</td>
+                                    <td>{!! $data->office_addr !!}</td>
                                     <td align="center">
                                         <div class="dropdown d-inline">
                                             <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
