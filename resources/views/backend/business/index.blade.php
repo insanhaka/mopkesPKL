@@ -48,58 +48,43 @@
                                     <th></th>
                                     <th>Nama</th>
                                     <th>NIK</th>
-                                    <th>Lokasi Usaha</th>
-                                    <th>Nama Usaha</th>
-                                    <th>Waktu Usaha</th>
-                                    <th>Aktiv ?</th>
-                                    <th>QR Code</th>
-                                    <th width="80" class="no-sort">Act</th>
+                                    <th>Alamat KTP</th>
+                                    <th>Alamat Domisili</th>
+                                    <th>Jumlah Usaha</th>
+                                    <th>Data Usaha</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($business as $data)
-                                <tr>
-                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
-                                    <td class="text-center no-sort" width="50px">
-                                        <input class="cekbox" name="generate[]" type="checkbox" value="{!! $data->id !!}" id="cek{!! $data->id !!}">
-                                    </td>
-                                    {{-- <td>{{$loop->iteration}}</td> --}}
-                                    <td>{!! $data->name !!}</td>
-                                    <td>{!! $data->nik_id !!}</td>
-                                    <td>{!! $data->lapak_addr !!} </td>
-                                    <td>{!! $data->business_name !!}</td>
-                                    <td>{!! $data->mulai_jual !!} - {!! $data->selesai_jual !!}</td>
-                                    <td>
-                                        @if ($data->is_active == 1)
-                                        <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" checked="1" autocomplete="off" />
-                                        @else
-                                        <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" autocomplete="off" />
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="visible-print text-center">
-                                            <a class="btn btn-primary" href="/admin/business/{!!$data->id!!}/generate" role="button">Generate QR Code</a>
-                                        </div>
-                                    </td>
-                                    <td align="center">
-                                        <div class="dropdown d-inline">
-                                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                {!! GHelper::btnEdit($data->id) !!}
-                                                {!! GHelper::btnDelete($data->id) !!}
+                                @foreach ($agreement as $person)
+                                @foreach ($totbusiness as $tot)
+                                @if ($person->id == $tot->nik_id)
+                                    <tr>
+                                        <td class="text-center no-sort" width="50px">
+                                            <input class="cekbox" name="generate[]" type="checkbox" value="{!! $person->id !!}" id="cek{!! $person->id !!}">
+                                        </td>
+                                        <td>{!! $person->name !!}</td>
+                                        <td>{!! $person->nik !!}</td>
+                                        <td>DESA {!! $person->village_ktp->name !!}, KEC. {!! $person->district_ktp->name !!}</td>
+                                        <td>DESA {!! $person->village_dom->name !!}, KEC. {!! $person->district_dom->name !!}</td>
+                                        <td>{!! $tot->total !!}
+                                        <td>
+                                            <div class="visible-print text-center">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#bisnis{!!$person->id!!}">
+                                                    view
+                                                </button>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endif
+                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
-                                <button class="select-generatehide btn btn-primary" id="qrku" type="submit">Generate All QR Code (Max 6)</button>
+                                <button class="select-generatehide btn btn-danger" id="qrku" type="submit">Delete All</button>
                                 {!! GHelper::btnDeleteAll() !!}
                             </div>
                         </div>
@@ -110,6 +95,70 @@
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+@foreach ($agreement as $ag)
+<div class="modal fade" id="bisnis{!!$ag->id!!}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Data Usaha {!!$ag->name!!}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="margin-left: 2%; margin-right:2%;">
+            @foreach ($business as $data)
+                @if ($data->nik_id == $ag->id)
+                <div class="card mb-3" style="max-width: 100%; border: 1px solid #eee; padding: 2%;">
+                    <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{asset('foto_usaha/'.$data->photo)}}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{!! $data->business_name !!}</h5>
+                            <table class="table table-sm">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row"><img src="{{asset('assets/img/user.png')}}" style="width: 20px;"></th>
+                                    <td>{!! $data->name !!}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><img src="{{asset('assets/img/pin.png')}}" style="width: 20px;"></th>
+                                    <td>{!! $data->lapak_addr !!}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><img src="{{asset('assets/img/phone.png')}}" style="width: 20px;"></th>
+                                    <td>{!! $data->contact !!}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer" style="margin-top: -50px;">
+                            <div class="row justify-content-between">
+                                <div class="col-12 text-md-right text-center">
+                                    <a class="btn btn-primary" href="#" role="button">Generate QR Code</a>
+                                    <a class="btn btn-warning" href="#" role="button">Edit</a>
+                                    <a class="btn btn-danger" href="#" role="button">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <hr>
+                @endif
+            @endforeach
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Generate All QR Code</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection
 

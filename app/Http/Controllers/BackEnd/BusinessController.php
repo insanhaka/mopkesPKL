@@ -21,23 +21,25 @@ class BusinessController extends Controller
         $this->desparent = Village::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Desa', 0);
         $this->sectorparent = Sector::where('sector_name', 0)->orderBy('sector_name', 'asc')->pluck('sector_name', 'id')->prepend('Pilih Sektor', 0);
         // $this->nikparent = Agreement::leftJoin('business', 'nik', '=', 'nik_id')->whereNull('nik_id')->pluck('nik', 'nik')->prepend('NIK', '');
-        $this->nikparent = Agreement::get(['id', 'nik'])->pluck('nik', 'nik')->prepend('NIK', '');
+        $this->nikparent = Agreement::get(['id', 'nik'])->pluck('nik', 'id')->prepend('NIK', '');
         $this->provparent = Province::where('name', 0)->orderBy('name', 'asc')->pluck('name', 'id')->prepend('Pilih Provinsi', 0);
     }
 
     public function index()
     {
         $business = Business::all();
+        $agreement = Agreement::all();
+        $totbusiness = Business::groupBy('nik_id')->select('nik_id', \DB::raw('count(*) as total'))->get();
 
         if (\Request::ajax()) {
-            $view = view('backend.business.index', compact('business'))->renderSections();
+            $view = view('backend.business.index', compact('business', 'agreement', 'totbusiness'))->renderSections();
             return response()->json([
                 'content' => $view['content'],
                 'css' => $view['css'],
                 'js' => $view['js'],
             ]);
         }
-        return view('backend.business.index', compact('business'))->render();
+        return view('backend.business.index', compact('business', 'agreement', 'totbusiness'))->render();
     }
 
     public function create()
@@ -79,7 +81,7 @@ class BusinessController extends Controller
 
         $databusiness = new Business;
         $databusiness->name = $request->name;
-        $databusiness->nik_id = $request->nik_id;
+        $databusiness->nik_id = $datakelompok->id;
         $databusiness->lapak_kec = $request->lapak_kec;
         $databusiness->lapak_desa = $request->lapak_desa;
         $databusiness->lapak_addr = $request->lapak_addr;
@@ -155,13 +157,7 @@ class BusinessController extends Controller
 
         // $business = Business::findOrFail($id);
         // dd($business);
-
-        $datakelompok = Agreement::where('nik', $request->nik_id)->first();
-
         $databusiness = Business::find($id);
-
-        $databusiness->name = $request->name;
-        $databusiness->nik_id = $request->nik_id;
         $databusiness->lapak_kec = $request->lapak_kec;
         $databusiness->lapak_desa = $request->lapak_desa;
         $databusiness->lapak_addr = $request->lapak_addr;
@@ -171,13 +167,6 @@ class BusinessController extends Controller
         $databusiness->selesai_jual = $request->selesai_jual;
         $databusiness->contact = $request->contact;
         $databusiness->photo = $nama_file;
-        if($datakelompok->community_id == null){
-            $databusiness->status_kelompok = "Tidak";
-        }else {
-            $databusiness->status_kelompok = "Ya";
-        }
-        $databusiness->is_active = 1;
-        $databusiness->community_id = $datakelompok->community_id;
 
         $databusiness->save();
 
