@@ -208,42 +208,14 @@ class BusinessController extends Controller
 
     }
 
-    // public function cetak_pdf(Request $request)
-    // {
-    //     $ids = $request->generate;
-    //     $generate = Business::findOrFail($ids);
+    public function dellall(Request $request)
+    {
+        $ids = $request->del;
+        
+        $data = Business::whereIn('nik_id', $ids)->delete();
 
-    //     $pdf = PDF::loadview('backend.business.qrcode', ['pedagang' => $generate]);
-    // 	return $pdf->download('QRcode-pdf');
-    // }
+        return back()->with('warning','Data Berhasil Dihapus');
 
-    public function getCloneFields(Request $request) {
-
-        $input = $request->all();
-        $id = $input['div_count'];
-        $varId = 'removeId'. $id;
-        $data = '
-        <div class="clonedInput" id="'. $varId .'">
-            <div class="row" id="clonedInput">
-                <div class="col-md-3">
-                    <input type="text" name="name[]" id="name'. $id .'" placeholder="Enter Your Name" class="form-control" required/>
-                    <label class="control-label col-md-8"></label>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" name="language" id="language'. $id .'" placeholder="Enter Your Language"  class="form-control" required/>
-                    <label class="control-label col-md-8"></label>
-                </div>
-                <div class="col-md-3">
-                    <input type="number" name="age[]" id="age'. $id .'" placeholder="Enter Your Age"  class="form-control" required/>
-                    <label class="control-label col-md-8"></label>
-                </div>
-                <div class="col-md-1">
-                    <input type="button" class="btn btn-danger" name="del_item" value="Delete" onClick="removedClone('. $varId .');" />
-                </div>
-            </div>
-        </div>
-        ';
-        echo json_encode($data);
     }
 
 

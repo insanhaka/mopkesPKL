@@ -36,7 +36,7 @@
             <div class="col-12">
                 <div class="card">
                     {{-- {!! Form::open(['url'=>\Request::path(),'class'=>'form-horizontal','id'=>'form-delete','method' => 'POST']) !!} --}}
-                    <form action="/admin/business/generateall" method="POST">
+                    <form action="/admin/business/deleteall" method="POST">
                         @csrf
                     <div class="card-body">
                         <table class="table table-striped dt-responsive" id="simpledatatable">
@@ -60,7 +60,7 @@
                                 @if ($person->id == $tot->nik_id)
                                     <tr>
                                         <td class="text-center no-sort" width="50px">
-                                            <input class="cekbox" name="generate[]" type="checkbox" value="{!! $person->id !!}" id="cek{!! $person->id !!}">
+                                            <input class="cekbox" name="del[]" type="checkbox" value="{!! $person->id !!}" id="cek{!! $person->id !!}">
                                         </td>
                                         <td>{!! $person->name !!}</td>
                                         <td>{!! $person->nik !!}</td>
@@ -84,8 +84,8 @@
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
-                                <button class="select-generatehide btn btn-danger" id="qrku" type="submit">Delete All</button>
-                                {!! GHelper::btnDeleteAll() !!}
+                                <button class="select-generatehide btn btn-danger" id="dell-all" type="submit">Delete All</button>
+                                {{-- {!! GHelper::btnDeleteAll() !!} --}}
                             </div>
                         </div>
                     </div>
@@ -101,60 +101,82 @@
 <div class="modal fade" id="bisnis{!!$ag->id!!}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Data Usaha {!!$ag->name!!}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" style="margin-left: 2%; margin-right:2%;">
-            @foreach ($business as $data)
-                @if ($data->nik_id == $ag->id)
-                <div class="card mb-3" style="max-width: 100%; border: 1px solid #eee; padding: 2%;">
-                    <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="{{asset('foto_usaha/'.$data->photo)}}" class="card-img" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{!! $data->business_name !!}</h5>
-                            <table class="table table-sm">
-                                <tbody>
-                                  <tr>
-                                    <th scope="row"><img src="{{asset('assets/img/user.png')}}" style="width: 20px;"></th>
-                                    <td>{!! $data->name !!}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row"><img src="{{asset('assets/img/pin.png')}}" style="width: 20px;"></th>
-                                    <td>{!! $data->lapak_addr !!}</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row"><img src="{{asset('assets/img/phone.png')}}" style="width: 20px;"></th>
-                                    <td>{!! $data->contact !!}</td>
-                                  </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer" style="margin-top: -50px;">
-                            <div class="row justify-content-between">
-                                <div class="col-12 text-md-right text-center">
-                                    <a class="btn btn-primary" href="#" role="button">Generate QR Code</a>
-                                    <a class="btn btn-warning" href="#" role="button">Edit</a>
-                                    <a class="btn btn-danger" href="#" role="button">Delete</a>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Data Usaha {!!$ag->name!!}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin-left: 2%; margin-right:2%;">
+                @foreach ($business as $data)
+                    @if ($data->nik_id == $ag->id)
+                    <div class="card mb-3" style="max-width: 100%; border: 1px solid #eee; padding: 2%;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{asset('foto_usaha/'.$data->photo)}}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <form action="/admin/business/generateall" method="POST">
+                                        @csrf
+                                    <div class="container">
+                                        <div class="row" style="padding-left: 1%;">
+                                            <div class="col-8">
+                                                <h5 class="card-title">{!! $data->business_name !!}</h5>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="row" style="margin-right: -30%;">
+                                                    <div class="col-10" style="text-align: right; margin-right: -20px;">
+                                                        <p style="font-size: 12px; font-weight: bold;">Check to generate QRCode</p>
+                                                    </div>
+                                                    <div class="col-2" style="padding-top: 5px;">
+                                                        <input class="cekbox" name="generate[]" type="checkbox" value="{!! $data->id !!}" id="qrselect{!! $data->id !!}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="table table-sm" style="width: 50%;">
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row"><img src="{{asset('assets/img/user.png')}}" style="width: 20px;"></th>
+                                                <td>{!! $data->name !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><img src="{{asset('assets/img/pin.png')}}" style="width: 20px;"></th>
+                                                <td>{!! $data->lapak_addr !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><img src="{{asset('assets/img/open.png')}}" style="width: 20px;"></th>
+                                                <td>{!! $data->mulai_jual !!} - {!! $data->selesai_jual !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><img src="{{asset('assets/img/phone.png')}}" style="width: 20px;"></th>
+                                                <td>{!! $data->contact !!}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer" style="margin-top: -50px;">
+                                    <div class="row justify-content-between">
+                                        <div class="col-12 text-md-right text-center">
+                                            <a class="btn btn-warning" href="/admin/business/{!!$data->id!!}/edit" role="button">Edit</a>
+                                            <a class="btn btn-danger" href="/admin/business/{!!$data->id!!}/delete" role="button">Delete</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-                <hr>
-                @endif
-            @endforeach
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Generate All QR Code</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+                    <hr>
+                    @endif
+                @endforeach
+            </div>
+            <div class="modal-footer">
+                <button class="select-generatehide btn btn-primary" id="qrgenerate{!!$ag->id!!}" type="submit">Generate QR Code</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
@@ -230,10 +252,36 @@
     </script>
     @endforeach
 
-    @foreach ($business as $i)
+    @foreach ($agreement as $i)
     <script>
 
         $('#cek{!!$i->id!!}').click(function(event) {
+
+            var favorite = [];
+            $.each($("input[name='del[]']:checked"), function(){
+                favorite.push($(this).val());
+            });
+            // alert("My favourite sports are: " + favorite.join(", "));
+            var terpilih = favorite.length;
+            console.log(terpilih);
+
+            if(terpilih > 0){
+                $('#dell-all').removeClass("select-generatehide");
+                $('#dell-all').addClass("select-generateshow");
+            }else {
+                $('#dell-all').removeClass("select-generateshow");
+                $('#dell-all').addClass("select-generatehide");
+            }
+
+        });
+
+    </script>
+    @endforeach
+
+    @foreach ($business as $qr)
+    <script>
+
+        $('#qrselect{!!$qr->id!!}').click(function(event) {
 
             var favorite = [];
             $.each($("input[name='generate[]']:checked"), function(){
@@ -241,13 +289,14 @@
             });
             // alert("My favourite sports are: " + favorite.join(", "));
             var terpilih = favorite.length;
+            console.log(terpilih);
 
             if(terpilih > 0){
-                $('#qrku').removeClass("select-generatehide");
-                $('#qrku').addClass("select-generateshow");
+                $('#qrgenerate{!!$qr->nik_id!!}').removeClass("select-generatehide");
+                $('#qrgenerate{!!$qr->nik_id!!}').addClass("select-generateshow");
             }else {
-                $('#qrku').removeClass("select-generateshow");
-                $('#qrku').addClass("select-generatehide");
+                $('#qrgenerate{!!$qr->nik_id!!}').removeClass("select-generateshow");
+                $('#qrgenerate{!!$qr->nik_id!!}').addClass("select-generatehide");
             }
 
         });
