@@ -35,15 +35,21 @@
                 <div class="col-10">{!! $data->lapak_addr !!}</div>
             </div>
             <hr>
-            <p>Kategori bidang usaha :</p>
+            <p>Jam Operasional :</p>
             <div class="row" style="margin-top: -3%;">
-                <div class="col-1"><img src="{{asset('assets/img/list.png')}}" style="width: 20px;"></div>
-                <div class="col-10">{!! $data->sector_name !!}</div>
+                <div class="col-1"><img src="{{asset('assets/img/open.png')}}" style="width: 20px;"></div>
+                <div class="col-10">{!! $data->mulai_jual !!} - {!! $data->selesai_jual !!}</div>
+            </div>
+            <hr>
+            <p>Pesan Disini :</p>
+            <div class="row" style="margin-top: -3%;">
+                <div class="col-1"><img src="{{asset('assets/img/phone.png')}}" style="width: 20px;"></div>
+                <div class="col-10">{!! $data->contact !!}</div>
             </div>
             <hr>
 
         <div class="lapor text-center">
-            <a class="btn" href="/laporan/{!!$data->nik_id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
+            <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
         </div>
         </div>
     @else

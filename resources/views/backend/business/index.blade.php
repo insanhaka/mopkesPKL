@@ -107,6 +107,8 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form action="/admin/business/generateall" method="POST">
+            @csrf
             <div class="modal-body" style="margin-left: 2%; margin-right:2%;">
                 @foreach ($business as $data)
                     @if ($data->nik_id == $ag->id)
@@ -117,8 +119,6 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <form action="/admin/business/generateall" method="POST">
-                                        @csrf
                                     <div class="container">
                                         <div class="row" style="padding-left: 1%;">
                                             <div class="col-8">

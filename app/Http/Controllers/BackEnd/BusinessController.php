@@ -198,10 +198,10 @@ class BusinessController extends Controller
     public function qrall(Request $request)
     {
         $ids = $request->generate;
-        if ($ids == null){
-            echo ("<h2>DATA KOSONG</h2>");
-        }
-        $generate = Business::findOrFail($ids);
+        // dd($ids);
+        // $generate = Business::findOrFail($ids);
+
+        $generate = Business::whereIn('id', $ids)->get();
         // dd($generate);
 
         return view('backend.business.qrcode', ['pedagang' => $generate]);
@@ -211,7 +211,7 @@ class BusinessController extends Controller
     public function dellall(Request $request)
     {
         $ids = $request->del;
-        
+
         $data = Business::whereIn('nik_id', $ids)->delete();
 
         return back()->with('warning','Data Berhasil Dihapus');

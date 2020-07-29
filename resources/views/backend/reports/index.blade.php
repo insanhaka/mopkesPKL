@@ -34,9 +34,10 @@
                                     </th> --}}
                                     <th>No</th>
                                     <th>Name Pelaku Usaha</th>
-                                    <th>NIK</th>
+                                    <th>No.HP</th>
                                     <th>Nama Usaha</th>
                                     <th>Lokasi Usaha</th>
+                                    <th>Waktu Operasional</th>
                                     <th>Tentang Laporan</th>
                                     <th>Waktu Laporan</th>
                                     <th>Preview</th>
@@ -49,9 +50,10 @@
                                     {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
                                     <td>{{$loop->iteration}}</td>
                                     <td>{!! $data->business->name !!}</td>
-                                    <td>{!! $data->business->nik_id !!}</td>
+                                    <td>{!! $data->business->contact !!}</td>
                                     <td>{!! $data->business->business_name !!}</td>
                                     <td>{!! $data->business->lapak_addr !!}</td>
+                                    <td>{!! $data->business->mulai_jual !!} - {!! $data->business->selesai_jual !!}</td>
                                     <td>{!! $data->about !!}</td>
                                     <td>{!! $data->created_at !!}</td>
                                     <td>

@@ -10,19 +10,19 @@ use DB;
 
 class ReportController extends Controller
 {
-    public function preview($nik)
+    public function preview($id)
     {
         $data = DB::table('business')
-        		->join('sectors', 'business.sector_id', '=', 'sectors.id')
-                ->where('nik_id', $nik)->get();
+        		->join('agreements', 'business.nik_id', '=', 'agreements.id')
+                ->where('business.id', $id)->get();
 
         return view('frontend.preview', ['business' => $data]);
     }
 
-    public function laporanform($nik_id)
+    public function laporanform($id)
     {
     	$data = DB::table('business')
-    			->where('nik_id', $nik_id)
+    			->where('id', $id)
     			->get();
 
     	return view('frontend.form', ['laporan' => $data]);
@@ -30,9 +30,9 @@ class ReportController extends Controller
 
     public function kirimlaporan(Request $request)
     {
-        $nik = $request->nik_id;
+        $id = $request->id;
 
-        $databusiness = Business::where('nik_id', $nik)->first();
+        $databusiness = Business::where('id', $id)->first();
 
         $reports = new Report;
         $reports->about = $request->about;

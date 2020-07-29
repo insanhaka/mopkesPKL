@@ -43,7 +43,7 @@
 
 	function showQr() {
 	    new QRCode(document.getElementById("qrcode{!! $i->id !!}"), {
-	        text : window.location.origin + "/qrcode/"+ {!! $i->nik_id !!},
+	        text : window.location.origin + "/qrcode/"+ {!! $i->id !!},
 	        width: 300,
 	        height: 300,
 	        colorDark: "#000000",

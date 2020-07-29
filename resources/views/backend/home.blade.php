@@ -81,8 +81,6 @@
                         <thead>
                           <tr>
                             <th scope="col">Nama</th>
-                            <th scope="col">Nama Usaha</th>
-                            <th scope="col">Alamat Usaha</th>
                             <th scope="col">Jumlah</th>
                           </tr>
                         </thead>
@@ -90,8 +88,6 @@
                             @foreach ($data->take(10) as $top)
                             <tr>
                                 <td>{!!$top->agreement->name!!}</td>
-                                <td>{!!$top->business->Business_specific!!}</td>
-                                <td>{!!$top->business->lapak_addr!!}</td>
                                 <td>{!!$top->count!!}</td>
                             </tr>
                             @endforeach

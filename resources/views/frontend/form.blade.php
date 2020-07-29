@@ -22,7 +22,7 @@
     	<form action="/kirim" method="POST">
         {{ csrf_field() }}
     		@foreach($laporan as $data)
-			  <input type="text" class="form-control" name="nik_id" value="{!! $data->nik_id !!}" style="visibility: hidden; margin-top: -5%;">
+			  <input type="text" class="form-control" name="id" value="{!! $data->id !!}" style="visibility: hidden; margin-top: -5%;">
 			  <div class="form-group">
 			    <label>Perihal Laporan</label>
 			    <input type="text" class="form-control" name="about">
