@@ -47,6 +47,12 @@
                 <div class="col-10">{!! $data->contact !!}</div>
             </div>
             <hr>
+            <div class="row" style="margin-top: -3%; background-color: #b2c1f9; padding-top: 2%;">
+                <div class="col-12 text-center"><img src="{{asset('assets/img/verify.png')}}" style="width: 70px;"></div>
+            </div>
+            <div class="row" style="background-color: #b2c1f9; padding-bottom: 2%;">
+                <div class="col-12 text-center">Usaha ini telah menyetujui untuk melaksanakan protokol kesehatan yang telah ditetapkan Pemerintah Kabupaten Tegal</div>
+            </div>
 
         <div class="lapor text-center">
             <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>

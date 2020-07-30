@@ -86,10 +86,14 @@
                         </thead>
                         <tbody>
                             @foreach ($data->take(10) as $top)
+                            @foreach ($agreement as $person)
+                            @if ( $person->id == $top->nik_id)
                             <tr>
-                                <td>{!!$top->agreement->name!!}</td>
+                                <td>{!!$person->name!!}</td>
                                 <td>{!!$top->count!!}</td>
                             </tr>
+                            @endif
+                            @endforeach
                             @endforeach
                         </tbody>
                       </table>

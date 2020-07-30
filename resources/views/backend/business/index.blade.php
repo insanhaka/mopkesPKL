@@ -66,7 +66,7 @@
                                         <td>{!! $person->nik !!}</td>
                                         <td>DESA {!! $person->village_ktp->name !!}, KEC. {!! $person->district_ktp->name !!}</td>
                                         <td>DESA {!! $person->village_dom->name !!}, KEC. {!! $person->district_dom->name !!}</td>
-                                        <td>{!! $tot->total !!}
+                                        <td>{!! $tot->total !!}</td>
                                         <td>
                                             <div class="visible-print text-center">
                                                 <!-- Button trigger modal -->
@@ -135,6 +135,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <table class="table table-sm" style="width: 50%;">
                                             <tbody>
                                             <tr>
@@ -160,6 +161,11 @@
                                 <div class="card-footer" style="margin-top: -50px;">
                                     <div class="row justify-content-between">
                                         <div class="col-12 text-md-right text-center">
+                                            @if ($data->is_active == 1)
+                                            <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" checked="1" autocomplete="off" />
+                                            @else
+                                            <input type="checkbox" id="{!!$data->id!!}" value="" class="lcs_check{!!$data->id!!}" autocomplete="off" />
+                                            @endif
                                             <a class="btn btn-warning" href="/admin/business/{!!$data->id!!}/edit" role="button">Edit</a>
                                             <a class="btn btn-danger" href="/admin/business/{!!$data->id!!}/delete" role="button">Delete</a>
                                         </div>

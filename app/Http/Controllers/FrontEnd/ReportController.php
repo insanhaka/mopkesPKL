@@ -13,31 +13,28 @@ class ReportController extends Controller
     public function preview($id)
     {
         $data = DB::table('business')
-        		->join('agreements', 'business.nik_id', '=', 'agreements.id')
-                ->where('business.id', $id)->get();
+                ->where('id', $id)->get();
 
         return view('frontend.preview', ['business' => $data]);
     }
 
     public function laporanform($id)
     {
-    	$data = DB::table('business')
+        $data = DB::table('business')
     			->where('id', $id)
-    			->get();
+                ->get();
+
+        // dd($data);
 
     	return view('frontend.form', ['laporan' => $data]);
     }
 
     public function kirimlaporan(Request $request)
     {
-        $id = $request->id;
-
-        $databusiness = Business::where('id', $id)->first();
-
         $reports = new Report;
         $reports->about = $request->about;
         $reports->description = $request->description;
-        $reports->nik_id = $databusiness->id;
+        $reports->nik_id = $request->id;
 
         $reports->save();
 
