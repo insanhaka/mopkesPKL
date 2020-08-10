@@ -19,11 +19,11 @@ class CreateCommunitiesTable extends Migration
             $table->string('chairman_name', 100)->nullable();
             $table->bigInteger('chairman_nik')->nullable();
 
-            $table->char('office_kec');
+            $table->char('office_kec')->nullable();
             $table->foreign('office_kec')->references('id')->on('districts');
-            $table->char('office_desa');
+            $table->char('office_desa')->nullable();
             $table->foreign('office_desa')->references('id')->on('villages');
-            $table->string('office_addr');
+            $table->string('office_addr')->nullable();
 
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();

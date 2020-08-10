@@ -64,18 +64,12 @@ class BusinessController extends Controller
 
         // dd($request->all());
 
-        $this->validate($request, [
-            'photo' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        // $this->validate($request, [
+        //     'photo' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+        // ]);
 
-        // menyimpan data file yang diupload ke variabel $file
-        $file = $request->file('photo');
-
-        $nama_file = time()."_".$file->getClientOriginalName();
-
-                // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'foto_usaha';
-        $file->move($tujuan_upload,$nama_file);
+        // $file = $request->file('photo');
+        // dd($file);
 
         $datakelompok = Agreement::where('nik', $request->nik_id)->first();
 
@@ -90,7 +84,18 @@ class BusinessController extends Controller
         $databusiness->mulai_jual = $request->mulai_jual;
         $databusiness->selesai_jual = $request->selesai_jual;
         $databusiness->contact = $request->contact;
-        $databusiness->photo = $nama_file;
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('photo');
+        if($file == null){
+            $nama_file = "";
+            $databusiness->photo = $nama_file;
+        }else{
+            $nama_file = time()."_".$file->getClientOriginalName();
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'foto_usaha';
+            $file->move($tujuan_upload,$nama_file);
+            $databusiness->photo = $nama_file;
+        }
         if($datakelompok->community_id == null){
             $databusiness->status_kelompok = "Tidak";
         }else {
@@ -100,14 +105,6 @@ class BusinessController extends Controller
         $databusiness->community_id = $datakelompok->community_id;
 
         $status = $databusiness->save();
-        // if ($status) {
-        //     $data['status'] = true;
-        //     $data['message'] = "Data berhasil disimpan!!!";
-        // } else {
-        //     $data['status'] = false;
-        //     $data['message'] = "Data gagal disimpan!!!";
-        // }
-        // return response()->json(['code' => 200,'data' => $data], 200);
 
         return redirect(url()->current())->with('success','Data Berhasil Disimpan');
     }

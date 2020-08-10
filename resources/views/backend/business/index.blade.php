@@ -115,7 +115,11 @@
                     <div class="card mb-3" style="max-width: 100%; border: 1px solid #eee; padding: 2%;">
                         <div class="row no-gutters">
                             <div class="col-md-4">
+                                @if($data->photo == null)
+                                <img src="{{asset('foto_usaha/default-image.jpg')}}" class="card-img" alt="...">
+                                @else
                                 <img src="{{asset('foto_usaha/'.$data->photo)}}" class="card-img" alt="...">
+                                @endif
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group col-lg-4 col-12">
                                 {!! Form::label('officeaddr', 'Alamat Lengkap') !!}
-                                {!! Form::text('office_addr', null ,['id'=>'office_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap','required'=>'true']) !!}
+                                {!! Form::text('office_addr', null ,['id'=>'office_addr','class'=>'form-control','placeholder'=>'Alamat lokasi jualan lengkap']) !!}
                             </div>
                         </div>
                     </div>
