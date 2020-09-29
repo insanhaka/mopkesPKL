@@ -80,16 +80,20 @@
                     <table class="table table-sm table-striped">
                         <thead>
                           <tr>
-                            <th scope="col">Nama</th>
+                            <th scope="col">Nama Usaha</th>
+                            <th scope="col">Nama Pemilik</th>
+                            <th scope="col">No.HP</th>
                             <th scope="col">Jumlah</th>
                           </tr>
                         </thead>
                         <tbody>
                             @foreach ($data->take(10) as $top)
-                            @foreach ($agreement as $person)
-                            @if ( $person->id == $top->nik_id)
+                            @foreach ($business as $b)
+                            @if ( $b->id == $top->nik_id)
                             <tr>
-                                <td>{!!$person->name!!}</td>
+                                <td>{!!$b->business_name!!}</td>
+                                <td>{!!$b->name!!}</td>
+                                <td>{!!$b->contact!!}</td>
                                 <td>{!!$top->count!!}</td>
                             </tr>
                             @endif
@@ -112,8 +116,10 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+{{-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
+
+<script src="{{asset('assets/js/axios.min.js')}}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>

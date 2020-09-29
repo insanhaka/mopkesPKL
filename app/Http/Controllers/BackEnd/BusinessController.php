@@ -12,6 +12,7 @@ use App\District;
 use App\Village;
 use DB;
 use PDF;
+use DataTables;
 use Illuminate\Support\Facades\Input;
 
 class BusinessController extends Controller
@@ -28,7 +29,7 @@ class BusinessController extends Controller
     public function index()
     {
         $business = Business::all();
-        $agreement = Agreement::all();
+        $agreement = Agreement::orderBy('name', 'asc')->get();
         $totbusiness = Business::groupBy('nik_id')->select('nik_id', \DB::raw('count(*) as total'))->get();
 
         if (\Request::ajax()) {
@@ -40,6 +41,34 @@ class BusinessController extends Controller
             ]);
         }
         return view('backend.business.index', compact('business', 'agreement', 'totbusiness'))->render();
+    }
+
+    public function getDataServerSide(Request $request)
+    {
+       
+        $data = Business::all();
+        return Datatables::of($data)
+                ->addColumn('checkall', function ($data) {
+                    $checkall = '<td class="text-center" width="50px">
+                                    <input class="cekbox" name="del[]" type="checkbox" value="'.$data->id.'" id="cek'.$data->id.'">
+                                </td>' ;
+                    return $checkall;
+                })
+                ->addColumn('act', function ($data) {
+                    $checkall = '<div class="dropdown d-inline">
+                        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu">'
+                        .\GHelper::btnEdit($data->id)
+                        .\GHelper::btnDelete($data->id)
+                        .'</div>
+                    </div>';
+                    return $checkall;
+                })->rawColumns(['checkall','ktp','domisili','nama-kelompok','attachment','viewlink','act'])
+                ->make(true);
+        
+        // return view('users');
     }
 
     public function create()

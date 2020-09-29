@@ -19,7 +19,6 @@ class CreateReportsTable extends Migration
             $table->longText('description');
             $table->unsignedBigInteger('nik_id');
             $table->foreign('nik_id')->references('id')->on('business')->onDelete('cascade');
-            $table->ipAddress('reporter');
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

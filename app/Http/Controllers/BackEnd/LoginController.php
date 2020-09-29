@@ -41,8 +41,8 @@ class LoginController extends Controller
             );
             if (Auth::attempt($userdata)) {
                 if (Auth::user()->is_active==true){
-                    // return redirect()->route('admin.home');
-                    return view('auth.maintenance');
+                    return redirect()->route('admin.home');
+                    // return view('auth.maintenance');
                 }else{
                     $request->session()->flash('message', 'Your account is not active');
                     return redirect('/'.config('gconfig.admin'));

@@ -81,9 +81,9 @@
                         {!! Form::close() !!}
 
                         <div class="text-center mt-5 text-small">
-                            Copyright &copy; Blumpack.
+                            Copyright &copy; <?php echo date("Y"); ?> Dinas Kominfo Kab.Tegal
                             <div class="mt-2">
-                                Dev. by Blumpack
+                                Made with <i style="color: #eb4d4b;" class="fa fa-heart" aria-hidden="true"></i> By insanhaka
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; 2019 - {{date('Y')}} <div class="bullet"></div> Dev. By McF1 x IHK
+        Copyright &copy;{{date('Y')}} Dinas Kominfo Kab.Tegal | Made with <i style="color: #eb4d4b;" class="fa fa-heart" aria-hidden="true"></i> By insanhaka
     </div>
     <div class="footer-right">
         2.0

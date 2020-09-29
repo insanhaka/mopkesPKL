@@ -1,6 +1,6 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,3 +12,12 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('auth.login');
+})->name('admin.login');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('admin.login');
+Route::post('/login', 'LoginController@doLogin')->name('admin.dologin');
+

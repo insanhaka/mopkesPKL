@@ -55,30 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($agreement as $person)
-                                @foreach ($totbusiness as $tot)
-                                @if ($person->id == $tot->nik_id)
-                                    <tr>
-                                        <td class="text-center no-sort" width="50px">
-                                            <input class="cekbox" name="del[]" type="checkbox" value="{!! $person->id !!}" id="cek{!! $person->id !!}">
-                                        </td>
-                                        <td>{!! $person->name !!}</td>
-                                        <td>{!! $person->nik !!}</td>
-                                        <td>DESA {!! $person->village_ktp->name !!}, KEC. {!! $person->district_ktp->name !!}</td>
-                                        <td>DESA {!! $person->village_dom->name !!}, KEC. {!! $person->district_dom->name !!}</td>
-                                        <td>{!! $tot->total !!}</td>
-                                        <td>
-                                            <div class="visible-print text-center">
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#bisnis{!!$person->id!!}">
-                                                    view
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                                @endforeach
-                                @endforeach
+                                
                             </tbody>
                         </table>
                         <div class="row">

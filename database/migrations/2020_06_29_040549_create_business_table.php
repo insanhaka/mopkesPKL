@@ -35,7 +35,7 @@ class CreateBusinessTable extends Migration
             $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
             $table->string('status_kelompok');
             $table->boolean('is_active');
-            $table->string('photo', 100)->nullable();
+            $table->string('photo', 100);
             $table->string('created_by', 50);
             $table->string('updated_by', 50)->nullable();
             $table->timestamps();

@@ -63,12 +63,6 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">

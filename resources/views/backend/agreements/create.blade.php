@@ -2,6 +2,7 @@
 
 @section('css')
 {!! Html::style('assets/vendors/select2/dist/css/select2.min.css') !!}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/tower-file-input.css') }}">
 <style>
     .select-kelompokhide {
         visibility: hidden;
@@ -32,6 +33,22 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
+                    @if ($message = Session::get('failkel'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Maaf</strong> {!!$message!!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                    @if ($message = Session::get('failnik'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Maaf</strong> {!!$message!!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     {!!Form::open(['route'=>'admin.agreement.store','class'=>'validate', 'method'=>'POST', 'enctype'=>'multipart/form-data', 'id'=>'simpan','novalidate'=>''])!!}
                     {{-- <form action="{{ route('admin.agreement.store') }}" method="POST" enctype="multipart/form-data"> --}}
                         {{-- @csrf --}}
@@ -128,8 +145,18 @@
                                 {!! Form::select('community_id', $communitiesparent, null,['class'=>'form-control selectku','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="form-group col-lg-8 col-12" style="margin: 7px;">
-                                {!! Form::label('Bukti', 'Bukti (jpeg/png/jpg | max:2MB)') !!}
-                                {!! Form::file('attachment', null ,['id'=>'attachment','class'=>'form-control','placeholder'=>'Attachment','required'=>'true']) !!}
+                                {{-- {!! Form::label('Bukti', 'Bukti (jpeg/png/jpg | max:2MB)') !!}
+                                {!! Form::file('attachment', null ,['id'=>'attachment','class'=>'form-control','placeholder'=>'Attachment','required'=>'true']) !!} --}}
+                                <label for="exampleInput">Upload Bukti Persetujuan</label>
+                                <div class="tower-file">
+                                    <input type="file" name="attachment" id="demoInput5" />
+                                    <label for="demoInput5" class="btn btn-primary">
+                                        <span class="mdi mdi-upload"></span>Select Files
+                                    </label>
+                                    <button type="button" class="tower-file-clear btn btn-secondary align-top">
+                                        Clear
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -157,6 +184,12 @@
 {!! Html::script('js/pages/validate-init.js') !!}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('assets/js/tower-file-input.js') }}"></script>
+<script type="text/javascript">
+    $('#demoInput5').fileInput({
+        iconClass: 'mdi mdi-fw mdi-upload'
+    });
+</script>
 
     <script>
         $(document).ready(function(){

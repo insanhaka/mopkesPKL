@@ -37,18 +37,17 @@ Route::group(['middleware' => ['auth:web'],'as'=>'admin.'], function () {
     // Route::post('product/delete', 'ProductController@delete')->name('product.delete');
     Route::get('/sector/{id}/delete', 'SectorController@delete');
 
+    Route::get('/business/getdataserverside', 'BusinessController@getDataServerSide')->name('business.getdataserverside');
     Route::resource('business', 'BusinessController');
-    // Route::post('seller/delete', 'SellerController@delete')->name('seller.delete');
     Route::get('/business/{id}/delete', 'BusinessController@delete');
     Route::get('/business/{id}/generate', 'BusinessController@generate');
     Route::post('/business/generateall', 'BusinessController@qrall');
-    Route::post('/business/deleteall', 'BusinessController@dellall');
     // Route::get('/business/cetak_pdf', 'BusinessController@cetak_pdf');
-    Route::post('/business/clone', 'BusinessController@getCloneFields');
 
+    Route::get('/agreement/getdataserverside', 'AgreementController@getDataServerSide')->name('agreement.getdataserverside');
     Route::resource('agreement', 'AgreementController');
-    // Route::post('agreement/delete', 'AgreementController@delete')->name('agreement.delete');
     Route::get('/agreement/{id}/delete', 'AgreementController@delete');
+    Route::post('/agreement/deleteall', 'AgreementController@delall');
 
     Route::resource('report', 'ReportController');
     // Route::post('report/delete', 'ReportController@delete')->name('report.delete');

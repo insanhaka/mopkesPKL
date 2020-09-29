@@ -3,6 +3,7 @@
 @section('css')
 {!! Html::style('assets/vendors/select2/dist/css/select2.min.css') !!}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/tower-file-input.css') }}">
 @endsection
 
 @section('content')
@@ -84,10 +85,20 @@
                                 <input class="form-control" type="tel" placeholder="ex : 087712345432" id="contact" name="contact">
                             </div>
                             <div class="form-group col-lg-8 col-12" style="margin: 7px;">
-                                {!! Form::label('photo', 'Foto Usaha (jpeg/png/jpg | max:2MB)') !!}
+                                {{-- {!! Form::label('photo', 'Foto Usaha (jpeg/png/jpg | max:2MB)') !!}
                                 <br>
                                 <input type="file" id="photo" name="photo" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-                                <img id="blah" alt="your image" width="100" height="100" />
+                                <img id="blah" alt="your image" width="100" height="100" /> --}}
+                                <label for="exampleInput">Upload Foto Usaha</label>
+                                <div class="tower-file">
+                                    <input type="file" name="photo" id="demoInput5" />
+                                    <label for="demoInput5" class="btn btn-primary">
+                                        <span class="mdi mdi-upload"></span>Select Files
+                                    </label>
+                                    <button type="button" class="tower-file-clear btn btn-secondary align-top">
+                                        Clear
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
@@ -121,6 +132,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('assets/js/tower-file-input.js') }}"></script>
 
 
     <script>
@@ -170,26 +182,11 @@
     });
     </script>
 
-    {{-- <script type="text/javascript">
-        function createClone() {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-                url: APP_URL_ADMIN +'/business/clone',
-                type : 'POST',
-                data: {'_token': CSRF_TOKEN, 'div_count': $('.clonedInput').length + 1},
-                success: function(data){
-                    var obj = JSON.parse(data);
-                    $('#clonedInput').before(obj);
-                }
-            });
-        }
-        function removedClone(id){
-            var r = confirm("Are you sure you want to delete?");
-            if (r == true) {
-                $(id).remove();
-            }
-        }
-    </script> --}}
+    <script type="text/javascript">
+        $('#demoInput5').fileInput({
+            iconClass: 'mdi mdi-fw mdi-upload'
+        });
+    </script>
 
 
 @endsection

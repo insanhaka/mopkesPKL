@@ -27,13 +27,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-lg-6 col-12">
-                                {!! Form::label('nik_id', 'NIK') !!}
-                                <input class="form-control" type="text" id="selected_nik" name="nik_id" value="{!!$business->nik_id!!}" readonly>
-                            </div>
-                            <div class="form-group col-lg-6 col-12">
                                 {!! Form::label('name', 'Nama') !!}
                                 {{-- {!! Form::text('name', null ,['id'=>'name','class'=>'form-control','placeholder'=>'Nama','required'=>'true']) !!} --}}
                                 <input class="form-control" type="text" id="name" name="name" value="{!!$business->name!!}" readonly>
+                            </div>
+                            <div class="form-group col-lg-6 col-12" style="visibility: hidden">
+                                {!! Form::label('nik_id', 'NIK') !!}
+                                <input class="form-control" type="text" id="selected_nik" name="nik_id" value="{!!$business->nik_id!!}" readonly>
                             </div>
                         </div>
                         <div id="writeforms">

@@ -3,6 +3,15 @@
 @section('css')
     {!! Html::style('assets/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css') !!}
     {!! Html::style('assets/vendors/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') !!}
+    <style>
+        .select-generatehide {
+            visibility: hidden;
+        }
+
+        .select-generateshow {
+            visibility: visible;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -24,63 +33,34 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    {!! Form::open(['url'=>\Request::path(),'class'=>'form-horizontal','id'=>'form-delete','method' => 'POST']) !!}
+                    <form action="/admin/agreement/deleteall" method="POST">
+                    @csrf
                     <div class="card-body">
-                        <table class="table table-striped dt-responsive" id="simpledatatable">
+                        <table class="table table-striped dt-responsive" id="tableserverside">
                             <thead>
                                 <tr>
                                     {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
-                                    <th>No.</th>
+                                    {{-- <th></th> --}}
                                     <th>Nama Pihak Yang Menyetujui</th>
                                     <th>NIK</th>
                                     <th>Alamat KTP</th>
                                     <th>Alamat Domisili</th>
-                                    <th>Kelompok / Individu</th>
+                                    <th>Kelompok/Individu</th>
                                     <th>Nama Kelompok</th>
                                     <th>Bukti</th>
-                                    <th>Display</th>
+                                    <th>View</th>
                                     <th>Act</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($agreements as $data)
-                                <tr>
-                                    {{-- <td>{!! GHelper::cbDelete($data->id); !!}</td> --}}
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{!! $data->name !!}</td>
-                                    <td>{!! $data->nik !!}</td>
-                                    <td>DESA {!! $data->village_ktp->name !!}, KEC. {!! $data->district_ktp->name !!}</td>
-                                    <td>DESA {!! $data->village_dom->name !!}, KEC. {!! $data->district_dom->name !!}</td>
-                                    <td>{!! $data->status !!}</td>
-                                    @if ($data->status === "Kelompok")
-                                    <td>{!! $data->community->name !!}</td>
-                                    @else
-                                    <td>---</td>
-                                    @endif
-                                    <td><a href="{{asset('agreement_file/'.$data->attachment)}}" alt="Image description" target="_blank" style="display: inline-block; width: 100%; height: 100%;">Preview</a></td>
-                                    <td><img src="{{asset('agreement_file/'.$data->attachment)}}" class="card-img-top" style="width: 50px; height: 50px;" alt="..."></td>
-                                    <td align="center">
-                                        <div class="dropdown d-inline">
-                                            <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu" style="width: 60px;">
-                                                {!! GHelper::btnEdit($data->id) !!}
-                                                {!! GHelper::btnDelete($data->id) !!}
-                                                {{-- <a class="dropdown-item has-icon bg-danger text-white btn-hapus" href="/agreement/{{$data->id}}/delete" title="Delete"><i class="far fa-trash-alt"></i> Delete</a> --}}
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
                             </tbody>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-md-left text-center">
                                 {!! GHelper::btnCreate() !!}
-                                {!! GHelper::btnDeleteAll() !!}
+                                <button class="select-generatehide btn btn-danger" id="dell-all" type="submit">Delete All</button>
                             </div>
                         </div>
                     </div>
@@ -111,6 +91,12 @@
                         message: 'Data Berhasil Dihapus',
                         position: 'topRight'
                     });
+        @elseif ($message = Session::get('error'))
+            iziToast.error({
+                        title: 'Ups',
+                        message: 'Proses gagal',
+                        position: 'topRight'
+                    });
         @endif
     </script>
 
@@ -118,81 +104,56 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            // $('#simpledatatable').on('click','.btn-hapus',function(e){
-            //     e.preventDefault();
-            //     var $this =$(this);
-            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-            //         if (confirm) {
-            //             $.ajax({
-            //                 url: $this.attr('data-url') + '/delete',
-            //                 type: 'POST',
-            //                 data: {
-            //                     'id' : $this.attr('data-id'),
-            //                     '_token' : '{{csrf_token()}}'
-            //                 },
-            //                 success: function(response) {
-            //                     if(response){
-            //                         $this.closest('tr').fadeOut(300,function(){
-            //                             $this.remove();
-            //                         });
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
-
-            // //Hapus Semua
-            // $('#form-delete').on('submit',function(e){
-            //     e.preventDefault();
-            //     var $this = $(this);
-            //     bootbox.confirm({size: "small",message: "Hapus data ditandai?",callback: function(confirm){
-            //         if(confirm){
-            //             $.ajax({
-            //                 url : $this.attr('action') + '/delete',
-            //                 type : 'POST',
-            //                 data : $this.serialize(),
-            //                 success:function(response){
-            //                     // console.log(response);
-            //                     if(response.data.status){
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                         $this.find('input[type=checkbox]').each(function (t){
-            //                             if($(this).is(':checked')){
-            //                                 $(this).closest('tr').fadeOut(100,function(){
-            //                                     $(this).remove();
-            //                                 });
-            //                             }
-            //                         });
-            //                         $('#deleteall').fadeOut(300);
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: response.data.message,
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
         });
     </script>
+
+{{-- @foreach ($agreements as $i)
+<script>
+
+    $('#cek{!!$i->id!!}').click(function(event) {
+
+        var favorite = [];
+        $.each($("input[name='del[]']:checked"), function(){
+            favorite.push($(this).val());
+        });
+        // alert("My favourite sports are: " + favorite.join(", "));
+        var terpilih = favorite.length;
+
+        if(terpilih > 0){
+            $('#dell-all').removeClass("select-generatehide");
+            $('#dell-all').addClass("select-generateshow");
+        }else {
+            $('#dell-all').removeClass("select-generateshow");
+            $('#dell-all').addClass("select-generatehide");
+        }
+
+    });
+
+</script>
+@endforeach --}}
+
+<script type="text/javascript">
+    $(function () {
+      
+      var table = $('#tableserverside').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: APP_URL_ADMIN +"/agreement/getdataserverside",
+          columns: [
+            // {data: 'checkall',name: 'checkall'},
+            {data: 'name',name: 'name'},
+            {data: 'nik',name: 'nik'},
+            {data: 'ktp',name: 'ktp'},
+            {data: 'domisili',name: 'domisili'},
+            {data: 'status',name: 'status'},
+            {data: 'nama-kelompok',name: 'nama-kelompok'},
+            {data: 'attachment',name: 'attachment'},
+            {data: 'viewlink',name: 'viewlink'},
+            {data: 'act',name: 'act',orderable: false, searchable: false}
+          ]
+      });
+      
+    });
+</script>
+
 @endsection

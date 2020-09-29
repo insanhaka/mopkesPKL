@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: May 27, 2020 at 04:44 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.8
+-- Host: localhost
+-- Generation Time: 22 Jul 2020 pada 13.21
+-- Versi Server: 5.7.30-0ubuntu0.16.04.1
+-- PHP Version: 7.2.13-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,11 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tegkabgo_mudikdb`
+-- Database: `tegkabgo_simpasarV2db`
 --
 
 --
--- Dumping data for table `regencies`
+-- Dumping data untuk tabel `regencies`
 --
 
 INSERT INTO `regencies` (`id`, `province_id`, `name`, `created_at`, `updated_at`) VALUES
@@ -541,7 +539,6 @@ INSERT INTO `regencies` (`id`, `province_id`, `name`, `created_at`, `updated_at`
 ('9435', '94', 'KABUPATEN INTAN JAYA', NULL, NULL),
 ('9436', '94', 'KABUPATEN DEIYAI', NULL, NULL),
 ('9471', '94', 'KOTA JAYAPURA', NULL, NULL);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
