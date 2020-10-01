@@ -31,7 +31,6 @@ class BusinessController extends Controller
         $business = Business::all();
         $agreement = Agreement::orderBy('name', 'asc')->get();
         $totbusiness = Business::groupBy('nik_id')->select('nik_id', \DB::raw('count(*) as total'))->get();
-
         if (\Request::ajax()) {
             $view = view('backend.business.index', compact('business', 'agreement', 'totbusiness'))->renderSections();
             return response()->json([
@@ -43,10 +42,9 @@ class BusinessController extends Controller
         return view('backend.business.index', compact('business', 'agreement', 'totbusiness'))->render();
     }
 
-    public function getDataServerSide(Request $request)
-    {
-       
-        $data = Business::all();
+    public function getDataServerSide()
+    {       
+        $data = Business::orderBy('name', 'asc')->get();
         return Datatables::of($data)
                 ->addColumn('checkall', function ($data) {
                     $checkall = '<td class="text-center" width="50px">
@@ -54,18 +52,26 @@ class BusinessController extends Controller
                                 </td>' ;
                     return $checkall;
                 })
-                ->addColumn('act', function ($data) {
-                    $checkall = '<div class="dropdown d-inline">
-                        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                        </button>
-                        <div class="dropdown-menu">'
-                        .\GHelper::btnEdit($data->id)
-                        .\GHelper::btnDelete($data->id)
-                        .'</div>
-                    </div>';
-                    return $checkall;
-                })->rawColumns(['checkall','ktp','domisili','nama-kelompok','attachment','viewlink','act'])
+                ->addColumn('nik', function ($data) {
+                    $get_nik = Agreement::where('id', $data->nik_id)->first();
+                    $nik = '<td>'.$get_nik->nik.'</td>' ;
+                    return $nik;
+                })
+                ->addColumn('ktp', function ($data) {
+                    $get_ktp = Agreement::where('id', $data->nik_id)->first();
+                    $ktp = 'DESA '.$get_ktp->village_ktp->name.', KEC. '.$get_ktp->district_ktp->name.'' ;
+                    return $ktp;
+                })
+                ->addColumn('domisili', function ($data) {
+                    $get_dom = Agreement::where('id', $data->nik_id)->first();
+                    $dom = 'DESA '.$get_dom->village_dom->name.', KEC. '.$get_dom->district_dom->name.'' ;
+                    return $dom;
+                })
+                ->addColumn('view', function ($data) {
+                    $get = Agreement::where('id', $data->nik_id)->first();
+                    $view_data = '<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#bisnis'.$get->id.'">view</button>';
+                    return $view_data;
+                })->rawColumns(['checkall','nik','ktp','domisili','total','view'])
                 ->make(true);
         
         // return view('users');

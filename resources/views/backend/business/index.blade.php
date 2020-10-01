@@ -39,18 +39,18 @@
                     <form action="/admin/business/deleteall" method="POST">
                         @csrf
                     <div class="card-body">
-                        <table class="table table-striped dt-responsive" id="simpledatatable">
+                        <table class="table table-striped dt-responsive" id="tableserverside">
                             <thead>
                                 <tr>
                                     {{-- <th class="text-center no-sort" width="50px">
                                         <input type="checkbox" id="checkall" name="checkall" class="checkall"><span class="text"></span></label>
                                     </th> --}}
-                                    <th></th>
                                     <th>Nama</th>
                                     <th>NIK</th>
                                     <th>Alamat KTP</th>
                                     <th>Alamat Domisili</th>
-                                    <th>Jumlah Usaha</th>
+                                    <th>Alamat Usaha</th>
+                                    {{-- <th>Jumlah Usaha</th> --}}
                                     <th>Data Usaha</th>
                                 </tr>
                             </thead>
@@ -290,5 +290,27 @@
 
     </script>
     @endforeach
+
+    <script type="text/javascript">
+        $(function () {
+          
+          var table = $('#tableserverside').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: APP_URL_ADMIN +"/business/getdataserverside",
+              columns: [
+                // {data: 'checkall',name: 'checkall'},
+                {data: 'name',name: 'name'},
+                {data: 'nik',name: 'nik'},
+                {data: 'ktp',name: 'ktp'},
+                {data: 'domisili',name: 'domisili'},
+                {data: 'lapak_addr',name: 'lapak_addr'},
+                // {data: 'total',name: 'total'},
+                {data: 'view',name: 'view'}
+              ]
+          });
+          
+        });
+    </script>
 
 @endsection

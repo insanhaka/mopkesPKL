@@ -40,7 +40,7 @@ class AgreementController extends Controller
         return view('backend.agreements.index', compact('agreements'))->render();
     }
 
-    public function getDataServerSide(Request $request)
+    public function getDataServerSide()
     {
        
         $data = Agreement::orderBy('name', 'asc')->get();
