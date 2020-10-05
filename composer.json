@@ -20,6 +20,7 @@
         "laravelcollective/html": "^6.0",
         "ramsey/uuid": "^4.0",
         "simplesoftwareio/simple-qrcode": "~3",
+        "willvincent/laravel-rateable": "^2.2",
         "yajra/laravel-datatables-oracle": "^9.10"
     },
     "require-dev": {

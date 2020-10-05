@@ -59,7 +59,7 @@
             </div>
 
         <div class="lapor text-center">
-            <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Buat Laporan</a>
+            <a class="btn" href="/laporan/{!!$data->id!!}" role="button" style="margin-top: 10%; margin-bottom: 10%; background-color: #5a61c1; color: #fff;">Beri Penilaian</a>
         </div>
         </div>
     @else

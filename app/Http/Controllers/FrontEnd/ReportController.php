@@ -49,6 +49,7 @@ class ReportController extends Controller
         }
 
         $reports = new Report;
+        $reports->rating = $request->rating;
         $reports->about = $request->about;
         $reports->description = $request->description;
         $reports->nik_id = $request->id;

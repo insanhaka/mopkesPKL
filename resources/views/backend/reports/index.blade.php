@@ -38,7 +38,7 @@
                                     <th>Nama Usaha</th>
                                     <th>Lokasi Usaha</th>
                                     <th>Waktu Operasional</th>
-                                    <th>Tentang Laporan</th>
+                                    <th>Nilai</th>
                                     <th>Waktu Laporan</th>
                                     <th>Preview</th>
                                     <th width="80" class="no-sort">Act</th>
@@ -91,6 +91,10 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
             </div>
         </div>
     </div>
@@ -168,41 +172,12 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var table = InitiateSimpleDataTable.init();
-            // $('#simpledatatable').on('click','.btn-hapus',function(e){
-            //     e.preventDefault();
-            //     var $this =$(this);
-            //     bootbox.confirm({size: "small",message: "Are you sure?",callback: function(confirm){
-            //         if (confirm) {
-            //             $.ajax({
-            //                 url: $this.attr('data-url') + '/delete',
-            //                 type: 'POST',
-            //                 data: {
-            //                     'id' : $this.attr('data-id'),
-            //                     '_token' : '{{csrf_token()}}'
-            //                 },
-            //                 success: function(response) {
-            //                     if(response.data.status){
-            //                         $this.closest('tr').fadeOut(300,function(){
-            //                             $this.remove();
-            //                         });
-            //                         iziToast.success({
-            //                             title: 'Success',
-            //                             message: 'Data berhasil dihapus',
-            //                             position: 'topRight'
-            //                         });
-            //                     }else{
-            //                         iziToast.error({
-            //                             title: 'Failed',
-            //                             message: 'Data gagal dihapus',
-            //                             position: 'topRight'
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     });
-            // });
+        });
+    </script>
+
+    <script>
+        $(document).ready( function () {
+            $('#simpledatatable2').DataTable();
         });
     </script>
 @endsection

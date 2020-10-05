@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -169,6 +169,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         SimpleSoftwareIO\QrCode\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        willvincent\Rateable\RateableServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>BlumPackage &mdash; v.2.0</title>
+    <title>Mutan - Monitoring Kepatuhan Protokol Kesehatan</title>
 
     <!-- General CSS Files -->
     {!! Html::style('assets/vendors/bootstrap/css/bootstrap.min.css') !!}
